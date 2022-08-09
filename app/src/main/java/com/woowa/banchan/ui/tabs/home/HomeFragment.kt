@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -23,6 +24,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
+        with(binding) {
+            binding.bannerTitle = getString(R.string.plan_banner_title)
+        }
     }
 
     override fun onDestroyView() {
