@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
-import com.woowa.banchan.R
+import com.google.android.material.tabs.TabLayout
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.tabs.ViewPagerAdapter
 
@@ -26,17 +25,20 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val titles = arrayOf(
-            getString(R.string.home),
-            getString(R.string.main_dish),
-            getString(R.string.soup),
-            getString(R.string.side)
-        )
-        binding.apply {
+        initView()
+    }
+
+    private fun initView() {
+        with(binding) {
             vpOrdering.adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
-            TabLayoutMediator(tlOrdering, vpOrdering) { tab, position ->
-                tab.text = titles[position]
-            }.attach()
+            tlOrdering.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    vpOrdering.currentItem = tab.position
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) = Unit
+                override fun onTabReselected(tab: TabLayout.Tab) = Unit
+            })
         }
     }
 
