@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Banchan.Headline6" parent="TextAppearance.MaterialComponents.Headline6" />
+
+    <style name="Theme.Banchan.Headline6.Logo">
+        <item name="fontFamily">@font/outfit_bold</item>
+        <item name="fontWeight">700</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1" />
+
+    <style name="Theme.Banchan.Subtitle1.CategoryTitle">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+        <item name="fontWeight">700</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+    </style>
+
+    <style name="Theme.Banchan.Subtitle2.TabTitle">
+        <item name="fontWeight">700</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Subtitle2.ItemPrimary">
+        <item name="fontWeight">700</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Subtitle2.ItemRate">
+        <item name="fontWeight">500</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/primary_accent</item>
+    </style>
+
+    <style name="Theme.Banchan.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+    </style>
+
+    <style name="Theme.Banchan.Caption.ItemSecondary">
+        <item name="fontWeight">500</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/gray_default</item>
+    </style>
+
+    <style name="Theme.Banchan.Caption.ItemOriginal">
+        <item name="fontWeight">400</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/gray_default</item>
+    </style>
+
+    <style name="Theme.Banchan.Overline" parent="TextAppearance.MaterialComponents.Overline" />
+
+    <style name="Theme.Banchan.Overline.Label">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+        <item name="fontWeight">500</item>
+        <item name="lineHeight">26dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline4" parent="TextAppearance.MaterialComponents.Headline4" />
+
+    <style name="Theme.Banchan.Headline4.BannerTitle">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+        <item name="fontWeight">400</item>
+        <item name="lineHeight">48dp</item>
+    </style>
+
+
+</resources>
