@@ -10,6 +10,6 @@
         android:id="@+id/fcv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:name="com.woowa.banchan.ui.MainFragment"/>
+        tools:context=".ui.main.MainActivity"
+        android:name="com.woowa.banchan.ui.main.MainFragment"/>
 </layout>

@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui
+package com.woowa.banchan.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.ui.tabs.ViewPagerAdapter
 
 class MainFragment : Fragment() {
 

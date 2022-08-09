@@ -1,13 +1,13 @@
-package com.woowa.banchan.ui
+package com.woowa.banchan.ui.tabs
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.woowa.banchan.ui.home.HomeFragment
-import com.woowa.banchan.ui.maindish.MainDishFragment
-import com.woowa.banchan.ui.side.SideFragment
-import com.woowa.banchan.ui.soup.SoupFragment
+import com.woowa.banchan.ui.tabs.home.HomeFragment
+import com.woowa.banchan.ui.tabs.maindish.MainDishFragment
+import com.woowa.banchan.ui.tabs.side.SideFragment
+import com.woowa.banchan.ui.tabs.soup.SoupFragment
 
 class ViewPagerAdapter(
     fm: FragmentManager,
