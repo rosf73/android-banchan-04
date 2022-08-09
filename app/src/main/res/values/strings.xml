@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">banchan</string>
+    <string name="home">기획전</string>
+    <string name="main_dish">든든한 메인요리</string>
+    <string name="soup">뜨끈한 국물요리</string>
+    <string name="side">정갈한 밑반찬</string>
 </resources>
