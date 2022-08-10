@@ -9,14 +9,16 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
 import com.woowa.banchan.ui.tabs.common.BannerAdapter
+import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment() : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
     private val concatAdapter = ConcatAdapter()
+    private lateinit var onClickMenu: OnClickMenu
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,8 +45,14 @@ class HomeFragment : Fragment() {
                 true
             )
         )
-        concatAdapter.addAdapter(PlanAdapter(category))
+        concatAdapter.addAdapter(
+            PlanAdapter(category, onClick = { onClickMenu.navigateToDetail() })
+        )
         binding.rvHome.adapter = concatAdapter
+    }
+
+    fun setOnClickMenu(onClickMenu: OnClickMenu) {
+        this.onClickMenu = onClickMenu
     }
 
     override fun onDestroyView() {

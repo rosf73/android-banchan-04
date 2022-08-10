@@ -12,9 +12,11 @@ import com.woowa.banchan.R
 class DetailThumbAdapter(
     private val context: Context,
     private val items: List<String>
-): RecyclerView.Adapter<DetailThumbAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<DetailThumbAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_detail_thumb, parent, false))
+        ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_detail_thumb, parent, false)
+        )
 
     override fun getItemCount(): Int = items.size
 
