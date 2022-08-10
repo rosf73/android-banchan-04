@@ -1,11 +1,14 @@
 package com.woowa.banchan.ui.detail
 
+import android.content.res.Resources
 import android.graphics.Paint
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.woowa.banchan.utils.toMoneyInt
 import com.woowa.banchan.utils.toMoneyString
 import com.woowa.banchan.utils.toVisibility
+import com.bumptech.glide.Glide
 
 @BindingAdapter("visibility")
 fun TextView.setVisibility(condition: Boolean) {
@@ -22,4 +25,9 @@ fun TextView.setTextStrikeThrough(condition: Boolean) {
     if (condition) {
         paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
     }
+}
+
+@BindingAdapter("src")
+fun ImageView.setSource(url: String) {
+    Glide.with(context).load(url).into(this)
 }

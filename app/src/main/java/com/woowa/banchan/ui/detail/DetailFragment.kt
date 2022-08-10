@@ -96,8 +96,8 @@ class DetailFragment : Fragment() {
 
     private fun setAdapter() {
         with(binding) {
-            vpDetailThumb.adapter = DetailThumbAdapter(requireContext(), testProduct.thumbs)
-            rvDetailSection.adapter = DetailSectionAdapter(requireContext(), testProduct.section)
+            vpDetailThumb.adapter = DetailThumbAdapter(testProduct.thumbs)
+            rvDetailSection.adapter = DetailSectionAdapter(testProduct.section)
         }
     }
 
