@@ -6,4 +6,7 @@
     <string name="side">정갈한 밑반찬</string>
 
     <string name="label_thumb">Thumbnail</string>
+    <string name="label_point">적립금</string>
+    <string name="label_delivery_info">배송정보</string>
+    <string name="label_delivery_fee">배송비</string>
 </resources>
