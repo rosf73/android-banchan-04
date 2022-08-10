@@ -15,8 +15,10 @@ import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.utils.toMoneyInt
 import com.woowa.banchan.utils.toMoneyString
 import com.woowa.banchan.utils.toPx
+import dagger.hilt.android.AndroidEntryPoint
 
-class DetailFragment: Fragment() {
+@AndroidEntryPoint
+class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding: FragmentDetailBinding get() = requireNotNull(_binding)
