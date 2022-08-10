@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.woowa.banchan.R
 
-class DetailThumbAdapter(
+class DetailSectionAdapter(
     private val context: Context,
     private val items: List<String>
-): RecyclerView.Adapter<DetailThumbAdapter.ViewHolder>() {
+): RecyclerView.Adapter<DetailSectionAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_detail_thumb, parent, false))
+        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_detail_section, parent, false))
 
     override fun getItemCount(): Int = items.size
 
@@ -23,6 +23,6 @@ class DetailThumbAdapter(
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageUrl: ImageView = view.findViewById(R.id.iv_thumbnail)
+        val imageUrl: ImageView = view.findViewById(R.id.iv_section)
     }
 }
