@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
+    id("kotlin-kapt")
 }
 
 java {
@@ -10,4 +11,7 @@ java {
 
 dependencies {
     implementation(project(":domain"))
+
+    implementation(Lib.Hilt.core)
+    kapt(Lib.Hilt.compiler)
 }

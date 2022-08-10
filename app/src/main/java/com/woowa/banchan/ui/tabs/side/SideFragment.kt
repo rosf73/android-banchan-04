@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.woowa.banchan.databinding.FragmentSideBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SideFragment : Fragment() {
 
     private var _binding: FragmentSideBinding? = null

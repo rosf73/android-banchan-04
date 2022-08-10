@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
 import com.woowa.banchan.ui.tabs.common.BannerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -38,7 +40,7 @@ class HomeFragment : Fragment() {
         concatAdapter.addAdapter(
             BannerAdapter(
                 listOf(getString(R.string.plan_banner_title)),
-                false
+                true
             )
         )
         concatAdapter.addAdapter(PlanAdapter(category))
