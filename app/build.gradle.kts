@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -52,4 +54,7 @@ dependencies {
 
     implementation(Lib.Androidx.glide)
     annotationProcessor(Lib.Androidx.glideCompiler)
+    
+    implementation(Lib.Hilt.android)
+    kapt(Lib.Hilt.androidCompiler)
 }

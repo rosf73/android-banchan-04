@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.woowa.banchan.databinding.FragmentSoupBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SoupFragment : Fragment() {
 
     private var _binding: FragmentSoupBinding? = null
