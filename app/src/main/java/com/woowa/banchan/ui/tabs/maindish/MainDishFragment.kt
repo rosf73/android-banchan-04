@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.woowa.banchan.databinding.FragmentMaindishBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainDishFragment : Fragment() {
 
     private var _binding: FragmentMaindishBinding? = null
