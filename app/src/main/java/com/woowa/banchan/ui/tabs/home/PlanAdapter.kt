@@ -3,7 +3,7 @@ package com.woowa.banchan.ui.tabs.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.databinding.LayoutBanchanHorizontalBinding
+import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
 import com.woowa.banchan.ui.tabs.common.BanchanItemAdapter
 import com.woowa.domain.entity.Category
 
@@ -13,7 +13,7 @@ class PlanAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return CategoryViewHolder(LayoutBanchanHorizontalBinding.inflate(inflater, parent, false))
+        return CategoryViewHolder(ItemBanchanHorizontalBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -27,7 +27,7 @@ class PlanAdapter(
 
     override fun getItemCount(): Int = planItems.size
 
-    class CategoryViewHolder(private val binding: LayoutBanchanHorizontalBinding) :
+    class CategoryViewHolder(private val binding: ItemBanchanHorizontalBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val banchanItemAdapter by lazy { BanchanItemAdapter() }
