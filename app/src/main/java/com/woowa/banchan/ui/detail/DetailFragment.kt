@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.utils.toPx
+
+private const val DESCRIPTION = "DESCRIPTION"
 
 class DetailFragment: Fragment() {
 
@@ -35,22 +32,14 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setIndicators(testProduct.thumbs)
-        setViewPager(testProduct.thumbs)
-        binding.apply {
-            tvDetailName.text = testProduct.name
-            tvDetailDescription.text = testProduct.description
-            tvDetailSPrice.text = testProduct.sPrice.toString()
-            if (testProduct.nPrice != null) {
-                tvDetailNPrice.visibility = View.VISIBLE
-                tvDetailNPrice.text = testProduct.nPrice.toString()
-                tvDetailNPrice.paintFlags = tvDetailNPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                tvDetailDiscountRate.visibility = View.VISIBLE
-                tvDetailDiscountRate.text = "${testProduct.discountRate}%"
+        if (arguments != null) {
+            setIndicators(testProduct.thumbs)
+            setViewPager(testProduct.thumbs)
+            setProductInfo(requireArguments().getString(DESCRIPTION, ""))
+
+            if (savedInstanceState != null) {
+                binding.nsvDetailContainer.scrollY = savedInstanceState.getInt("SCROLL_Y")
             }
-            tvPoint.text = testProduct.point
-            tvDeliveryInfo.text = testProduct.deliveryInfo
-            tvDeliveryFee.text = testProduct.deliveryFee
         }
     }
 
@@ -61,6 +50,17 @@ class DetailFragment: Fragment() {
                 llDetailThumb.addView(getIndicator(false))
             }
         }
+    }
+
+    private fun getIndicator(selected: Boolean): ImageView {
+        val imageView = ImageView(requireContext())
+        if (selected)
+            imageView.setImageResource(R.drawable.indicator_round_selected)
+        else
+            imageView.setImageResource(R.drawable.indicator_round_unselected)
+        imageView.setPadding(0, 0, 10f.toPx(requireContext()), 0)
+
+        return imageView
     }
 
     private fun setViewPager(urlList: List<String>) {
@@ -80,26 +80,47 @@ class DetailFragment: Fragment() {
         }
     }
 
-    private fun getIndicator(selected: Boolean): ImageView {
-        val imageView = ImageView(requireContext())
-        if (selected)
-            imageView.setImageResource(R.drawable.indicator_round_selected)
-        else
-            imageView.setImageResource(R.drawable.indicator_round_unselected)
-        imageView.setPadding(0, 0, 10f.toPx(requireContext()), 0)
-
-        return imageView
+    private fun setProductInfo(description: String) {
+        binding.apply {
+            tvDetailName.text = testProduct.name
+            tvDetailDescription.text = description
+            tvDetailSPrice.text = testProduct.sPrice
+            if (testProduct.nPrice != null) {
+                tvDetailNPrice.visibility = View.VISIBLE
+                tvDetailNPrice.text = testProduct.nPrice.toString()
+                tvDetailNPrice.paintFlags = tvDetailNPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                tvDetailDiscountRate.visibility = View.VISIBLE
+                tvDetailDiscountRate.text = "${testProduct.discountRate}%"
+            }
+            tvPoint.text = testProduct.point
+            tvDeliveryInfo.text = testProduct.deliveryInfo
+            tvDeliveryFee.text = testProduct.deliveryFee
+        }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
     }
+
+    fun newInstance(description: String): DetailFragment {
+        val fragment = DetailFragment()
+
+        // Supply index input as an argument.
+        val args = Bundle()
+        args.putString(DESCRIPTION, description)
+        fragment.arguments = args
+        return fragment
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("SCROLL_Y", binding.nsvDetailContainer.scrollY)
+    }
 }
 
 data class TestProduct(
     val name: String,
-    val description: String,
     val thumbs: List<String>,
     val sPrice: String,
     val nPrice: String?,
@@ -119,7 +140,6 @@ data class TestProduct(
 
 val testProduct = TestProduct(
     name = "오리 주물럭_반조리",
-    description = "감칠맛이 미쳤습니다",
     thumbs = listOf(
         "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
         "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_S.jpg"
