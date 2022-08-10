@@ -1,7 +1,5 @@
 package com.woowa.banchan.utils
 
-import com.woowa.banchan.BanchanApplication
-import kotlin.math.round
+import android.content.res.Resources
 
-fun Float.toPx(): Int
-    = round(this * BanchanApplication.instance.resources.displayMetrics.density).toInt()
+fun Float.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
