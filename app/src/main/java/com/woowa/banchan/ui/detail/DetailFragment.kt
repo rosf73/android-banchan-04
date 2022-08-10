@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.detail
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,12 +35,23 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val testList = listOf(
-            "https://swebtoon-phinf.pstatic.net/20211115_192/1636963468245dquJG_PNG/thumbnail.jpg",
-            "https://media.istockphoto.com/photos/modern-black-picture-or-square-photo-frame-isolated-picture-id1372401945?b=1&k=20&m=1372401945&s=170667a&w=0&h=0hMSes57k6UF54gCiE_9DE9zEcgXOYwXqBR8PFdrqok="
-        )
-        setIndicators(testList)
-        setViewPager(testList)
+        setIndicators(testProduct.thumbs)
+        setViewPager(testProduct.thumbs)
+        binding.apply {
+            tvDetailName.text = testProduct.name
+            tvDetailDescription.text = testProduct.description
+            tvDetailSPrice.text = testProduct.sPrice.toString()
+            if (testProduct.nPrice != null) {
+                tvDetailNPrice.visibility = View.VISIBLE
+                tvDetailNPrice.text = testProduct.nPrice.toString()
+                tvDetailNPrice.paintFlags = tvDetailNPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                tvDetailDiscountRate.visibility = View.VISIBLE
+                tvDetailDiscountRate.text = "${testProduct.discountRate}%"
+            }
+            tvPoint.text = testProduct.point
+            tvDeliveryInfo.text = testProduct.deliveryInfo
+            tvDeliveryFee.text = testProduct.deliveryFee
+        }
     }
 
     private fun setIndicators(urlList: List<String>) {
@@ -53,7 +65,7 @@ class DetailFragment: Fragment() {
 
     private fun setViewPager(urlList: List<String>) {
         binding.apply {
-            vpDetailThumb.adapter = DetailThumbAdapter(lifecycleScope, urlList)
+            vpDetailThumb.adapter = DetailThumbAdapter(requireContext(), urlList)
             vpDetailThumb.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     llDetailThumb.children.iterator().forEach { view ->
@@ -84,3 +96,37 @@ class DetailFragment: Fragment() {
         super.onDestroyView()
     }
 }
+
+data class TestProduct(
+    val name: String,
+    val description: String,
+    val thumbs: List<String>,
+    val sPrice: String,
+    val nPrice: String?,
+    val point: String,
+    val deliveryInfo: String,
+    val deliveryFee: String
+) {
+
+    val discountRate: Int
+        get() = if (nPrice == null) 0
+                else {
+                    val tempS = sPrice.replace(Regex(",|원"), "").toFloat()
+                    val tempN = nPrice.replace(Regex(",|원"), "").toFloat()
+                    ((tempN - tempS) / tempN * 100).toInt()
+                }
+}
+
+val testProduct = TestProduct(
+    name = "오리 주물럭_반조리",
+    description = "감칠맛이 미쳤습니다",
+    thumbs = listOf(
+        "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
+        "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_S.jpg"
+    ),
+    sPrice = "12,640원",
+    nPrice = "15,800원",
+    point = "126원",
+    deliveryInfo = "서울 경기 새벽 배송, 전국 택배 배송",
+    deliveryFee = "2,500원 (40,000원 이상 구매 시 무료)"
+)
