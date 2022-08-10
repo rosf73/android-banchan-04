@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation(Lib.Test.espressoCore)
 
     implementation(Lib.Androidx.glide)
-    annotationProcessor(Lib.Androidx.glideCompiler)
+    kapt(Lib.Androidx.glideCompiler)
     
     implementation(Lib.Hilt.android)
     kapt(Lib.Hilt.androidCompiler)
