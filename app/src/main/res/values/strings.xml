@@ -5,6 +5,11 @@
     <string name="soup">뜨끈한 국물요리</string>
     <string name="side">정갈한 밑반찬</string>
 
+    <string name="plan_banner_title">한 번 주문하면\n두 번 반하는 반찬들</string>
+    <string name="maindish_banner_title">모두가 좋아하는\n든든한 메인 요리</string>
+    <string name="soup_banner_title">정성이 담긴\n 뜨끈뜨끈 국물 요리</string>
+    <string name="side_banner_title">식탁을 풍성하게 하는\n 정갈한 밑반찬</string>
+
     <string name="label_thumb">Thumbnail</string>
     <string name="label_plus">Plus</string>
     <string name="label_minus">Minus</string>

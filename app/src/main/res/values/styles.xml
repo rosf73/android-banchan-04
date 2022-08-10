@@ -59,7 +59,9 @@
         <item name="android:textColor">@color/gray_default</item>
     </style>
 
-    <style name="Theme.Banchan.Overline" parent="TextAppearance.MaterialComponents.Overline" />
+    <style name="Theme.Banchan.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
     <style name="Theme.Banchan.Overline.Label">
         <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
@@ -69,6 +71,7 @@
 
     <style name="Theme.Banchan.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Theme.Banchan.Headline4.BannerTitle">
@@ -108,5 +111,6 @@
         <item name="android:textColor">@color/gray_default</item>
         <item name="fontWeight">500</item>
     </style>
+
 
 </resources>

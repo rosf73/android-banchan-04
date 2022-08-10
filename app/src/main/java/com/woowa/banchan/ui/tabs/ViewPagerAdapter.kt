@@ -14,7 +14,7 @@ class ViewPagerAdapter(
     lifecycle: Lifecycle
 ) : FragmentStateAdapter(fm, lifecycle) {
 
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = SIZE
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
@@ -24,5 +24,9 @@ class ViewPagerAdapter(
             3 -> SideFragment()
             else -> HomeFragment()
         }
+    }
+
+    companion object {
+        const val SIZE = 4
     }
 }
