@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="url"
             type="String" />
@@ -12,7 +13,7 @@
         android:id="@+id/iv_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/label_thumb"
         android:adjustViewBounds="true"
-        app:src="@{url}"/>
+        android:contentDescription="@string/label_thumb"
+        app:src="@{url}" />
 </layout>

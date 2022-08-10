@@ -54,7 +54,7 @@ dependencies {
 
     implementation(Lib.Androidx.glide)
     kapt(Lib.Androidx.glideCompiler)
-    
+
     implementation(Lib.Hilt.android)
     kapt(Lib.Hilt.androidCompiler)
 }

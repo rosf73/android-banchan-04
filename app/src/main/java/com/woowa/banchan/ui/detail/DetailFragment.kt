@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.detail
 
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
-import com.woowa.banchan.utils.toMoneyInt
-import com.woowa.banchan.utils.toMoneyString
 import com.woowa.banchan.utils.toPx
 import dagger.hilt.android.AndroidEntryPoint
 

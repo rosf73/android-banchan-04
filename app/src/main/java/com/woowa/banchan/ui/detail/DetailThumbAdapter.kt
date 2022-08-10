@@ -3,7 +3,6 @@ package com.woowa.banchan.ui.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.databinding.ItemDetailSectionBinding
 import com.woowa.banchan.databinding.ItemDetailThumbBinding
 
 class DetailThumbAdapter(
