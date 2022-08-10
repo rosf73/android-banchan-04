@@ -1,6 +1,6 @@
 package com.woowa.banchan.ui.detail
 
-var quantity = 1
+const val testDescription = "감칠맛이 미쳤습니다"
 
 data class TestProduct(
     val name: String,
@@ -13,12 +13,12 @@ data class TestProduct(
     val section: List<String>
 ) {
 
-    val discountRate: Int
-        get() = if (nPrice == null) 0
+    val discountRate: String
+        get() = if (nPrice == null) ""
         else {
             val tempS = sPrice.replace(Regex(",|원"), "").toFloat()
             val tempN = nPrice.replace(Regex(",|원"), "").toFloat()
-            ((tempN - tempS) / tempN * 100).toInt()
+            "${((tempN - tempS) / tempN * 100).toInt()}%"
         }
 }
 

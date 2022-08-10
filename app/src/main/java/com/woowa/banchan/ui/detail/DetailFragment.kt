@@ -70,7 +70,8 @@ class DetailFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        binding.apply {
+        with(binding) {
+            //TODO: ViewModel.position 정의 후 양방향 바인딩
             vpDetailThumb.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     llDetailThumb.children.iterator().forEach { view ->
@@ -87,26 +88,9 @@ class DetailFragment : Fragment() {
 
     private fun initProductInfo() {
         with(binding) {
-            tvDetailName.text = testProduct.name
-            if (arguments != null) {
-                tvDetailDescription.text = requireArguments().getString(DESCRIPTION, "")
-            }
-            tvDetailSPrice.text = testProduct.sPrice
-            if (testProduct.nPrice != null) {
-                tvDetailNPrice.visibility = View.VISIBLE
-                tvDetailNPrice.text = testProduct.nPrice.toString()
-                tvDetailNPrice.paintFlags = tvDetailNPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                tvDetailDiscountRate.visibility = View.VISIBLE
-                tvDetailDiscountRate.text = "${testProduct.discountRate}%"
-            }
-
-            tvPoint.text = testProduct.point
-            tvDeliveryInfo.text = testProduct.deliveryInfo
-            tvDeliveryFee.text = testProduct.deliveryFee
-
-            btnMinus.isEnabled = false
-            tvQuantity.text = quantity.toString()
-            tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
+            product = testProduct
+            description = testDescription
+            quantity = 1
         }
     }
 
@@ -120,18 +104,12 @@ class DetailFragment : Fragment() {
     private fun setOnClickListener() {
         with(binding) {
             btnMinus.setOnClickListener {
-                if (quantity > 1)
-                    quantity--
-                else
-                    it.isEnabled = false
-                tvQuantity.text = quantity.toString()
-                tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
+                if (quantity > 1) quantity--
+                else it.isEnabled = false
             }
             btnPlus.setOnClickListener {
                 quantity++
                 btnMinus.isEnabled = true
-                tvQuantity.text = quantity.toString()
-                tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
             btnOrdering.setOnClickListener {
                 //TODO: 프래그먼트 전환
@@ -157,7 +135,6 @@ class DetailFragment : Fragment() {
         fun newInstance(description: String): DetailFragment {
             val fragment = DetailFragment()
 
-            // Supply index input as an argument.
             val args = Bundle()
             args.putString(DESCRIPTION, description)
             fragment.arguments = args
