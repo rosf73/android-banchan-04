@@ -8,6 +8,12 @@
         <variable
             name="bannerTitle"
             type="String" />
+
+        <variable
+            name="isShowLabel"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +21,21 @@
         android:layout_height="202dp"
         android:background="@color/primary_surface"
         android:paddingHorizontal="16dp">
+
+        <TextView
+            android:id="@+id/tv_label"
+            style="@style/Theme.Banchan.Overline.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/tv_background_white_corner_black_15dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
+            android:text="@string/home"
+            android:visibility="@{isShowLabel == true?View.VISIBLE:View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_banner_title"
