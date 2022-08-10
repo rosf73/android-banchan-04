@@ -13,8 +13,6 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.utils.toPx
 
-private const val DESCRIPTION = "DESCRIPTION"
-
 class DetailFragment: Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
@@ -31,28 +29,31 @@ class DetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView(savedInstanceState)
+    }
 
+    private fun initView(savedInstanceState: Bundle?) {
         if (arguments != null) {
-            setIndicators(testProduct.thumbs)
-            setViewPager(testProduct.thumbs)
+            initIndicators(testProduct.thumbs)
+            initViewPager(testProduct.thumbs)
             setProductInfo(requireArguments().getString(DESCRIPTION, ""))
 
             if (savedInstanceState != null) {
-                binding.nsvDetailContainer.scrollY = savedInstanceState.getInt("SCROLL_Y")
+                binding.nsvDetailContainer.scrollY = savedInstanceState.getInt(SCROLL_Y)
             }
         }
     }
 
-    private fun setIndicators(urlList: List<String>) {
+    private fun initIndicators(urlList: List<String>) {
         binding.apply {
-            llDetailThumb.addView(getIndicator(true))
+            llDetailThumb.addView(createIndicator(true))
             for (e in 1 until urlList.size) {
-                llDetailThumb.addView(getIndicator(false))
+                llDetailThumb.addView(createIndicator(false))
             }
         }
     }
 
-    private fun getIndicator(selected: Boolean): ImageView {
+    private fun createIndicator(selected: Boolean): ImageView {
         val imageView = ImageView(requireContext())
         if (selected)
             imageView.setImageResource(R.drawable.indicator_round_selected)
@@ -63,7 +64,7 @@ class DetailFragment: Fragment() {
         return imageView
     }
 
-    private fun setViewPager(urlList: List<String>) {
+    private fun initViewPager(urlList: List<String>) {
         binding.apply {
             vpDetailThumb.adapter = DetailThumbAdapter(requireContext(), urlList)
             vpDetailThumb.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -81,7 +82,7 @@ class DetailFragment: Fragment() {
     }
 
     private fun setProductInfo(description: String) {
-        binding.apply {
+        with(binding) {
             tvDetailName.text = testProduct.name
             tvDetailDescription.text = description
             tvDetailSPrice.text = testProduct.sPrice
@@ -103,6 +104,11 @@ class DetailFragment: Fragment() {
         super.onDestroyView()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(SCROLL_Y, binding.nsvDetailContainer.scrollY)
+    }
+
     fun newInstance(description: String): DetailFragment {
         val fragment = DetailFragment()
 
@@ -113,9 +119,9 @@ class DetailFragment: Fragment() {
         return fragment
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("SCROLL_Y", binding.nsvDetailContainer.scrollY)
+    companion object {
+        private const val DESCRIPTION = "DESCRIPTION"
+        private const val SCROLL_Y = "SCROLL_Y"
     }
 }
 
@@ -126,7 +132,8 @@ data class TestProduct(
     val nPrice: String?,
     val point: String,
     val deliveryInfo: String,
-    val deliveryFee: String
+    val deliveryFee: String,
+    val section: List<String>
 ) {
 
     val discountRate: Int
@@ -148,5 +155,11 @@ val testProduct = TestProduct(
     nPrice = "15,800원",
     point = "126원",
     deliveryInfo = "서울 경기 새벽 배송, 전국 택배 배송",
-    deliveryFee = "2,500원 (40,000원 이상 구매 시 무료)"
+    deliveryFee = "2,500원 (40,000원 이상 구매 시 무료)",
+    section = listOf(
+        "http://public.codesquad.kr/jk/storeapp/data/main/510_ZIP_P_0047_D1.jpg",
+        "http://public.codesquad.kr/jk/storeapp/data/main/510_ZIP_P_0047_D2.jpg",
+        "http://public.codesquad.kr/jk/storeapp/data/main/510_ZIP_P_0047_D3.jpg",
+        "http://public.codesquad.kr/jk/storeapp/data/pakage_regular.jpg"
+    )
 )
