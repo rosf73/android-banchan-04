@@ -32,8 +32,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(savedInstanceState)
-        setAdapter()
-        setOnClickListener()
     }
 
     private fun initView(savedInstanceState: Bundle?) {
@@ -44,6 +42,9 @@ class DetailFragment : Fragment() {
         if (savedInstanceState != null) {
             binding.nsvDetailContainer.scrollY = savedInstanceState.getInt(SCROLL_Y)
         }
+
+        setAdapter()
+        setOnClickListener()
     }
 
     private fun initIndicators() {
