@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         concatAdapter.addAdapter(
             BannerAdapter(
                 listOf(getString(R.string.plan_banner_title)),
-                false
+                true
             )
         )
         concatAdapter.addAdapter(PlanAdapter(category))
