@@ -45,6 +45,7 @@ dependencies {
     implementation(Lib.Androidx.appcompat)
     implementation(Lib.Androidx.googleMaterial)
     implementation(Lib.Androidx.constraintLayout)
+    implementation(Lib.Androidx.recyclerview)
     testImplementation(Lib.Test.junit4)
     androidTestImplementation(Lib.Test.androidxJunit)
     androidTestImplementation(Lib.Test.espressoCore)
