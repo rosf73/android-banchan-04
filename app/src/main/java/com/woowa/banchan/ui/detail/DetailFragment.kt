@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
+import com.woowa.banchan.utils.toMoneyInt
+import com.woowa.banchan.utils.toMoneyString
 import com.woowa.banchan.utils.toPx
 
 class DetailFragment: Fragment() {
@@ -102,7 +104,7 @@ class DetailFragment: Fragment() {
 
             btnMinus.isEnabled = false
             tvQuantity.text = quantity.toString()
-            tvTotalPrice.text = "${testProduct.sPrice.replace(Regex(",|원"), "").toInt() * quantity}원"
+            tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
         }
     }
 
@@ -121,13 +123,13 @@ class DetailFragment: Fragment() {
                 else
                     it.isEnabled = false
                 tvQuantity.text = quantity.toString()
-                tvTotalPrice.text = "${testProduct.sPrice.replace(Regex(",|원"), "").toInt() * quantity}원"
+                tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
             btnPlus.setOnClickListener {
                 quantity++
                 btnMinus.isEnabled = true
                 tvQuantity.text = quantity.toString()
-                tvTotalPrice.text = "${testProduct.sPrice.replace(Regex(",|원"), "").toInt() * quantity}원"
+                tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
             btnOrdering.setOnClickListener {
                 //TODO: 프래그먼트 전환
