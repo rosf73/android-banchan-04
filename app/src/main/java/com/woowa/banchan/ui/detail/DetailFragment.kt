@@ -60,7 +60,7 @@ class DetailFragment: Fragment() {
             imageView.setImageResource(R.drawable.indicator_round_selected)
         else
             imageView.setImageResource(R.drawable.indicator_round_unselected)
-        imageView.setPadding(0, 0, 10f.toPx(requireContext()), 0)
+        imageView.setPadding(0, 0, 10f.toPx(), 0)
 
         return imageView
     }
@@ -146,19 +146,19 @@ class DetailFragment: Fragment() {
         outState.putInt(SCROLL_Y, binding.nsvDetailContainer.scrollY)
     }
 
-    fun newInstance(description: String): DetailFragment {
-        val fragment = DetailFragment()
-
-        // Supply index input as an argument.
-        val args = Bundle()
-        args.putString(DESCRIPTION, description)
-        fragment.arguments = args
-        return fragment
-    }
-
     companion object {
         private const val DESCRIPTION = "DESCRIPTION"
         private const val SCROLL_Y = "SCROLL_Y"
+
+        fun newInstance(description: String): DetailFragment {
+            val fragment = DetailFragment()
+
+            // Supply index input as an argument.
+            val args = Bundle()
+            args.putString(DESCRIPTION, description)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
 
