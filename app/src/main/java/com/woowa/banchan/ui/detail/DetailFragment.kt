@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -30,24 +31,24 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(savedInstanceState)
+        setAdapter()
+        setOnClickListener()
     }
 
     private fun initView(savedInstanceState: Bundle?) {
-        if (arguments != null) {
-            initIndicators(testProduct.thumbs)
-            initViewPager(testProduct.thumbs)
-            setProductInfo(requireArguments().getString(DESCRIPTION, ""))
+        initIndicators()
+        initViewPager()
+        initProductInfo()
 
-            if (savedInstanceState != null) {
-                binding.nsvDetailContainer.scrollY = savedInstanceState.getInt(SCROLL_Y)
-            }
+        if (savedInstanceState != null) {
+            binding.nsvDetailContainer.scrollY = savedInstanceState.getInt(SCROLL_Y)
         }
     }
 
-    private fun initIndicators(urlList: List<String>) {
-        binding.apply {
+    private fun initIndicators() {
+        with(binding) {
             llDetailThumb.addView(createIndicator(true))
-            for (e in 1 until urlList.size) {
+            for (e in 1 until testProduct.thumbs.size) {
                 llDetailThumb.addView(createIndicator(false))
             }
         }
@@ -64,9 +65,8 @@ class DetailFragment: Fragment() {
         return imageView
     }
 
-    private fun initViewPager(urlList: List<String>) {
+    private fun initViewPager() {
         binding.apply {
-            vpDetailThumb.adapter = DetailThumbAdapter(requireContext(), urlList)
             vpDetailThumb.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     llDetailThumb.children.iterator().forEach { view ->
@@ -81,10 +81,12 @@ class DetailFragment: Fragment() {
         }
     }
 
-    private fun setProductInfo(description: String) {
+    private fun initProductInfo() {
         with(binding) {
             tvDetailName.text = testProduct.name
-            tvDetailDescription.text = description
+            if (arguments != null) {
+                tvDetailDescription.text = requireArguments().getString(DESCRIPTION, "")
+            }
             tvDetailSPrice.text = testProduct.sPrice
             if (testProduct.nPrice != null) {
                 tvDetailNPrice.visibility = View.VISIBLE
@@ -93,9 +95,44 @@ class DetailFragment: Fragment() {
                 tvDetailDiscountRate.visibility = View.VISIBLE
                 tvDetailDiscountRate.text = "${testProduct.discountRate}%"
             }
+
             tvPoint.text = testProduct.point
             tvDeliveryInfo.text = testProduct.deliveryInfo
             tvDeliveryFee.text = testProduct.deliveryFee
+
+            btnMinus.isEnabled = false
+            tvQuantity.text = quantity.toString()
+            tvTotalPrice.text = "${testProduct.sPrice.replace(Regex(",|원"), "").toInt() * quantity}원"
+        }
+    }
+
+    private fun setAdapter() {
+        with(binding) {
+            vpDetailThumb.adapter = DetailThumbAdapter(requireContext(), testProduct.thumbs)
+            rvDetailSection.adapter = DetailSectionAdapter(requireContext(), testProduct.section)
+        }
+    }
+
+    private fun setOnClickListener() {
+        with(binding) {
+            btnMinus.setOnClickListener {
+                if (quantity > 1)
+                    quantity--
+                else
+                    it.isEnabled = false
+                tvQuantity.text = quantity.toString()
+                tvTotalPrice.text = "${testProduct.sPrice.replace(Regex(",|원"), "").toInt() * quantity}원"
+            }
+            btnPlus.setOnClickListener {
+                quantity++
+                btnMinus.isEnabled = true
+                tvQuantity.text = quantity.toString()
+                tvTotalPrice.text = "${testProduct.sPrice.replace(Regex(",|원"), "").toInt() * quantity}원"
+            }
+            btnOrdering.setOnClickListener {
+                //TODO: 프래그먼트 전환
+                Toast.makeText(requireContext(), "$quantity 개를 주문했습니다", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -163,3 +200,5 @@ val testProduct = TestProduct(
         "http://public.codesquad.kr/jk/storeapp/data/pakage_regular.jpg"
     )
 )
+
+var quantity = 1
