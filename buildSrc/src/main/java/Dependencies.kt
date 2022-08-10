@@ -4,6 +4,7 @@ object Version {
     const val constraintLayout = "2.1.4"
     const val fragmentKtx = "1.3.3"
     const val googleMaterial = "1.6.1"
+    const val recyclerview = "1.2.1"
 
     const val junit4 = "4.13.2"
     const val androidxJunit = "1.1.3"
@@ -19,6 +20,8 @@ object Lib {
             "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragmentKtx}"
         const val googleMaterial = "com.google.android.material:material:${Version.googleMaterial}"
+        const val recyclerview =  "androidx.recyclerview:recyclerview:${Version.recyclerview}"
+
     }
 
     object Test {
