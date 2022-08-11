@@ -8,12 +8,17 @@ import com.woowa.banchan.databinding.ItemBanchanBinding
 import com.woowa.domain.entity.Menu
 
 class BanchanItemAdapter(
-    private val onClick: () -> Unit
+    private val onClick: () -> Unit,
+    private val onClickCart: () -> Unit
 ) : ListAdapter<Menu, BanchanItemAdapter.BanchanItemViewHolder>(menuDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BanchanItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return BanchanItemViewHolder(ItemBanchanBinding.inflate(inflater, parent, false), onClick)
+        return BanchanItemViewHolder(
+            ItemBanchanBinding.inflate(inflater, parent, false),
+            onClick,
+            onClickCart
+        )
     }
 
     override fun onBindViewHolder(holder: BanchanItemViewHolder, position: Int) {
@@ -22,11 +27,13 @@ class BanchanItemAdapter(
 
     class BanchanItemViewHolder(
         private val binding: ItemBanchanBinding,
-        private val onClick: () -> Unit
+        private val onClick: () -> Unit,
+        private val onClickCart: () -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(menu: Menu) {
             itemView.setOnClickListener { onClick() }
+            binding.ivCart.setOnClickListener { onClickCart() }
             binding.menu = menu
         }
     }

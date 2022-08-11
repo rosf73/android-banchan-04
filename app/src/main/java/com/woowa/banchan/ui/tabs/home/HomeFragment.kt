@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
 import com.woowa.banchan.ui.tabs.common.BannerAdapter
+import com.woowa.banchan.ui.tabs.common.CartBottomSheet
 import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,7 +47,11 @@ class HomeFragment() : Fragment() {
             )
         )
         concatAdapter.addAdapter(
-            PlanAdapter(category, onClick = { onClickMenu.navigateToDetail() })
+            PlanAdapter(
+                category,
+                onClick = { onClickMenu.navigateToDetail() },
+                onClickCart = { CartBottomSheet().show(childFragmentManager, "cart") }
+            )
         )
         binding.rvHome.adapter = concatAdapter
     }
