@@ -1,0 +1,49 @@
+{
+  "statusCode": 200,
+  "body": [
+    {
+      "category_id": "17011000",
+      "name": "풍성한 고기반찬",
+      "items": [
+        {
+          "detail_hash": "HBDEF",
+          "image": "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
+          "alt": "오리 주물럭_반조리",
+          "delivery_type": [
+            "새벽배송",
+            "전국택배"
+          ],
+          "title": "오리 주물럭_반조리",
+          "description": "감질맛 나는 매콤한 양념",
+          "n_price": "15,800원",
+          "s_price": "12,640원",
+          "badge": [
+            "런칭특가"
+          ]
+        }
+      ]
+    },
+    {
+      "category_id": "17010200",
+      "name": "편리한 반찬세트",
+      "items": [
+        {
+          "detail_hash": "HBBCC",
+          "image": "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
+          "alt": "새콤달콤 오징어무침",
+          "delivery_type": [
+            "새벽배송",
+            "전국택배"
+          ],
+          "title": "새콤달콤 오징어무침",
+          "description": "국내산 오징어를 새콤달콤하게",
+          "n_price": "7,500원",
+          "s_price": "6,000원",
+          "badge": [
+            "런칭특가"
+          ]
+        }
+      ]
+    }
+  ]
+}
