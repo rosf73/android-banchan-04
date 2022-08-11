@@ -2,6 +2,7 @@ package com.woowa.banchan.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.woowa.banchan.data.remote.network.BanchanService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object RetrofitModule {
-    private val BASE_URL = "https://api.codesquad.kr/onban"
+    private val BASE_URL = "https://api.codesquad.kr/"
 
     @Provides
     @Singleton
@@ -44,4 +45,10 @@ object RetrofitModule {
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()
+
+    @Singleton
+    @Provides
+    fun provideBanchanService(retrofit: Retrofit): BanchanService {
+        return retrofit.create(BanchanService::class.java)
+    }
 }
