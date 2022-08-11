@@ -8,6 +8,10 @@
         <variable
             name="fragment"
             type="com.woowa.banchan.ui.tabs.common.CartBottomSheet" />
+
+        <variable
+            name="quantity"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
