@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.woowa.banchan.ui.tabs.common.CartDialog" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_radius_20dp"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp">
+
+        <TextView
+            android:id="@+id/tv_cart"
+            style="@style/Theme.Banchan.Subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="선택한 상품이 장바구니에 담겼습니다."
+            app:layout_constraintBottom_toTopOf="@id/btn_stay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="선택한 상품이 장바구니에 담겼습니다." />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cart"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:text="장바구니 확인"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_stay" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_stay"
+            style="@style/Theme.Banchan.Subtitle2.ItemRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="@{() -> fragment.stay()}"
+            android:text="계속 쇼핑하기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cart" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
