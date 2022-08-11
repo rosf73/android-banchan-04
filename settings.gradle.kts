@@ -14,5 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "banchan"
 include (":app")
-include(":domain")
-include(":data")

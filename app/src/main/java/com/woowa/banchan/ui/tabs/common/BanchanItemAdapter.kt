@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanBinding
-import com.woowa.domain.entity.Menu
+import com.woowa.banchan.domain.entity.Menu
 
 class BanchanItemAdapter(
     private val onClick: () -> Unit

@@ -1,4 +1,4 @@
-package com.woowa.domain.entity
+package com.woowa.banchan.domain.entity
 
 data class Menu(
     val detailHash: String,

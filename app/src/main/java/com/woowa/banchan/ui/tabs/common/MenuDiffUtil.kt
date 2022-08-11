@@ -1,7 +1,7 @@
 package com.woowa.banchan.ui.tabs.common
 
 import androidx.recyclerview.widget.DiffUtil
-import com.woowa.domain.entity.Menu
+import com.woowa.banchan.domain.entity.Menu
 
 val menuDiffUtil = object : DiffUtil.ItemCallback<Menu>() {
     override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
