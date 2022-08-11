@@ -4,8 +4,8 @@ import com.google.common.truth.Truth
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.woowa.banchan.data.remote.dto.CategoryDto
+import com.woowa.banchan.data.remote.dto.PlanResponse
 import com.woowa.banchan.data.remote.dto.ProductDto
-import com.woowa.banchan.data.remote.dto.SectionResponse
 import com.woowa.banchan.data.remote.network.BanchanService
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -46,7 +46,7 @@ class BanchanServiceTest {
         val responseJson = File("src/test/java/com/resources/plan.json").readText()
         val response = MockResponse().setBody(responseJson)
         mockWebServer.enqueue(response)
-        val expected = SectionResponse(
+        val expected = PlanResponse(
             statusCode = 200,
             categories = listOf(
                 CategoryDto(
