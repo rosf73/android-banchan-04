@@ -12,15 +12,9 @@ interface BanchanService {
     @GET("onban/best")
     suspend fun getPlan(): Response<PlanResponse>
 
-    @GET("onban/main")
-    suspend fun getMainDish(): Response<ProductsResponse>
+    @GET("onban/{type}")
+    suspend fun getProducts(@Path("type") type: String): Response<ProductsResponse>
 
-    @GET("onban/soup")
-    suspend fun getSoup(): Response<ProductsResponse>
-
-    @GET("onban/side")
-    suspend fun getSide(): Response<ProductsResponse>
-
-    @GET("onban/detail{detail_hash}")
+    @GET("onban/detail/{detail_hash}")
     suspend fun getDetail(@Path("detail_hash") detailHash: String): Response<DetailResponse>
 }
