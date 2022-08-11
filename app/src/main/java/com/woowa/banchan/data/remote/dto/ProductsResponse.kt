@@ -2,7 +2,7 @@ package com.woowa.banchan.data.remote.dto
 
 import com.squareup.moshi.Json
 
-data class SectionResponse(
+data class ProductsResponse(
     @Json(name = "statusCode") val statusCode: Int,
-    @Json(name = "body") val categories: List<CategoryDto>
+    @Json(name = "body") val products: List<ProductDto>
 )
