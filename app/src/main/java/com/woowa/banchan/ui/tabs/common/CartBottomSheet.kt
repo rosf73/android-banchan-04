@@ -43,12 +43,14 @@ class CartBottomSheet : BottomSheetDialogFragment() {
                 else
                     it.isEnabled = false
                 tvQuantity.text = quantity.toString()
+                btnOrdering.text = "${quantity}개 담기"
                 tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
             btnPlus.setOnClickListener {
                 quantity++
                 btnMinus.isEnabled = true
                 tvQuantity.text = quantity.toString()
+                btnOrdering.text = "${quantity}개 담기"
                 tvTotalPrice.text = (testProduct.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
         }

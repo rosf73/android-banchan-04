@@ -151,13 +151,14 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_ordering"
             style="@style/Theme.Banchan.Headline7.DetailTotalPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="24dp"
+            android:background="@color/primary_main"
             android:onClick="@{() -> fragment.navigateToCart()}"
             android:padding="16dp"
             android:text="1개 담기"
