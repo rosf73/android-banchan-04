@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowa.banchan.databinding.FragmentBottomSheetBinding
-import com.woowa.banchan.ui.detail.quantity
 import com.woowa.banchan.ui.detail.testProduct
 import com.woowa.banchan.utils.toMoneyInt
 import com.woowa.banchan.utils.toMoneyString
@@ -32,6 +31,7 @@ class CartBottomSheet : BottomSheetDialogFragment() {
 
     private fun initView() {
         binding.fragment = this@CartBottomSheet
+        binding.quantity = 1
         setOnClickListener()
     }
 

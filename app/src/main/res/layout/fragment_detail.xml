@@ -15,7 +15,7 @@
 
         <variable
             name="quantity"
-            type="int" />
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
