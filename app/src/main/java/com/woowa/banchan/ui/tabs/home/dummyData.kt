@@ -1,14 +1,14 @@
 package com.woowa.banchan.ui.tabs.home
 
 import com.woowa.banchan.domain.entity.Category
-import com.woowa.banchan.domain.entity.Menu
+import com.woowa.banchan.domain.entity.Product
 
 val category =
     listOf(
         Category(
             "풍성한 고기반찬",
             listOf(
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -19,7 +19,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -30,7 +30,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -41,7 +41,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -52,7 +52,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -62,7 +62,7 @@ val category =
                     nPrice = "15,800원",
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
-                ), Menu(
+                ), Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -78,7 +78,7 @@ val category =
         Category(
             "풍성한 고기반찬",
             listOf(
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -89,7 +89,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -100,7 +100,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -111,7 +111,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -122,7 +122,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -132,7 +132,7 @@ val category =
                     nPrice = "15,800원",
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
-                ), Menu(
+                ), Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -148,7 +148,7 @@ val category =
         Category(
             "풍성한 고기반찬",
             listOf(
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -159,7 +159,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -170,7 +170,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -181,7 +181,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -192,7 +192,7 @@ val category =
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
                 ),
-                Menu(
+                Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",
@@ -202,7 +202,7 @@ val category =
                     nPrice = "15,800원",
                     sPrice = "12,640원",
                     badge = listOf("런칭특가")
-                ), Menu(
+                ), Product(
                     detailHash = "HBDEF",
                     image = "http://public.codesquad.kr/jk/storeapp/data/main/1155_ZIP_P_0081_T.jpg",
                     alt = "오리 주물럭_반조리",

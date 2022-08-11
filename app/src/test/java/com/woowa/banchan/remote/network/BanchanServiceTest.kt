@@ -128,7 +128,7 @@ class BanchanServiceTest {
         )
 
         // when
-        val actual = banchanService.getMainDish()
+        val actual = banchanService.getProducts("main")
 
         // then
         val actualResult = actual.body()
@@ -171,7 +171,7 @@ class BanchanServiceTest {
         )
 
         // when
-        val actual = banchanService.getSoup()
+        val actual = banchanService.getProducts("soup")
 
         // then
         val actualResult = actual.body()
@@ -204,7 +204,7 @@ class BanchanServiceTest {
         )
 
         // when
-        val actual = banchanService.getSide()
+        val actual = banchanService.getProducts("side")
 
         // then
         val actualResult = actual.body()

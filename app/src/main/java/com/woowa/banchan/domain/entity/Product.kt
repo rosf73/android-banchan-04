@@ -1,6 +1,6 @@
 package com.woowa.banchan.domain.entity
 
-data class Menu(
+data class Product(
     val detailHash: String,
     val image: String,
     val alt: String,
