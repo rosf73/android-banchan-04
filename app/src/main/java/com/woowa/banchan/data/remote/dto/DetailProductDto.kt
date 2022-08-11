@@ -1,12 +1,14 @@
 package com.woowa.banchan.data.remote.dto
 
+import com.squareup.moshi.Json
+
 data class DetailProductDto(
-    val delivery_fee: String,
-    val delivery_info: String,
-    val detail_section: List<String>,
-    val point: String,
-    val prices: List<String>,
-    val product_description: String,
-    val thumb_images: List<String>,
-    val top_image: String
+    @Json(name = "delivery_fee") val deliveryFee: String,
+    @Json(name = "delivery_info") val deliveryInfo: String,
+    @Json(name = "detail_section") val detailSection: List<String>,
+    @Json(name = "point") val point: String,
+    @Json(name = "prices") val prices: List<String>,
+    @Json(name = "product_description") val productDescription: String,
+    @Json(name = "thumb_images") val thumbImages: List<String>,
+    @Json(name = "top_image") val topImage: String
 )

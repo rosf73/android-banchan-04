@@ -3,10 +3,7 @@ package com.woowa.banchan.remote.network
 import com.google.common.truth.Truth
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.woowa.banchan.data.remote.dto.CategoryDto
-import com.woowa.banchan.data.remote.dto.PlanResponse
-import com.woowa.banchan.data.remote.dto.ProductDto
-import com.woowa.banchan.data.remote.dto.ProductsResponse
+import com.woowa.banchan.data.remote.dto.*
 import com.woowa.banchan.data.remote.network.BanchanService
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -175,6 +172,78 @@ class BanchanServiceTest {
 
         // when
         val actual = banchanService.getSoup()
+
+        // then
+        val actualResult = actual.body()
+        Truth.assertThat(actualResult).isEqualTo(expected)
+    }
+
+
+    @Test
+    fun `정갈한 밑반찬의 상품 메뉴를 가져올 수 있다`() = runBlocking {
+
+        // given
+        val responseJson = File("src/test/java/com/resources/side.json").readText()
+        val response = MockResponse().setBody(responseJson)
+        mockWebServer.enqueue(response)
+        val expected = ProductsResponse(
+            statusCode = 200,
+            products = listOf(
+                ProductDto(
+                    detailHash = "HBBCC",
+                    image = "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
+                    alt = "새콤달콤 오징어무침",
+                    deliveryType = listOf("새벽배송", "전국택배"),
+                    title = "새콤달콤 오징어무침",
+                    description = "국내산 오징어를 새콤달콤하게",
+                    nPrice = "7,500원",
+                    sPrice = "6,000원",
+                    badge = listOf("런칭특가")
+                )
+            )
+        )
+
+        // when
+        val actual = banchanService.getSide()
+
+        // then
+        val actualResult = actual.body()
+        Truth.assertThat(actualResult).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Hash 값으로 상품 상세화면 정보를 가져올 수 있다`() = runBlocking {
+
+        // given
+        val responseJson = File("src/test/java/com/resources/detail_product.json").readText()
+        val response = MockResponse().setBody(responseJson)
+        mockWebServer.enqueue(response)
+        val expected = DetailResponse(
+            hash = "HBBCC",
+            detailProduct = DetailProductDto(
+                topImage = "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
+                thumbImages = listOf(
+                    "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
+                    "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_S.jpg"
+                ),
+                productDescription = "국내산 오징어를 새콤달콤하게",
+                point = "60원",
+                deliveryInfo = "서울 경기 새벽 배송 / 전국 택배 배송",
+                deliveryFee = "2,500원 (40,000원 이상 구매 시 무료)",
+                prices = listOf(
+                    "7,500원",
+                    "6,000원"
+                ),
+                detailSection = listOf(
+                    "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_D1.jpg",
+                    "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_D2.jpg",
+                    "http://public.codesquad.kr/jk/storeapp/data/pakage_small.jpg"
+                )
+            )
+        )
+
+        // when
+        val actual = banchanService.getDetail(expected.hash)
 
         // then
         val actualResult = actual.body()
