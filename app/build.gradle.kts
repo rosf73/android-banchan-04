@@ -50,10 +50,24 @@ dependencies {
     testImplementation(Lib.Test.junit4)
     androidTestImplementation(Lib.Test.androidxJunit)
     androidTestImplementation(Lib.Test.espressoCore)
+    testImplementation(Lib.OkHttp3.mockWebServer)
+    testImplementation(Lib.Test.mockk)
+    testImplementation(Lib.Test.truth)
 
     implementation(Lib.Androidx.glide)
     kapt(Lib.Androidx.glideCompiler)
 
     implementation(Lib.Hilt.android)
     kapt(Lib.Hilt.androidCompiler)
+
+    implementation(Lib.Coroutine.android)
+    implementation(Lib.Coroutine.core)
+    implementation(Lib.Coroutine.test)
+
+    implementation(Lib.Moshi.moshi)
+    implementation(Lib.OkHttp3.core)
+    implementation(Lib.OkHttp3.loggingIntercepter)
+
+    implementation(Lib.Retrofit.core)
+    implementation(Lib.Retrofit.moshiConverter)
 }
