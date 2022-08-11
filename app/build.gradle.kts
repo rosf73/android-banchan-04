@@ -52,6 +52,9 @@ dependencies {
     androidTestImplementation(Lib.Test.androidxJunit)
     androidTestImplementation(Lib.Test.espressoCore)
 
+    implementation(Lib.Androidx.glide)
+    kapt(Lib.Androidx.glideCompiler)
+
     implementation(Lib.Hilt.android)
     kapt(Lib.Hilt.androidCompiler)
 }

@@ -8,12 +8,16 @@ import com.woowa.banchan.ui.tabs.common.BanchanItemAdapter
 import com.woowa.domain.entity.Category
 
 class PlanAdapter(
-    private val planItems: List<Category>
+    private val planItems: List<Category>,
+    private val onClick: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return CategoryViewHolder(ItemBanchanHorizontalBinding.inflate(inflater, parent, false))
+        return CategoryViewHolder(
+            ItemBanchanHorizontalBinding.inflate(inflater, parent, false),
+            onClick
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -27,10 +31,12 @@ class PlanAdapter(
 
     override fun getItemCount(): Int = planItems.size
 
-    class CategoryViewHolder(private val binding: ItemBanchanHorizontalBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class CategoryViewHolder(
+        private val binding: ItemBanchanHorizontalBinding,
+        private val onClick: () -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val banchanItemAdapter by lazy { BanchanItemAdapter() }
+        private val banchanItemAdapter by lazy { BanchanItemAdapter(onClick) }
 
         fun bind(item: Category) {
             binding.category = item.title

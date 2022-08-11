@@ -11,6 +11,8 @@ object Version {
     const val junit4 = "4.13.2"
     const val androidxJunit = "1.1.3"
     const val espressoCore = "3.4.0"
+
+    const val glide = "4.13.2"
 }
 
 object Lib {
@@ -22,8 +24,11 @@ object Lib {
             "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragmentKtx}"
         const val googleMaterial = "com.google.android.material:material:${Version.googleMaterial}"
-        const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerview}"
 
+        const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
+        const val glideCompiler = "com.github.bumptech.glide:compiler:${Version.glide}"
+
+        const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerview}"
     }
 
     object Hilt {

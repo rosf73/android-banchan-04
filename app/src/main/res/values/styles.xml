@@ -37,6 +37,12 @@
         <item name="android:textColor">@color/primary_accent</item>
     </style>
 
+    <style name="Theme.Banchan.Subtitle2.DetailInfo">
+        <item name="fontWeight">400</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/gray_default</item>
+    </style>
+
     <style name="Theme.Banchan.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
     </style>
@@ -64,13 +70,46 @@
     </style>
 
     <style name="Theme.Banchan.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Theme.Banchan.Headline4.BannerTitle">
-        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
         <item name="fontWeight">400</item>
         <item name="lineHeight">48dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline4.DetailName">
+        <item name="fontWeight">400</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline4.DetailTotalPrice">
+        <item name="fontWeight">500</item>
+        <item name="lineHeight">48dp</item>
+        <item name="android:textColor">@color/off_black</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline7">
+        <item name="android:textSize">18sp</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline7.DetailDescription">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_medium</item>
+        <item name="android:textColor">@color/gray_default</item>
+        <item name="fontWeight">400</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline7.DetailPrice">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_bold</item>
+        <item name="fontWeight">700</item>
+    </style>
+
+    <style name="Theme.Banchan.Headline7.DetailTotalPrice">
+        <item name="fontFamily">@font/ko_pub_world_dotum_pro_bold</item>
+        <item name="android:textColor">@color/gray_default</item>
+        <item name="fontWeight">500</item>
     </style>
 
 

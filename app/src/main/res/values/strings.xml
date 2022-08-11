@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">banchan</string>
-
     <string name="home">기획전</string>
     <string name="main_dish">든든한 메인요리</string>
     <string name="soup">뜨끈한 국물요리</string>
@@ -10,4 +9,15 @@
     <string name="maindish_banner_title">모두가 좋아하는\n든든한 메인 요리</string>
     <string name="soup_banner_title">정성이 담긴\n 뜨끈뜨끈 국물 요리</string>
     <string name="side_banner_title">식탁을 풍성하게 하는\n 정갈한 밑반찬</string>
+
+    <string name="label_thumb">Thumbnail</string>
+    <string name="label_plus">Plus</string>
+    <string name="label_minus">Minus</string>
+
+    <string name="detail_point">적립금</string>
+    <string name="detail_delivery_info">배송정보</string>
+    <string name="detail_delivery_fee">배송비</string>
+    <string name="detail_quantity">수량</string>
+    <string name="detail_total_price">총 주문금액</string>
+    <string name="detail_ordering">주문하기</string>
 </resources>
