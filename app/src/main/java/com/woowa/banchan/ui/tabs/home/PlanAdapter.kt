@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
+import com.woowa.banchan.domain.entity.Category
 import com.woowa.banchan.ui.tabs.common.BanchanItemAdapter
-import com.woowa.domain.entity.Category
 
 class PlanAdapter(
     private val planItems: List<Category>,

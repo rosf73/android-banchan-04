@@ -1,7 +1,7 @@
 package com.woowa.banchan.ui.tabs.home
 
-import com.woowa.domain.entity.Category
-import com.woowa.domain.entity.Menu
+import com.woowa.banchan.domain.entity.Category
+import com.woowa.banchan.domain.entity.Menu
 
 val category =
     listOf(

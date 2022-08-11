@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
 
     implementation(Lib.Androidx.core)
     implementation(Lib.Androidx.appcompat)
