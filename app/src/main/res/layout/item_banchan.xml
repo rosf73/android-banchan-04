@@ -7,7 +7,7 @@
 
         <variable
             name="menu"
-            type="com.woowa.banchan.domain.entity.Menu" />
+            type="com.woowa.banchan.domain.entity.Product" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
