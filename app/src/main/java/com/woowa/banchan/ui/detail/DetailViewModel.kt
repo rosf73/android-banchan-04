@@ -42,7 +42,7 @@ class DetailViewModel @Inject constructor(
                         _state.value = state.value.copy(
                             product = DetailProduct.default,
                             isLoading = false,
-                            errorMessage = "기획전 상품을 찾을 수 없습니다."
+                            errorMessage = "상품을 찾을 수 없습니다."
                         )
                     }
                     else -> {
