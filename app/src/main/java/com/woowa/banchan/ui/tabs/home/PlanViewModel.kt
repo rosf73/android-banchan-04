@@ -6,7 +6,7 @@ import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.GetPlanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ class PlanViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlanUiState())
-    val state: StateFlow<PlanUiState> = _state
+    val state = _state.asStateFlow()
 
     init {
         getPlan()
