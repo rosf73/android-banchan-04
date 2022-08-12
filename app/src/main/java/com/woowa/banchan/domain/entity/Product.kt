@@ -10,4 +10,12 @@ data class Product(
     val nPrice: String?,
     val sPrice: String,
     val badge: List<String>?,
-)
+) {
+    val discountRate: String
+        get() = if (nPrice == null) ""
+        else {
+            val tempS = sPrice.replace(Regex(",|원"), "").toFloat()
+            val tempN = nPrice.replace(Regex(",|원"), "").toFloat()
+            "${((tempN - tempS) / tempN * 100).toInt()}%"
+        }
+}

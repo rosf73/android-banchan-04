@@ -10,7 +10,7 @@ data class ProductDto(
     @Json(name = "description") val description: String,
     @Json(name = "detail_hash") val detailHash: String,
     @Json(name = "image") val image: String,
-    @Json(name = "n_price") val nPrice: String,
+    @Json(name = "n_price") val nPrice: String?,
     @Json(name = "s_price") val sPrice: String,
     @Json(name = "title") val title: String
 )

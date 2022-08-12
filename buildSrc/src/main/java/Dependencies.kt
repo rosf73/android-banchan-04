@@ -3,8 +3,12 @@ object Version {
     const val appcompat = "1.4.2"
     const val constraintLayout = "2.1.4"
     const val fragmentKtx = "1.3.3"
+    const val activityKtx = "1.1.0"
+
     const val googleMaterial = "1.6.1"
     const val recyclerview = "1.2.1"
+    const val viewModel = "2.2.0"
+    const val lifecycleRuntimeKtx = "2.4.1"
 
     const val hilt = "2.40"
 
@@ -19,8 +23,6 @@ object Version {
     const val retrofit2 = "2.9.0"
     const val coroutine = "1.6.1"
     const val truth = "1.1.2"
-
-
 }
 
 object Lib {
@@ -31,12 +33,15 @@ object Lib {
         const val constraintLayout =
             "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragmentKtx}"
+        const val activityKtx = "androidx.activity:activity-ktx:${Version.activityKtx}"
         const val googleMaterial = "com.google.android.material:material:${Version.googleMaterial}"
 
         const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
         const val glideCompiler = "com.github.bumptech.glide:compiler:${Version.glide}"
 
         const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerview}"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.viewModel}"
+        const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleRuntimeKtx}"
     }
 
     object Hilt {

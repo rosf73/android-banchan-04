@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
             android:paddingBottom="16dp"
-            android:text="풍성한 고기반찬"
+            android:text="@{category}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

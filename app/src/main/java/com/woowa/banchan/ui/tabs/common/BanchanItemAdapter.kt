@@ -9,7 +9,7 @@ import com.woowa.banchan.domain.entity.Product
 
 class BanchanItemAdapter(
     private val onClick: () -> Unit,
-    private val onClickCart: () -> Unit
+    private val onClickCart: (Product) -> Unit
 ) : ListAdapter<Product, BanchanItemAdapter.BanchanItemViewHolder>(menuDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BanchanItemViewHolder {
@@ -28,12 +28,12 @@ class BanchanItemAdapter(
     class BanchanItemViewHolder(
         private val binding: ItemBanchanBinding,
         private val onClick: () -> Unit,
-        private val onClickCart: () -> Unit
+        private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(menu: Product) {
             itemView.setOnClickListener { onClick() }
-            binding.ivCart.setOnClickListener { onClickCart() }
+            binding.ivCart.setOnClickListener { onClickCart(menu) }
             binding.menu = menu
         }
     }

@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowa.banchan.databinding.FragmentBottomSheetBinding
+import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.detail.testProduct
 import com.woowa.banchan.utils.toMoneyInt
 import com.woowa.banchan.utils.toMoneyString
 
-class CartBottomSheet : BottomSheetDialogFragment() {
+class CartBottomSheet(private val product: Product) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentBottomSheetBinding? = null
     private val binding: FragmentBottomSheetBinding get() = requireNotNull(_binding)
@@ -31,6 +32,7 @@ class CartBottomSheet : BottomSheetDialogFragment() {
 
     private fun initView() {
         binding.fragment = this@CartBottomSheet
+        binding.product = product
         binding.quantity = 1
         setOnClickListener()
     }

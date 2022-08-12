@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
 import com.woowa.banchan.domain.entity.Category
+import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.tabs.common.BanchanItemAdapter
 
 class PlanAdapter(
     private val planItems: List<Category>,
     private val onClick: () -> Unit,
-    private val onClickCart: () -> Unit
+    private val onClickCart: (Product) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -18,7 +19,7 @@ class PlanAdapter(
         return CategoryViewHolder(
             ItemBanchanHorizontalBinding.inflate(inflater, parent, false),
             onClick,
-            onClickCart
+            onClickCart = { onClickCart(it) }
         )
     }
 
@@ -36,10 +37,14 @@ class PlanAdapter(
     class CategoryViewHolder(
         private val binding: ItemBanchanHorizontalBinding,
         private val onClick: () -> Unit,
-        private val onClickCart: () -> Unit
+        private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val banchanItemAdapter by lazy { BanchanItemAdapter(onClick, onClickCart) }
+        private val banchanItemAdapter by lazy {
+            BanchanItemAdapter(
+                onClick,
+                onClickCart = { onClickCart(it) })
+        }
 
         fun bind(item: Category) {
             binding.category = item.title
