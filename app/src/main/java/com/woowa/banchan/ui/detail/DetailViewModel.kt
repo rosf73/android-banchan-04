@@ -2,6 +2,8 @@ package com.woowa.banchan.ui.detail
 
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.entity.DetailProduct
@@ -20,12 +22,12 @@ class DetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(DetailUiState())
     val state = _state.asStateFlow()
 
-    val productName = ObservableField("")
-    val productDescription = ObservableField("")
-
+    var productName = ""
+    var productDescription = ""
     var productHash = ""
 
-    val quantity = ObservableField(1)
+    private val _quantity = MutableLiveData(1)
+    val quantity: LiveData<Int> get() = _quantity
 
     fun getDetailProduct(hash: String) = viewModelScope.launch {
         _state.value = state.value.copy(product = DetailProduct.default, isLoading = true, errorMessage = "")
@@ -54,21 +56,27 @@ class DetailViewModel @Inject constructor(
                     }
                 }
             }
+            initData()
         }.launchIn(this)
     }
 
+    private fun initData() {
+        productHash = ""
+        _quantity.postValue(1)
+    }
+
     fun plusQuantity(view: View) {
-        quantity.set(quantity.get()?.plus(1))
+        _quantity.value = quantity.value!! + 1
     }
 
     fun minusQuantity(view: View) {
-        if (quantity.get()!! > 1)
-            quantity.set(quantity.get()?.minus(1))
+        if (quantity.value!! > 1)
+            _quantity.value = quantity.value!! - 1
     }
 
     fun setDetailProductInfo(hash: String, name: String, description: String) {
         productHash = hash
-        productName.set(name)
-        productDescription.set(description)
+        productName = name
+        productDescription = description
     }
 }

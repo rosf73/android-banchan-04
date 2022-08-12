@@ -40,11 +40,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null) {
-            binding.nsvDetailContainer.scrollY = savedInstanceState.getInt(SCROLL_Y)
+        if (detailViewModel.productHash.isNotBlank()) {
+            initData()
         }
 
-        initData()
         observeData()
     }
 
@@ -69,6 +68,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun initBinding(product: DetailProduct) {
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.detailViewModel = detailViewModel
         binding.product = product
     }
@@ -114,14 +114,5 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SCROLL_Y, binding.nsvDetailContainer.scrollY)
-    }
-
-    companion object {
-        private const val SCROLL_Y = "SCROLL_Y"
     }
 }
