@@ -10,7 +10,7 @@ import com.woowa.banchan.ui.tabs.common.BanchanItemAdapter
 
 class PlanAdapter(
     private val planItems: List<Category>,
-    private val onClick: () -> Unit,
+    private val onClick: (Product) -> Unit,
     private val onClickCart: (Product) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -36,7 +36,7 @@ class PlanAdapter(
 
     class CategoryViewHolder(
         private val binding: ItemBanchanHorizontalBinding,
-        private val onClick: () -> Unit,
+        private val onClick: (Product) -> Unit,
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

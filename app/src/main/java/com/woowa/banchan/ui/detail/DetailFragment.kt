@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -44,9 +43,6 @@ class DetailFragment : Fragment() {
         if (savedInstanceState != null) {
             binding.nsvDetailContainer.scrollY = savedInstanceState.getInt(SCROLL_Y)
         }
-
-        //TODO: 테스트 용 코드 삭제하고 HomeFragment에서 처리
-        detailViewModel.setDetailProductInfo("HBBCC", "새콤달콤 오징어무침", "국내산 오징어를 새콤달콤하게")
 
         initData()
         observeData()
