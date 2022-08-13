@@ -51,4 +51,10 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         if (title != null) this.title.text = title
     }
 
+    fun onNavigationIconClick(onBackClick: () -> Unit) {
+        this.navigationIcon.setOnClickListener {
+            onBackClick()
+        }
+    }
+
 }
