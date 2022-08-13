@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -124,8 +125,9 @@ class DetailFragment : Fragment(), OnCartClickListener {
     }
 
     override fun navigateToCart() {
+        parentFragmentManager.popBackStack("Detail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .addToBackStack(null)
+            .addToBackStack("Detail")
             .replace(R.id.fcv_main, CartFragment())
             .commit()
     }
