@@ -21,10 +21,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/ic_logo" />
+            tools:background="@drawable/ic_logo"
+            android:contentDescription="@string/label_logo" />
 
         <TextView
             android:id="@+id/tv_title"
+            style="@style/Theme.Banchan.Headline6.Logo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -44,7 +46,8 @@
             app:layout_constraintEnd_toStartOf="@id/iv_action_second"
             app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/ic_cart" />
+            tools:background="@drawable/ic_cart"
+            android:contentDescription="@string/label_action_first" />
 
         <ImageButton
             android:id="@+id/iv_action_second"
@@ -56,7 +59,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_action_first"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/ic_user" />
+            tools:background="@drawable/ic_user"
+            android:contentDescription="@string/label_action_second" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

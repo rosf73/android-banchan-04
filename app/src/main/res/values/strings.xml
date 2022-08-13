@@ -10,6 +10,9 @@
     <string name="soup_banner_title">정성이 담긴\n 뜨끈뜨끈 국물 요리</string>
     <string name="side_banner_title">식탁을 풍성하게 하는\n 정갈한 밑반찬</string>
 
+    <string name="label_logo">Logo</string>
+    <string name="label_action_first">Action First</string>
+    <string name="label_action_second">Action Second</string>
     <string name="label_thumb">Thumbnail</string>
     <string name="label_plus">Plus</string>
     <string name="label_minus">Minus</string>
