@@ -12,6 +12,14 @@
         <variable
             name="product"
             type="com.woowa.banchan.domain.entity.DetailProduct" />
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="description"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="24dp"
-                    android:text="@{detailViewModel.productName}"
+                    android:text="@{name}"
                     android:textColor="@color/off_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
-                    android:text="@{detailViewModel.productDescription}"
+                    android:text="@{description}"
                     app:layout_constraintBottom_toTopOf="@id/tv_detail_s_price"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

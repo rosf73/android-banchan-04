@@ -1,12 +1,10 @@
 package com.woowa.banchan.ui.tabs.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
-import com.woowa.banchan.ui.detail.DetailViewModel
 import com.woowa.banchan.ui.tabs.common.BannerAdapter
 import com.woowa.banchan.ui.tabs.common.CartBottomSheet
 import com.woowa.banchan.ui.tabs.common.OnClickMenu
@@ -33,7 +30,6 @@ class HomeFragment() : Fragment() {
     private lateinit var planAdapter: PlanAdapter
 
     private val planViewModel: PlanViewModel by viewModels()
-    private val detailViewModel: DetailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,10 +58,7 @@ class HomeFragment() : Fragment() {
                         planAdapter = PlanAdapter(
                             state.plans,
                             onClick = { product ->
-                                detailViewModel.setDetailProductInfo(
-                                    product.detailHash, product.title, product.description
-                                )
-                                onClickMenu.navigateToDetail()
+                                onClickMenu.navigateToDetail(product.detailHash, product.title, product.description)
                             },
                             onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
                         )

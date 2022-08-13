@@ -22,14 +22,12 @@ class DetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(DetailUiState())
     val state = _state.asStateFlow()
 
-    var productName = ""
-    var productDescription = ""
-    var productHash = ""
-
     private val _quantity = MutableLiveData(1)
     val quantity: LiveData<Int> get() = _quantity
 
     fun getDetailProduct(hash: String) = viewModelScope.launch {
+        if (hash.isBlank()) return@launch
+
         _state.value = state.value.copy(product = DetailProduct.default, isLoading = true, errorMessage = "")
         getDetailProductUseCase(hash).onEach { result ->
             result.onSuccess {
@@ -61,7 +59,6 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun initData() {
-        productHash = ""
         _quantity.postValue(1)
     }
 
@@ -72,11 +69,5 @@ class DetailViewModel @Inject constructor(
     fun minusQuantity(view: View) {
         if (quantity.value!! > 1)
             _quantity.value = quantity.value!! - 1
-    }
-
-    fun setDetailProductInfo(hash: String, name: String, description: String) {
-        productHash = hash
-        productName = name
-        productDescription = description
     }
 }

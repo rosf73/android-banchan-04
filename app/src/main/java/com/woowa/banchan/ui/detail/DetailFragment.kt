@@ -40,15 +40,14 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (detailViewModel.productHash.isNotBlank()) {
-            initData()
-        }
-
+        initData()
         observeData()
     }
 
     private fun initData() {
-        detailViewModel.getDetailProduct(detailViewModel.productHash)
+        arguments?.let {
+            detailViewModel.getDetailProduct(it.getString(HASH, ""))
+        }
     }
 
     private fun observeData() {
@@ -71,6 +70,11 @@ class DetailFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.detailViewModel = detailViewModel
         binding.product = product
+
+        arguments?.let {
+            binding.name = it.getString(NAME, "")
+            binding.description = it.getString(DESCRIPTION, "")
+        }
     }
 
     private fun initIndicators(thumbs: List<String>) {
@@ -114,5 +118,22 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        private const val HASH = "HASH"
+        private const val NAME = "NAME"
+        private const val DESCRIPTION = "DESCRIPTION"
+
+        fun newInstance(hash: String, name: String, description: String): DetailFragment {
+            val fragment = DetailFragment()
+
+            val args = Bundle()
+            args.putString(HASH, hash)
+            args.putString(NAME, name)
+            args.putString(DESCRIPTION, description)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
