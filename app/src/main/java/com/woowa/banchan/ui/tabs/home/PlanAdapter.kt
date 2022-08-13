@@ -7,6 +7,7 @@ import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
 import com.woowa.banchan.domain.entity.Category
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.tabs.common.BanchanItemAdapter
+import com.woowa.banchan.ui.tabs.common.HorizontalScrollListener
 
 class PlanAdapter(
     private val planItems: List<Category>,
@@ -49,6 +50,7 @@ class PlanAdapter(
         fun bind(item: Category) {
             binding.category = item.title
             binding.rvHome.adapter = banchanItemAdapter
+            binding.rvHome.addOnItemTouchListener(HorizontalScrollListener())
             banchanItemAdapter.submitList(item.menus)
         }
     }
