@@ -1,6 +1,7 @@
 package com.woowa.banchan.di
 
 import com.woowa.banchan.domain.repository.BanchanRepository
+import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
 import com.woowa.banchan.domain.usecase.GetPlanUseCase
 import dagger.Module
 import dagger.Provides
@@ -16,5 +17,11 @@ object UseCaseModule {
     @Singleton
     fun provideGetPlanUseCase(banchanRepository: BanchanRepository): GetPlanUseCase {
         return GetPlanUseCase(banchanRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetDetailProductUseCase(repository: BanchanRepository): GetDetailProductUseCase {
+        return GetDetailProductUseCase(repository)
     }
 }

@@ -6,16 +6,20 @@
     <data>
 
         <variable
+            name="detailViewModel"
+            type="com.woowa.banchan.ui.detail.DetailViewModel" />
+
+        <variable
             name="product"
-            type="com.woowa.banchan.ui.detail.TestProduct" />
+            type="com.woowa.banchan.domain.entity.DetailProduct" />
+
+        <variable
+            name="name"
+            type="String" />
 
         <variable
             name="description"
             type="String" />
-
-        <variable
-            name="quantity"
-            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="24dp"
-                    android:text="@{product.name}"
+                    android:text="@{name}"
                     android:textColor="@color/off_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +122,7 @@
 
                 <TextView
                     android:id="@+id/tv_detail_n_price"
-                    style="@style/Theme.Banchan.Headline7.DetailDescription"
+                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
@@ -141,7 +145,7 @@
 
                 <TextView
                     android:id="@+id/tv_point_label"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="24dp"
@@ -152,7 +156,7 @@
 
                 <TextView
                     android:id="@+id/tv_point"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -162,7 +166,7 @@
 
                 <TextView
                     android:id="@+id/tv_delivery_info_label"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="16dp"
@@ -173,7 +177,7 @@
 
                 <TextView
                     android:id="@+id/tv_delivery_info"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -183,7 +187,7 @@
 
                 <TextView
                     android:id="@+id/tv_delivery_fee_label"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="16dp"
@@ -194,7 +198,7 @@
 
                 <TextView
                     android:id="@+id/tv_delivery_fee"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -215,7 +219,7 @@
 
                 <TextView
                     android:id="@+id/tv_quantity_label"
-                    style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                    style="@style/Theme.Banchan.Caption.ItemOriginal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
@@ -240,7 +244,8 @@
                         android:contentDescription="@string/label_minus"
                         android:elevation="6dp"
                         android:enabled="false"
-                        android:src="@drawable/ic_minus" />
+                        android:src="@drawable/ic_minus"
+                        android:onClick="@{detailViewModel::minusQuantity}"/>
 
                     <TextView
                         android:id="@+id/tv_quantity"
@@ -248,7 +253,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@{Integer.toString(quantity)}" />
+                        android:text="@{Integer.toString(detailViewModel.quantity)}" />
 
                     <ImageButton
                         android:id="@+id/btn_plus"
@@ -258,7 +263,8 @@
                         android:background="@drawable/btn_circle"
                         android:contentDescription="@string/label_plus"
                         android:elevation="6dp"
-                        android:src="@drawable/ic_plus" />
+                        android:src="@drawable/ic_plus"
+                        android:onClick="@{detailViewModel::plusQuantity}"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -293,8 +299,8 @@
                     android:layout_marginVertical="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/v_line_3"
-                    app:price="@{product.sPrice}"
-                    app:quantity="@{quantity}" />
+                    app:price="@{product.SPrice}"
+                    app:quantity="@{detailViewModel.quantity}" />
 
                 <Button
                     android:id="@+id/btn_ordering"

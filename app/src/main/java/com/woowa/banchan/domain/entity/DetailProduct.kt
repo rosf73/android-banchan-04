@@ -11,18 +11,15 @@ class DetailProduct(
     val section: List<String>
 ) {
     val discountRate: String
-        get() = if (nPrice == null) BLANK
+        get() = if (nPrice == null) ""
         else {
-            val tempS = sPrice.replace(Regex("${COMMA}${SEPARATOR}${WON}"), BLANK).toFloat()
-            val tempN = nPrice.replace(Regex("${COMMA}${SEPARATOR}${WON}"), BLANK).toFloat()
-            "${((tempN - tempS) / tempN * 100).toInt()}${PERCENT}"
+            val tempS = sPrice.replace(Regex(",|원"), "").toFloat()
+            val tempN = nPrice.replace(Regex(",|원"), "").toFloat()
+            "${((tempN - tempS) / tempN * 100).toInt()}%"
         }
 
     companion object {
         const val BLANK = ""
-        const val COMMA = ","
-        const val SEPARATOR = "ㅣ"
-        const val WON = "원"
-        const val PERCENT = "%"
+        val default = DetailProduct("", emptyList(), "0", null, "", "", "", emptyList())
     }
 }

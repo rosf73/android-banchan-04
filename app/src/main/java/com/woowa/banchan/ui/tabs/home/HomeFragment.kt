@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.tabs.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,10 +24,12 @@ class HomeFragment() : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
-    private val planViewModel: PlanViewModel by viewModels()
+
     private val concatAdapter = ConcatAdapter()
     private lateinit var onClickMenu: OnClickMenu
     private lateinit var planAdapter: PlanAdapter
+
+    private val planViewModel: PlanViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +57,9 @@ class HomeFragment() : Fragment() {
                     if (state.plans.isNotEmpty()) {
                         planAdapter = PlanAdapter(
                             state.plans,
-                            onClick = { onClickMenu.navigateToDetail() },
+                            onClick = { product ->
+                                onClickMenu.navigateToDetail(product.detailHash, product.title, product.description)
+                            },
                             onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
                         )
                         concatAdapter.addAdapter(planAdapter)

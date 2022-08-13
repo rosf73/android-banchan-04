@@ -43,10 +43,10 @@ class MainFragment : Fragment(), OnClickMenu {
         }
     }
 
-    override fun navigateToDetail() {
+    override fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.beginTransaction()
             .addToBackStack(null)
-            .replace(R.id.fcv_main, DetailFragment())
+            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
