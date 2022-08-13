@@ -8,13 +8,15 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.ui.cart.CartFragment
+import com.woowa.banchan.ui.common.OnCartClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.tabs.ViewPagerAdapter
 import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), OnClickMenu {
+class MainFragment : Fragment(), OnClickMenu, OnCartClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
@@ -31,6 +33,7 @@ class MainFragment : Fragment(), OnClickMenu {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initListener()
     }
 
     private fun initView() {
@@ -43,10 +46,21 @@ class MainFragment : Fragment(), OnClickMenu {
         }
     }
 
+    private fun initListener() {
+        binding.cartClickListener = this
+    }
+
     override fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.beginTransaction()
             .addToBackStack(null)
             .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .commit()
+    }
+
+    override fun navigateToCart() {
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.fcv_main, CartFragment())
             .commit()
     }
 

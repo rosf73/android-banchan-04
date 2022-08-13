@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="cartClickListener"
+            type="com.woowa.banchan.ui.common.OnCartClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +22,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigation_icon="@drawable/ic_logo" />
+            app:navigation_icon="@drawable/ic_logo"
+            app:onFirstClick="@{cartClickListener.navigateToCart}" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_ordering"

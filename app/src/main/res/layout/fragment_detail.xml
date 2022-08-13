@@ -20,6 +20,10 @@
         <variable
             name="description"
             type="String" />
+
+        <variable
+            name="cartClickListener"
+            type="com.woowa.banchan.ui.common.OnCartClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +39,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigation_icon="@drawable/ic_logo" />
+            app:navigation_icon="@drawable/ic_logo"
+            app:onFirstClick="@{cartClickListener.navigateToCart}" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv_detail_container"

@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navigation_icon="@drawable/ic_left_arrow"
             app:title="@string/cart_appbar_title"
-            app:onBackClick="@{listener.navigateToMain}" />
+            app:onNavigationClick="@{listener.navigateToMain}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     

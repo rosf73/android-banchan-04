@@ -57,4 +57,16 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         }
     }
 
+    fun onActionFirstClick(onClick: () -> Unit) {
+        this.actionFirst.setOnClickListener {
+            onClick()
+        }
+    }
+
+    fun onActionSecondClick(onClick: () -> Unit) {
+        this.actionSecond.setOnClickListener {
+            onClick()
+        }
+    }
+
 }
