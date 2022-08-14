@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
@@ -51,15 +52,17 @@ class MainFragment : Fragment(), OnClickMenu, OnCartClickListener {
     }
 
     override fun navigateToDetail(hash: String, name: String, description: String) {
+        parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .addToBackStack(null)
+            .addToBackStack("Main")
             .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
     override fun navigateToCart() {
+        parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .addToBackStack(null)
+            .addToBackStack("Main")
             .replace(R.id.fcv_main, CartFragment())
             .commit()
     }
