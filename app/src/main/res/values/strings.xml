@@ -18,6 +18,7 @@
     <string name="label_thumb">Thumbnail</string>
     <string name="label_plus">Plus</string>
     <string name="label_minus">Minus</string>
+    <string name="label_checkbox">Check Box</string>
 
     <string name="detail_point">적립금</string>
     <string name="detail_delivery_info">배송정보</string>
@@ -25,4 +26,11 @@
     <string name="detail_quantity">수량</string>
     <string name="detail_total_price">총 주문금액</string>
     <string name="detail_ordering">주문하기</string>
+
+    <string name="cart_select_all">모두 선택</string>
+    <string name="cart_deselect">선택 해제</string>
+    <string name="cart_delete">선택 삭제</string>
+    <string name="cart_empty">장바구니가 비어있어요</string>
+    <string name="cart_recently">최근 본 상품</string>
+    <string name="cart_recently_all">전체 보기</string>
 </resources>
