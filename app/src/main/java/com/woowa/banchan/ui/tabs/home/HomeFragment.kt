@@ -12,9 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
+import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.tabs.common.BannerAdapter
 import com.woowa.banchan.ui.tabs.common.CartBottomSheet
-import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,8 +25,7 @@ class HomeFragment() : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
 
-    private val concatAdapter = ConcatAdapter()
-    private lateinit var onClickMenu: OnClickMenu
+    private lateinit var concatAdapter: ConcatAdapter
     private lateinit var planAdapter: PlanAdapter
 
     private val planViewModel: PlanViewModel by viewModels()
@@ -51,14 +50,25 @@ class HomeFragment() : Fragment() {
     }
 
     private fun observeData() {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 planViewModel.state.collectLatest { state ->
                     if (state.plans.isNotEmpty()) {
+                        concatAdapter.addAdapter(
+                            BannerAdapter(
+                                listOf(getString(R.string.plan_banner_title)),
+                                true
+                            )
+                        )
+
                         planAdapter = PlanAdapter(
                             state.plans,
                             onClick = { product ->
-                                onClickMenu.navigateToDetail(product.detailHash, product.title, product.description)
+                                (parentFragment as MainFragment).navigateToDetail(
+                                    product.detailHash,
+                                    product.title,
+                                    product.description
+                                )
                             },
                             onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
                         )
@@ -71,16 +81,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun setAdapter() {
-        concatAdapter.addAdapter(
-            BannerAdapter(
-                listOf(getString(R.string.plan_banner_title)),
-                true
-            )
-        )
-    }
-
-    fun setOnClickMenu(onClickMenu: OnClickMenu) {
-        this.onClickMenu = onClickMenu
+        concatAdapter = ConcatAdapter()
     }
 
     override fun onDestroyView() {

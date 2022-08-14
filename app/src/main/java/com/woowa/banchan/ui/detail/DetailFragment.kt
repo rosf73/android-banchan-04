@@ -60,8 +60,8 @@ class DetailFragment : Fragment(), OnCartClickListener {
     }
 
     private fun observeData() {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 detailViewModel.state.collectLatest { state ->
                     initBinding(state.product)
                     initIndicators(state.product.thumbs)

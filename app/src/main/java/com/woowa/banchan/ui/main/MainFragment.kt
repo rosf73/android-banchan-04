@@ -13,11 +13,10 @@ import com.woowa.banchan.ui.cart.CartFragment
 import com.woowa.banchan.ui.common.OnCartClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.tabs.ViewPagerAdapter
-import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), OnClickMenu, OnCartClickListener {
+class MainFragment : Fragment(), OnCartClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
@@ -40,7 +39,7 @@ class MainFragment : Fragment(), OnClickMenu, OnCartClickListener {
     private fun initView() {
         with(binding) {
             vpOrdering.adapter =
-                ViewPagerAdapter(childFragmentManager, lifecycle, this@MainFragment)
+                ViewPagerAdapter(childFragmentManager, lifecycle)
             TabLayoutMediator(tlOrdering, vpOrdering) { tab, position ->
                 tab.text = Tab.find(position)
             }.attach()
@@ -51,7 +50,7 @@ class MainFragment : Fragment(), OnClickMenu, OnCartClickListener {
         binding.cartClickListener = this
     }
 
-    override fun navigateToDetail(hash: String, name: String, description: String) {
+    fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
             .addToBackStack("Main")
