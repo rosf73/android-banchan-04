@@ -10,11 +10,10 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.tabs.ViewPagerAdapter
-import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), OnClickMenu {
+class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
@@ -36,14 +35,14 @@ class MainFragment : Fragment(), OnClickMenu {
     private fun initView() {
         with(binding) {
             vpOrdering.adapter =
-                ViewPagerAdapter(childFragmentManager, lifecycle, this@MainFragment)
+                ViewPagerAdapter(childFragmentManager, lifecycle)
             TabLayoutMediator(tlOrdering, vpOrdering) { tab, position ->
                 tab.text = Tab.find(position)
             }.attach()
         }
     }
 
-    override fun navigateToDetail(hash: String, name: String, description: String) {
+    fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.beginTransaction()
             .addToBackStack(null)
             .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))

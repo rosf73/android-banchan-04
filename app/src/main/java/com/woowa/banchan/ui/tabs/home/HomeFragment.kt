@@ -12,9 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
+import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.tabs.common.BannerAdapter
 import com.woowa.banchan.ui.tabs.common.CartBottomSheet
-import com.woowa.banchan.ui.tabs.common.OnClickMenu
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -65,7 +65,7 @@ class HomeFragment() : Fragment() {
                         planAdapter = PlanAdapter(
                             state.plans,
                             onClick = { product ->
-                                onClickMenu.navigateToDetail(product.detailHash, product.title, product.description)
+                                (parentFragment as MainFragment).navigateToDetail(product.detailHash, product.title, product.description)
                             },
                             onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
                         )
@@ -79,10 +79,6 @@ class HomeFragment() : Fragment() {
 
     private fun setAdapter() {
         concatAdapter = ConcatAdapter()
-    }
-
-    fun setOnClickMenu(onClickMenu: OnClickMenu) {
-        this.onClickMenu = onClickMenu
     }
 
     override fun onDestroyView() {
