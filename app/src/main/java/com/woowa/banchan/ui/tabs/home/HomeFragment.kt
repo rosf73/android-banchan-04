@@ -25,7 +25,7 @@ class HomeFragment() : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
 
-    private val concatAdapter = ConcatAdapter()
+    private lateinit var concatAdapter: ConcatAdapter
     private lateinit var onClickMenu: OnClickMenu
     private lateinit var planAdapter: PlanAdapter
 
@@ -51,10 +51,17 @@ class HomeFragment() : Fragment() {
     }
 
     private fun observeData() {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 planViewModel.state.collectLatest { state ->
                     if (state.plans.isNotEmpty()) {
+                        concatAdapter.addAdapter(
+                            BannerAdapter(
+                                listOf(getString(R.string.plan_banner_title)),
+                                true
+                            )
+                        )
+
                         planAdapter = PlanAdapter(
                             state.plans,
                             onClick = { product ->
@@ -71,12 +78,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun setAdapter() {
-        concatAdapter.addAdapter(
-            BannerAdapter(
-                listOf(getString(R.string.plan_banner_title)),
-                true
-            )
-        )
+        concatAdapter = ConcatAdapter()
     }
 
     fun setOnClickMenu(onClickMenu: OnClickMenu) {
