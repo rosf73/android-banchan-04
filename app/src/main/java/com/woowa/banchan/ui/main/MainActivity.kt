@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
     }
 
     override fun navigateToMain() {
+        supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_main, MainFragment())
             .commit()
