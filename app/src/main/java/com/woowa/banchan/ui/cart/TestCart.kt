@@ -5,10 +5,10 @@ data class TestCartItem(
     val thumb: String,
     val name: String,
     val price: String,
-    val quantity: Int
+    var quantity: Int = 1
 )
 
-val testCartItem = listOf(
+val testCartItem = mutableListOf(
     TestCartItem(
         id = 0L,
         thumb = "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",

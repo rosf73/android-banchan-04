@@ -6,9 +6,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -24,8 +23,7 @@ import com.woowa.banchan.utils.toMoneyString
 @Composable
 fun CartColumn(
     modifier: Modifier = Modifier,
-    cart: List<TestCartItem>,
-    onDeleteClick: (Long) -> Unit
+    cart: List<TestCartItem>
 ) {
     Column(modifier = modifier) {
         if (cart.isEmpty())

@@ -20,17 +20,17 @@ fun CartScreen(
         item {
             CartCheckBox(
                 modifier = Modifier.fillMaxWidth(),
-                onCheck = {},
-                onUncheck = {},
-                onDeleteClick = {}
+                isAllChecked = cartViewModel.isAllChecked(),
+                onCheck = { cartViewModel.addDeleteList() },
+                onUncheck = { cartViewModel.removeDeleteList() },
+                onDeleteClick = { cartViewModel.deleteCartItems() }
             )
             CartColumn(
                 modifier = Modifier.fillMaxWidth(),
-                cart = state.cart,
-                onDeleteClick = {}
+                cart = state.cart
             )
             RecentlyViewedColumn(
-                recentlyList = testRecentlyList
+                recentlyList = state.recentlyList
             )
         }
     }
