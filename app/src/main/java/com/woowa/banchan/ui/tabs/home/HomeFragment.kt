@@ -26,7 +26,6 @@ class HomeFragment() : Fragment() {
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
 
     private lateinit var concatAdapter: ConcatAdapter
-    private lateinit var onClickMenu: OnClickMenu
     private lateinit var planAdapter: PlanAdapter
 
     private val planViewModel: PlanViewModel by viewModels()
@@ -65,7 +64,11 @@ class HomeFragment() : Fragment() {
                         planAdapter = PlanAdapter(
                             state.plans,
                             onClick = { product ->
-                                (parentFragment as MainFragment).navigateToDetail(product.detailHash, product.title, product.description)
+                                (parentFragment as MainFragment).navigateToDetail(
+                                    product.detailHash,
+                                    product.title,
+                                    product.description
+                                )
                             },
                             onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
                         )
