@@ -58,10 +58,10 @@ class BanchanItemAdapter(
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(menu: Product) {
-            itemView.setOnClickListener { onClick(menu) }
-            binding.ivCart.setOnClickListener { onClickCart(menu) }
-            binding.menu = menu
+        fun bind(product: Product) {
+            itemView.setOnClickListener { onClick(product) }
+            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.product = product
         }
     }
 
@@ -70,10 +70,10 @@ class BanchanItemAdapter(
         private val onClick: (Product) -> Unit,
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(menu: Product) {
-            itemView.setOnClickListener { onClick(menu) }
-            binding.ivCart.setOnClickListener { onClickCart(menu) }
-            binding.menu = menu
+        fun bind(product: Product) {
+            itemView.setOnClickListener { onClick(product) }
+            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.product = product
         }
     }
 

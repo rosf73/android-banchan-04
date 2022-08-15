@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="menu"
+            name="product"
             type="com.woowa.banchan.domain.entity.Product" />
     </data>
 
@@ -21,7 +21,7 @@
             android:layout_height="160dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:src="@{menu.image}"
+            app:src="@{product.image}"
             tools:src="@drawable/ic_launcher_background" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{menu.title}"
+            android:text="@{product.title}"
             app:layout_constraintBottom_toTopOf="@id/tv_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_banchan"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{menu.description}"
+            android:text="@{product.description}"
             app:layout_constraintBottom_toTopOf="@id/tv_sale_rate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="4dp"
-            android:text="@{menu.discountRate}"
+            android:text="@{product.discountRate}"
             app:layout_constraintBottom_toTopOf="@id/tv_price_original"
             app:layout_constraintEnd_toStartOf="@id/tv_price_sale"
             app:layout_constraintStart_toStartOf="@id/tv_title"
@@ -73,7 +73,7 @@
             style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{menu.NPrice}"
+            android:text="@{product.sPrice}"
             app:layout_constraintBottom_toTopOf="@id/tv_price_original"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_sale_rate"
@@ -85,11 +85,13 @@
             style="@style/Theme.Banchan.Caption.ItemOriginal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{menu.SPrice}"
+            android:text="@{product.nPrice}"
             app:layout_constraintBottom_toBottomOf="@id/iv_banchan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_sale_rate"
+            app:textStrikeThrough="@{true}"
+            app:visibility="@{product.nPrice != null}"
             tools:text="7,500원" />
 
         <ImageButton
