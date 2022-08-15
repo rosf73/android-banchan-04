@@ -37,6 +37,11 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
 }
 
@@ -60,6 +65,7 @@ dependencies {
 
     implementation(Lib.Androidx.glide)
     kapt(Lib.Androidx.glideCompiler)
+    implementation(Lib.Androidx.glideCompose)
 
     implementation(Lib.Hilt.android)
     kapt(Lib.Hilt.androidCompiler)
@@ -70,8 +76,15 @@ dependencies {
 
     implementation(Lib.Moshi.moshi)
     implementation(Lib.OkHttp3.core)
-    implementation(Lib.OkHttp3.loggingIntercepter)
+    implementation(Lib.OkHttp3.loggingInterceptor)
 
     implementation(Lib.Retrofit.core)
     implementation(Lib.Retrofit.moshiConverter)
+
+    implementation(Lib.Compose.compose)
+    implementation(Lib.Compose.material)
+    implementation(Lib.Compose.animation)
+    implementation(Lib.Compose.viewModel)
+    implementation(Lib.Compose.tooling)
+    androidTestImplementation(Lib.Compose.junit4)
 }

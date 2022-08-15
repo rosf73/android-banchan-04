@@ -17,12 +17,17 @@ object Version {
     const val espressoCore = "3.4.0"
 
     const val glide = "4.13.2"
+    const val glideCompose = "1.6.1"
 
     const val okhttp = "4.10.0"
     const val moshi = "1.13.0"
     const val retrofit2 = "2.9.0"
     const val coroutine = "1.6.1"
     const val truth = "1.1.2"
+
+    const val compose = "1.4.0"
+    const val material = "1.1.1"
+    const val composeViewModel = "2.4.1"
 }
 
 object Lib {
@@ -38,6 +43,7 @@ object Lib {
 
         const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
         const val glideCompiler = "com.github.bumptech.glide:compiler:${Version.glide}"
+        const val glideCompose = "com.github.skydoves:landscapist-glide:${Version.glideCompose}"
 
         const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerview}"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.viewModel}"
@@ -65,7 +71,7 @@ object Lib {
 
     object OkHttp3 {
         const val core = "com.squareup.okhttp3:okhttp:${Version.okhttp}"
-        const val loggingIntercepter = "com.squareup.okhttp3:logging-interceptor:${Version.okhttp}"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.okhttp}"
         const val mockWebServer = "com.squareup.okhttp3:mockwebserver:4.9.0"
     }
 
@@ -78,5 +84,14 @@ object Lib {
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutine}"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutine}"
+    }
+
+    object Compose {
+        const val compose = "androidx.activity:activity-compose:${Version.compose}"
+        const val material = "androidx.compose.material:material:${Version.material}"
+        const val animation = "androidx.compose.animation:animation:${Version.material}"
+        const val tooling = "androidx.compose.ui:ui-tooling:${Version.material}"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.composeViewModel}"
+        const val junit4 = "androidx.compose.ui:ui-test-junit4:${Version.material}"
     }
 }
