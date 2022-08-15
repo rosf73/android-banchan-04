@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import com.woowa.banchan.ui.cart.components.CartCheckBox
 import com.woowa.banchan.ui.cart.components.CartColumn
 import com.woowa.banchan.ui.cart.components.RecentlyViewedColumn
-import com.woowa.banchan.ui.cart.components.testRecentlyList
 
 @Composable
 fun CartScreen(

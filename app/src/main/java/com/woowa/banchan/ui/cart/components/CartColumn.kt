@@ -1,18 +1,18 @@
 package com.woowa.banchan.ui.cart.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,84 +29,49 @@ fun CartColumn(
 ) {
     Column(modifier = modifier) {
         if (cart.isEmpty())
-            CartItemEmptyRow(modifier = Modifier.fillMaxWidth())
+            CartItemEmpty(modifier = Modifier.fillMaxWidth())
 
         else {
+            val totalPrice = cart.sumOf { item -> item.price.toMoneyInt() }
             cart.forEach { item ->
                 CartItemRow(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .background(colorResource(R.color.white))
+                        .fillMaxWidth(),
                     item = item,
                     onCheck = {},
                     onUncheck = {})
             }
-            CartPriceColumn(modifier = Modifier.align(Alignment.End))
+
+            CartPriceColumn(
+                modifier = Modifier.align(Alignment.End),
+                totalPrice = totalPrice)
+
+            Button(
+                modifier = Modifier
+                    .padding(16.dp, 0.dp)
+                    .fillMaxWidth(),
+                onClick = { /*TODO*/ },
+                enabled = totalPrice >= 40000,
+                contentPadding = PaddingValues(16.dp)
+            ) {
+                Text(text = "${totalPrice.toMoneyString()} 주문하기")
+            }
+
+            if (totalPrice < 40000)
+                Text(
+                    modifier = Modifier.align(CenterHorizontally),
+                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 무료!")
         }
     }
 }
 
 @Composable
-private fun CartItemEmptyRow(
+private fun CartItemEmpty(
     modifier: Modifier = Modifier
 ) {
     Text(
         modifier = modifier.padding(0.dp, 100.dp),
         text = stringResource(R.string.cart_empty),
         textAlign = TextAlign.Center)
-}
-
-@Composable
-private fun CartItemRow(
-    modifier: Modifier = Modifier,
-    item: TestCartItem,
-    onCheck: () -> Unit,
-    onUncheck: () -> Unit
-) {
-    val (isChecked, setIsChecked) = remember { mutableStateOf(true) }
-
-    Row(modifier = modifier
-        .clickable {
-            if (isChecked) {
-                onUncheck()
-                setIsChecked(false)
-            } else {
-                onCheck()
-                setIsChecked(true)
-            }
-        }
-    ) {
-        Image(
-            modifier = Modifier.align(CenterVertically),
-            painter = if (isChecked) painterResource(R.drawable.ic_checkbox)
-                      else painterResource(R.drawable.ic_checkbox_empty),
-            contentDescription = stringResource(R.string.label_checkbox))
-
-        GlideImage(
-            modifier = Modifier.size(80.dp),
-            url = item.thumb)
-
-        Column(modifier = Modifier.weight(1f)) {
-
-        }
-
-        Image(
-            modifier = modifier
-            .clickable {
-
-            },
-            painter = painterResource(R.drawable.ic_close),
-            contentDescription = stringResource(R.string.label_close))
-    }
-
-    Text(text = (item.price.toMoneyInt() * item.quantity).toMoneyString())
-
-    Divider(modifier = modifier, thickness = 1.dp, color = colorResource(R.color.gray_line))
-}
-
-@Composable
-private fun CartPriceColumn(
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier) {
-
-    }
 }

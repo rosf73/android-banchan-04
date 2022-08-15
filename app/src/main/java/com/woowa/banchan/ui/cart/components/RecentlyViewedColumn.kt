@@ -14,6 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
+import com.woowa.banchan.ui.cart.TestRecently
+import com.woowa.banchan.ui.cart.testRecentlyList
 
 @Composable
 fun RecentlyViewedColumn(
@@ -31,7 +33,7 @@ fun RecentlyViewedColumn(
 private fun RecentlyViewedHeader(
     onViewTotalClick: () -> Unit
 ) {
-    Row(modifier = Modifier.padding(20.dp)) {
+    Row(modifier = Modifier.padding(20.dp, 8.dp)) {
         Text(
             modifier = Modifier
                 .weight(1f)
@@ -39,7 +41,7 @@ private fun RecentlyViewedHeader(
             text = stringResource(R.string.cart_recently))
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = onViewTotalClick,
             colors = ButtonDefaults.textButtonColors(
                 contentColor = colorResource(R.color.gray_default)
             )
@@ -53,7 +55,7 @@ private fun RecentlyViewedHeader(
 private fun RecentlyViewedRow(
     recentlyList: List<TestRecently>
 ) {
-    LazyRow {
+    LazyRow(modifier = Modifier.padding(8.dp)) {
         items(recentlyList) { item ->
             RecentlyViewedItem(
                 modifier = Modifier
