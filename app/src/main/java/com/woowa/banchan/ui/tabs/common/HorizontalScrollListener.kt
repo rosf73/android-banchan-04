@@ -3,7 +3,7 @@ package com.woowa.banchan.ui.tabs.common
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
 
-class HorizontalScrollListener: RecyclerView.OnItemTouchListener {
+class HorizontalScrollListener : RecyclerView.OnItemTouchListener {
     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
         if (rv.canScrollHorizontally(1) || rv.canScrollHorizontally(-1))
             when (e.action) {

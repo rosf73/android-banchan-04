@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.detail
 
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,10 @@ import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +30,8 @@ class DetailViewModel @Inject constructor(
     fun getDetailProduct(hash: String) = viewModelScope.launch {
         if (hash.isBlank()) return@launch
 
-        _state.value = state.value.copy(product = DetailProduct.default, isLoading = true, errorMessage = "")
+        _state.value =
+            state.value.copy(product = DetailProduct.default, isLoading = true, errorMessage = "")
         getDetailProductUseCase(hash).onEach { result ->
             result.onSuccess {
                 _state.value = state.value.copy(
