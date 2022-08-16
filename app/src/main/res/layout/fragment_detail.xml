@@ -28,7 +28,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <com.woowa.banchan.ui.common.BanchanAppbar
             android:id="@+id/toolbar"
@@ -249,8 +250,8 @@
                         android:contentDescription="@string/label_minus"
                         android:elevation="6dp"
                         android:enabled="false"
-                        android:src="@drawable/ic_minus"
-                        android:onClick="@{detailViewModel::minusQuantity}"/>
+                        android:onClick="@{detailViewModel::minusQuantity}"
+                        android:src="@drawable/ic_minus" />
 
                     <TextView
                         android:id="@+id/tv_quantity"
@@ -268,8 +269,8 @@
                         android:background="@drawable/btn_circle"
                         android:contentDescription="@string/label_plus"
                         android:elevation="6dp"
-                        android:src="@drawable/ic_plus"
-                        android:onClick="@{detailViewModel::plusQuantity}"/>
+                        android:onClick="@{detailViewModel::plusQuantity}"
+                        android:src="@drawable/ic_plus" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

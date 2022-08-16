@@ -68,49 +68,50 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@{product.title}"
-            app:layout_constraintBottom_toTopOf="@id/tv_sale_rate"
+            app:layout_constraintBottom_toTopOf="@id/ll_price"
             app:layout_constraintStart_toEndOf="@id/iv_menu"
             app:layout_constraintTop_toTopOf="@id/iv_menu"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="새콤달콤 오징어무침" />
 
-        <TextView
-            android:id="@+id/tv_sale_rate"
-            style="@style/Theme.Banchan.Subtitle2.ItemRate"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_price"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{product.discountRate}"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/iv_menu"
-            app:layout_constraintEnd_toStartOf="@id/tv_price_sale"
             app:layout_constraintStart_toStartOf="@id/tv_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:visibility="@{product.nPrice != null}"
-            tools:text="20%" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <TextView
-            android:id="@+id/tv_price_sale"
-            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:text="@{product.NPrice}"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_sale_rate"
-            app:layout_constraintEnd_toStartOf="@id/tv_price_original"
-            app:layout_constraintStart_toEndOf="@id/tv_sale_rate"
-            app:layout_constraintTop_toTopOf="@id/tv_sale_rate"
-            tools:text="6,000원" />
+            <TextView
+                android:id="@+id/tv_sale_rate"
+                style="@style/Theme.Banchan.Subtitle2.ItemRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.discountRate}"
+                app:visibility="@{product.nPrice != null}"
+                tools:text="20%" />
 
-        <TextView
-            android:id="@+id/tv_price_original"
-            style="@style/Theme.Banchan.Subtitle2.DetailInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{product.SPrice}"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_sale_rate"
-            app:layout_constraintStart_toEndOf="@id/tv_price_sale"
-            app:layout_constraintTop_toTopOf="@id/tv_sale_rate"
-            tools:text="7,500원" />
+            <TextView
+                android:id="@+id/tv_price_sale"
+                style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{product.sPrice}"
+                tools:text="6,000원" />
+
+            <TextView
+                android:id="@+id/tv_price_original"
+                style="@style/Theme.Banchan.Subtitle2.DetailInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.nPrice}"
+                app:textStrikeThrough="@{true}"
+                app:visibility="@{product.nPrice != null}"
+                tools:text="7,500원" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_total_price"

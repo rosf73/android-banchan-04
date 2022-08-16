@@ -54,7 +54,7 @@ class MainFragment : Fragment(), OnCartClickListener {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
             .addToBackStack("Main")
-            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
@@ -62,7 +62,7 @@ class MainFragment : Fragment(), OnCartClickListener {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
             .addToBackStack("Main")
-            .replace(R.id.fcv_main, CartFragment())
+            .add(R.id.fcv_main, CartFragment())
             .commit()
     }
 
