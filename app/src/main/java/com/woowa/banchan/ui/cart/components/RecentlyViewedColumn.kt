@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.cart.TestRecently
-import com.woowa.banchan.ui.cart.testRecentlyList
+import com.woowa.banchan.ui.recently.TestRecently
+import com.woowa.banchan.ui.recently.testRecentlyList
 import com.woowa.banchan.extensions.substringShort
 
 @Composable
@@ -79,7 +79,7 @@ private fun RecentlyViewedItem(
 ) {
     Column(modifier = modifier) {
         GlideImage(
-            modifier = Modifier.size(120.dp),
+            modifier = Modifier.fillMaxWidth(),
             url = item.thumb)
 
         Text(text = item.name.substringShort(), fontWeight = FontWeight(500), color = colorResource(R.color.black), maxLines = 1)

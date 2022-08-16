@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.cart
+package com.woowa.banchan.ui.recently
 
 data class TestRecently(
     val id: Long,

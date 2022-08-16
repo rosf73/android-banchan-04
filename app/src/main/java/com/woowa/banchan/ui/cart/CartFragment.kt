@@ -11,7 +11,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnRecentlyClickListener
-import com.woowa.banchan.ui.recentlyviewed.RecentlyFragment
+import com.woowa.banchan.ui.recently.RecentlyFragment
 
 class CartFragment: Fragment(), OnRecentlyClickListener {
 
