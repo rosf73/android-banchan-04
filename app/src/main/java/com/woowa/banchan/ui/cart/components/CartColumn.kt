@@ -26,14 +26,17 @@ fun CartColumn(
     cart: List<TestCartItem>,
     onItemCheck: (Long) -> Unit,
     onItemUnCheck: (Long) -> Unit,
-    onItemDeleteClick: (Long) -> Unit
+    onItemDeleteClick: (Long) -> Unit,
+    onItemQuantityChanged: (Long, Int) -> Unit
 ) {
+    var totalPrice by remember { mutableStateOf(cart.sumOf { item -> item.price.toMoneyInt() * item.quantity }) }
+    totalPrice = cart.sumOf { item -> item.price.toMoneyInt() * item.quantity }
+
     Column(modifier = modifier) {
         if (cart.isEmpty())
             CartItemEmpty(modifier = Modifier.fillMaxWidth())
 
         else {
-            val totalPrice = cart.sumOf { item -> item.price.toMoneyInt() * item.quantity }
             cart.forEach { item ->
                 CartItemRow(
                     modifier = Modifier
@@ -42,7 +45,14 @@ fun CartColumn(
                     item = item,
                     onCheck = { onItemCheck(item.id) },
                     onUncheck = { onItemUnCheck(item.id) },
-                    onDeleteClick = { onItemDeleteClick(item.id) })
+                    onDeleteClick = { onItemDeleteClick(item.id) },
+                    onQuantityChanged = { q, isPlus ->
+                        onItemQuantityChanged(item.id, q)
+                        if (isPlus)
+                            totalPrice += item.price.toMoneyInt()
+                        else
+                            totalPrice -= item.price.toMoneyInt()
+                    })
             }
 
             CartPriceColumn(

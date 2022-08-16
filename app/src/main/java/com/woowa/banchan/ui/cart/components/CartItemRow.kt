@@ -31,9 +31,12 @@ fun CartItemRow(
     item: TestCartItem,
     onCheck: () -> Unit,
     onUncheck: () -> Unit,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    onQuantityChanged: (Int, Boolean) -> Unit
 ) {
     var isChecked by remember { mutableStateOf(item.checked) }
+    var quantity by remember { mutableStateOf(item.quantity) }
+    quantity = item.quantity
     isChecked = item.checked
 
     Column(modifier = modifier) {
@@ -69,8 +72,11 @@ fun CartItemRow(
                 Text(text = item.name)
                 Text(text = item.price)
                 CartItemQuantityRow(
-                    initQuantity = item.quantity,
-                    onQuantityChanged = {})
+                    initQuantity = quantity,
+                    onQuantityChanged = { q, type ->
+                        onQuantityChanged(q, type)
+                        quantity = q
+                    })
             }
 
             Image(
@@ -85,7 +91,7 @@ fun CartItemRow(
             modifier = Modifier
                 .align(Alignment.End)
                 .padding(16.dp),
-            text = (item.price.toMoneyInt() * item.quantity).toMoneyString()
+            text = (item.price.toMoneyInt() * quantity).toMoneyString()
         )
 
         Divider(modifier = modifier, thickness = 1.dp, color = colorResource(R.color.gray_line))
@@ -95,18 +101,20 @@ fun CartItemRow(
 @Composable
 private fun CartItemQuantityRow(
     initQuantity: Int = 1,
-    onQuantityChanged: (Int) -> Unit
+    onQuantityChanged: (Int, Boolean) -> Unit
 ) {
-
-    val (quantity, setQuantity) = remember { mutableStateOf(initQuantity) }
+    var quantity by remember { mutableStateOf(initQuantity) }
+    quantity = initQuantity
 
     Row {
         Surface(modifier = Modifier.size(24.dp), shape = CircleShape, elevation = 6.dp) {
             Box(
                 modifier = Modifier
                     .clickable {
-                        onQuantityChanged(quantity + 1)
-                        setQuantity(quantity + 1)
+                        if (quantity > 1) {
+                            onQuantityChanged(quantity - 1, false)
+                            quantity--
+                        }
                     }
             ) {
                 Image(
@@ -119,7 +127,7 @@ private fun CartItemQuantityRow(
             modifier = Modifier.width(32.dp),
             value = quantity.toString(),
             onValueChange = { text ->
-                setQuantity(text.toInt())
+                quantity = text.toInt()
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
@@ -129,8 +137,8 @@ private fun CartItemQuantityRow(
             Box(
                 modifier = Modifier
                     .clickable {
-                        onQuantityChanged(quantity + 1)
-                        setQuantity(quantity + 1)
+                        onQuantityChanged(quantity + 1, true)
+                        quantity++
                     }
             ) {
                 Image(

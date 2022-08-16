@@ -72,30 +72,31 @@ class CartViewModel @Inject constructor(
     }
 
     fun deleteCartItem(id: Long = -1L) {
-        if (id == -1L) {
+        if (id == -1L)
             _state.value = state.value.copy(
                 cart = state.value.cart.filter { !it.checked }.toMutableList(),
                 recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
-        }
-        else {
+        else
             _state.value = state.value.copy(
                 cart = state.value.cart.filter { it.id != id }.toMutableList(),
                 recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
-        }
     }
 
     fun updateCartItem(id: Long, quantity: Int) {
-        _state.value.cart.forEach {
-            if (it.id == id) {
-                it.quantity = quantity
-                return@forEach
-            }
-        }
+        _state.value = state.value.copy(
+            cart = state.value.cart.map {
+                if (it.id == id) it.apply { this.quantity = quantity }
+                else it
+            }.toMutableList(),
+            recentlyList = state.value.recentlyList,
+            isLoading = false,
+            errorMessage = ""
+        )
     }
 }
