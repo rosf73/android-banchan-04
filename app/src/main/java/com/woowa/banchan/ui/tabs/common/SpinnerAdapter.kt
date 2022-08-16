@@ -43,8 +43,8 @@ class SpinnerAdapter(
 
     private fun bindDropDownView(position: Int) {
         optionBinding.tvOption.text = getItem(position)
-        when {
-            position == currentPosition -> {
+        when (position) {
+            currentPosition -> {
                 titleBinding.tvTitle.typeface = Typeface.DEFAULT_BOLD
                 optionBinding.ivCheck.isVisible = true
             }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanBinding
 import com.woowa.banchan.databinding.ItemBanchanVerticalBinding
 import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.domain.entity.ProductViewType
 
 class BanchanItemAdapter(
     private val onClick: (Product) -> Unit,
@@ -62,6 +63,7 @@ class BanchanItemAdapter(
             itemView.setOnClickListener { onClick(product) }
             binding.ivCart.setOnClickListener { onClickCart(product) }
             binding.product = product
+            binding.executePendingBindings()
         }
     }
 
@@ -74,10 +76,7 @@ class BanchanItemAdapter(
             itemView.setOnClickListener { onClick(product) }
             binding.ivCart.setOnClickListener { onClickCart(product) }
             binding.product = product
+            binding.executePendingBindings()
         }
-    }
-
-    enum class ProductViewType {
-        Grid, Vertical
     }
 }

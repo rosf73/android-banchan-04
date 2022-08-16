@@ -2,6 +2,7 @@ package com.woowa.banchan.ui.tabs.maindish
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.woowa.banchan.domain.entity.ProductViewType
 import com.woowa.banchan.domain.entity.SortType
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.GetProductsUseCase
@@ -21,7 +22,14 @@ class ProductsViewModel @Inject constructor(
     private val _state = MutableStateFlow(ProductsUiState())
     val state = _state.asStateFlow()
 
+    private val _viewMode = MutableStateFlow(ProductViewType.Grid)
+    val viewMode = _viewMode.asStateFlow()
+
+    private val _sortType = MutableStateFlow(SortType.Default)
+    val sortType = _sortType.asStateFlow()
+
     fun getProduct(type: String, sortType: SortType = SortType.Default) = viewModelScope.launch {
+        setSortType(sortType)
         _state.value = state.value.copy(products = emptyList(), isLoading = true, errorMessage = "")
         getProductsUseCase(type, sortType)
             .onEach { result ->
@@ -51,5 +59,13 @@ class ProductsViewModel @Inject constructor(
                         }
                     }
             }.launchIn(this)
+    }
+
+    private fun setSortType(sortType: SortType) {
+        _sortType.value = sortType
+    }
+
+    fun setViewMode(viewMode: ProductViewType) {
+        _viewMode.value = viewMode
     }
 }

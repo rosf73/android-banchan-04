@@ -4,6 +4,11 @@
 
     <data>
 
+        <variable
+            name="viewMode"
+            type="com.woowa.banchan.domain.entity.ProductViewType" />
+
+        <import type="com.woowa.banchan.domain.entity.ProductViewType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,14 +32,15 @@
                 android:layout_height="24dp"
                 android:background="@drawable/rb_selector_grid"
                 android:button="@null"
-                android:checked="true" />
+                android:checked="@{viewMode==ProductViewType.Grid ? true:false}" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/rb_linear"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@drawable/rb_selector_vertical"
-                android:button="@null" />
+                android:button="@null"
+                android:checked="@{viewMode==ProductViewType.Vertical ? true:false}" />
         </RadioGroup>
 
         <androidx.appcompat.widget.AppCompatSpinner
