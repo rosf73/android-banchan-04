@@ -23,22 +23,26 @@ import com.woowa.banchan.utils.toMoneyString
 @Composable
 fun CartColumn(
     modifier: Modifier = Modifier,
-    cart: List<TestCartItem>
+    cart: List<TestCartItem>,
+    onItemCheck: (Long) -> Unit,
+    onItemUnCheck: (Long) -> Unit,
+    onItemDeleteClick: (Long) -> Unit
 ) {
     Column(modifier = modifier) {
         if (cart.isEmpty())
             CartItemEmpty(modifier = Modifier.fillMaxWidth())
 
         else {
-            val totalPrice = cart.sumOf { item -> item.price.toMoneyInt() }
+            val totalPrice = cart.sumOf { item -> item.price.toMoneyInt() * item.quantity }
             cart.forEach { item ->
                 CartItemRow(
                     modifier = Modifier
                         .background(colorResource(R.color.white))
                         .fillMaxWidth(),
                     item = item,
-                    onCheck = {},
-                    onUncheck = {})
+                    onCheck = { onItemCheck(item.id) },
+                    onUncheck = { onItemUnCheck(item.id) },
+                    onDeleteClick = { onItemDeleteClick(item.id) })
             }
 
             CartPriceColumn(

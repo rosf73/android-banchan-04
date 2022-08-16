@@ -5,7 +5,8 @@ data class TestCartItem(
     val thumb: String,
     val name: String,
     val price: String,
-    var quantity: Int = 1
+    var quantity: Int = 1,
+    var checked: Boolean = true
 )
 
 val testCartItem = mutableListOf(

@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.cart
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +16,6 @@ class CartViewModel @Inject constructor(
     private val _state = MutableStateFlow(CartUiState())
     val state = _state.asStateFlow()
 
-    private val deleteList = mutableStateListOf<Long>()
-
     init {
         getCart()
     }
@@ -26,33 +25,69 @@ class CartViewModel @Inject constructor(
 
         //TODO: Room Repository 와 연결
         _state.value = state.value.copy(cart = testCartItem, recentlyList = testRecentlyList, isLoading = false, errorMessage = "")
-        deleteList.addAll(testCartItem.map { it.id })
     }
 
-    fun isAllChecked(): Boolean = deleteList.size == state.value.cart.size
+    fun isAllChecked(): Boolean = state.value.cart.count { it.checked } == state.value.cart.size
 
-    fun addDeleteList(id: Long = -1L) {
+    fun isAllUnChecked(): Boolean = state.value.cart.count { !it.checked } == state.value.cart.size
+
+    fun check(id: Long = -1L) {
         if (id == -1L)
-            deleteList.addAll(state.value.cart.map { it.id })
+            _state.value = state.value.copy(
+                cart = state.value.cart.map { it.apply { checked = true } }.toMutableList(),
+                recentlyList = state.value.recentlyList,
+                isLoading = false,
+                errorMessage = ""
+            )
         else
-            deleteList.add(id)
+            _state.value = state.value.copy(
+                cart = state.value.cart.map {
+                    if (it.id == id) it.apply { checked = true }
+                    else it
+                }.toMutableList(),
+                recentlyList = state.value.recentlyList,
+                isLoading = false,
+                errorMessage = ""
+            )
     }
 
-    fun removeDeleteList(id: Long = -1L) {
+    fun uncheck(id: Long = -1L) {
         if (id == -1L)
-            deleteList.clear()
+            _state.value = state.value.copy(
+                cart = state.value.cart.map { it.apply { checked = false } }.toMutableList(),
+                recentlyList = state.value.recentlyList,
+                isLoading = false,
+                errorMessage = ""
+            )
         else
-            deleteList.remove(id)
+            _state.value = state.value.copy(
+                cart = state.value.cart.map {
+                    if (it.id == id) it.apply { checked = false }
+                    else it
+                }.toMutableList(),
+                recentlyList = state.value.recentlyList,
+                isLoading = false,
+                errorMessage = ""
+            )
     }
 
-    fun deleteCartItems() {
-        _state.value = state.value.copy(
-            cart = state.value.cart.filter { !deleteList.contains(it.id) }.toMutableList(),
-            recentlyList = state.value.recentlyList,
-            isLoading = false,
-            errorMessage = ""
-        )
-        removeDeleteList()
+    fun deleteCartItem(id: Long = -1L) {
+        if (id == -1L) {
+            _state.value = state.value.copy(
+                cart = state.value.cart.filter { !it.checked }.toMutableList(),
+                recentlyList = state.value.recentlyList,
+                isLoading = false,
+                errorMessage = ""
+            )
+        }
+        else {
+            _state.value = state.value.copy(
+                cart = state.value.cart.filter { it.id != id }.toMutableList(),
+                recentlyList = state.value.recentlyList,
+                isLoading = false,
+                errorMessage = ""
+            )
+        }
     }
 
     fun updateCartItem(id: Long, quantity: Int) {

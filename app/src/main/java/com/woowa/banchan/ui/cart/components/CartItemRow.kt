@@ -10,9 +10,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,19 +30,21 @@ fun CartItemRow(
     modifier: Modifier = Modifier,
     item: TestCartItem,
     onCheck: () -> Unit,
-    onUncheck: () -> Unit
+    onUncheck: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
-    val (isChecked, setIsChecked) = remember { mutableStateOf(true) }
+    var isChecked by remember { mutableStateOf(item.checked) }
+    isChecked = item.checked
 
     Column(modifier = modifier) {
         Row(modifier = Modifier
             .clickable {
-                if (isChecked) {
+                isChecked = if (isChecked) {
                     onUncheck()
-                    setIsChecked(false)
+                    false
                 } else {
                     onCheck()
-                    setIsChecked(true)
+                    true
                 }
             }
             .padding(20.dp, 20.dp, 20.dp, 0.dp)
@@ -75,9 +75,7 @@ fun CartItemRow(
 
             Image(
                 modifier = Modifier
-                    .clickable {
-
-                    },
+                    .clickable { onDeleteClick() },
                 painter = painterResource(R.drawable.ic_close),
                 contentDescription = stringResource(R.string.label_close)
             )

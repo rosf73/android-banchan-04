@@ -22,27 +22,22 @@ import com.woowa.banchan.ui.cart.CartViewModel
 @Composable
 fun CartCheckBox(
     modifier: Modifier = Modifier,
-    isAllChecked: Boolean,
+    state: CheckState,
     onCheck: () -> Unit,
     onUncheck: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    val (isChecked, setIsChecked) = remember { mutableStateOf(isAllChecked) }
-
     Row(modifier = modifier) {
         Image(
             modifier = Modifier
                 .clickable {
-                    if (isChecked) {
+                    if (state == CheckState.CHECKED)
                         onUncheck()
-                        setIsChecked(false)
-                    } else {
+                    else
                         onCheck()
-                        setIsChecked(true)
-                    }
                 }
                 .padding(20.dp),
-            painter = if (isChecked) painterResource(R.drawable.ic_checkbox)
+            painter = if (state == CheckState.CHECKED) painterResource(R.drawable.ic_checkbox)
                       else painterResource(R.drawable.ic_checkbox_empty),
             contentDescription = stringResource(R.string.label_checkbox))
 
@@ -50,7 +45,7 @@ fun CartCheckBox(
             modifier = Modifier
                 .weight(1f)
                 .align(CenterVertically),
-            text = if (isChecked) stringResource(R.string.cart_deselect)
+            text = if (state == CheckState.CHECKED) stringResource(R.string.cart_deselect)
                    else stringResource(R.string.cart_select_all),
             color = colorResource(R.color.black))
 
