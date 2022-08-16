@@ -13,10 +13,7 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         setContentView(R.layout.activity_main)
     }
 
-    override fun navigateToMain() {
-        supportFragmentManager.popBackStack()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fcv_main, MainFragment())
-            .commit()
+    override fun navigateToBack() {
+        onBackPressed()
     }
 }
