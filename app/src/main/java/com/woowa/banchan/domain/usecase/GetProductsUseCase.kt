@@ -3,6 +3,7 @@ package com.woowa.banchan.domain.usecase
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.SortType
 import com.woowa.banchan.domain.repository.BanchanRepository
+import com.woowa.banchan.utils.toMoneyInt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -22,10 +23,10 @@ class GetProductsUseCase @Inject constructor(
                                 emit(Result.success(products))
                             }
                             SortType.PriceAscending -> {
-                                emit(Result.success(products.sortedBy { it.nPrice }))
+                                emit(Result.success(products.sortedByDescending { it.sPrice.toMoneyInt() }))
                             }
                             SortType.PriceDescending -> {
-                                emit(Result.success(products.sortedByDescending { it.nPrice }))
+                                emit(Result.success(products.sortedBy { it.sPrice.toMoneyInt() }))
                             }
                             SortType.RateDescending -> {
                                 emit(Result.success(products.sortedByDescending { it.discountRate }))
