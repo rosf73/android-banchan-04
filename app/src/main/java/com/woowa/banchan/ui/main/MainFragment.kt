@@ -45,7 +45,7 @@ class MainFragment : Fragment() {
     fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.beginTransaction()
             .addToBackStack(null)
-            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
