@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="com.woowa.banchan.ui.tabs.common.CartBottomSheet" />
+            type="com.woowa.banchan.ui.customview.CartBottomSheet" />
 
         <variable
             name="product"

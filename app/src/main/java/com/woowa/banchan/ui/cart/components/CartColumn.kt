@@ -17,8 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
 import com.woowa.banchan.ui.cart.TestCartItem
-import com.woowa.banchan.utils.toMoneyInt
-import com.woowa.banchan.utils.toMoneyString
+import com.woowa.banchan.extensions.toMoneyInt
+import com.woowa.banchan.extensions.toMoneyString
 
 @Composable
 fun CartColumn(

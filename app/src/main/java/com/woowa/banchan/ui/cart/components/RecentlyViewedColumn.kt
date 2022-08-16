@@ -7,11 +7,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.BottomStart
-import androidx.compose.ui.Alignment.Companion.CenterEnd
-import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.Alignment.Companion.TopStart
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -24,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.woowa.banchan.R
 import com.woowa.banchan.ui.cart.TestRecently
 import com.woowa.banchan.ui.cart.testRecentlyList
-import com.woowa.banchan.utils.substringShort
+import com.woowa.banchan.extensions.substringShort
 
 @Composable
 fun RecentlyViewedColumn(

@@ -10,9 +10,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.cart.CartFragment
-import com.woowa.banchan.ui.common.OnCartClickListener
+import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
-import com.woowa.banchan.ui.tabs.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

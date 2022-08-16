@@ -6,7 +6,7 @@
 
         <variable
             name="listener"
-            type="com.woowa.banchan.ui.common.OnBackClickListener" />
+            type="com.woowa.banchan.ui.OnBackClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:background="@color/grey_surface">
 
-        <com.woowa.banchan.ui.common.BanchanAppbar
+        <com.woowa.banchan.ui.customview.BanchanAppbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
