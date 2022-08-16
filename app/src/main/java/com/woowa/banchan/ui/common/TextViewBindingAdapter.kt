@@ -10,7 +10,7 @@ import com.woowa.banchan.utils.toVisibility
 @BindingAdapter("price", "quantity")
 fun TextView.setTotalPrice(price: String?, quantity: Int) {
     text = if (price.isNullOrEmpty()) "0원"
-        else (price.toMoneyInt() * quantity).toMoneyString()
+    else (price.toMoneyInt() * quantity).toMoneyString()
 }
 
 @BindingAdapter("textStrikeThrough")

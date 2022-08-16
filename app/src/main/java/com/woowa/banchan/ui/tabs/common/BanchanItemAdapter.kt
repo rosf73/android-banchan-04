@@ -5,24 +5,52 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanBinding
+import com.woowa.banchan.databinding.ItemBanchanVerticalBinding
 import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.domain.entity.ProductViewType
 
 class BanchanItemAdapter(
     private val onClick: (Product) -> Unit,
     private val onClickCart: (Product) -> Unit
-) : ListAdapter<Product, BanchanItemAdapter.BanchanItemViewHolder>(menuDiffUtil) {
+) : ListAdapter<Product, RecyclerView.ViewHolder>(menuDiffUtil) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BanchanItemViewHolder {
+    private var viewType = ProductViewType.Grid
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return BanchanItemViewHolder(
-            ItemBanchanBinding.inflate(inflater, parent, false),
-            onClick,
-            onClickCart
-        )
+
+        return when (viewType) {
+            ProductViewType.Grid.ordinal -> {
+                BanchanItemViewHolder(
+                    ItemBanchanBinding.inflate(inflater, parent, false),
+                    onClick,
+                    onClickCart
+                )
+            }
+            ProductViewType.Vertical.ordinal -> {
+                BanchanLinearItemViewHolder(
+                    ItemBanchanVerticalBinding.inflate(inflater, parent, false),
+                    onClick,
+                    onClickCart
+                )
+            }
+            else -> {
+                throw IllegalAccessException()
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: BanchanItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is BanchanItemViewHolder -> holder.bind(getItem(position))
+            is BanchanLinearItemViewHolder -> holder.bind(getItem(position))
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int = viewType.ordinal
+
+    fun setViewType(viewType: ProductViewType) {
+        this.viewType = viewType
     }
 
     class BanchanItemViewHolder(
@@ -31,10 +59,24 @@ class BanchanItemAdapter(
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(menu: Product) {
-            itemView.setOnClickListener { onClick(menu) }
-            binding.ivCart.setOnClickListener { onClickCart(menu) }
-            binding.menu = menu
+        fun bind(product: Product) {
+            itemView.setOnClickListener { onClick(product) }
+            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.product = product
+            binding.executePendingBindings()
+        }
+    }
+
+    class BanchanLinearItemViewHolder(
+        private val binding: ItemBanchanVerticalBinding,
+        private val onClick: (Product) -> Unit,
+        private val onClickCart: (Product) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: Product) {
+            itemView.setOnClickListener { onClick(product) }
+            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.product = product
+            binding.executePendingBindings()
         }
     }
 }

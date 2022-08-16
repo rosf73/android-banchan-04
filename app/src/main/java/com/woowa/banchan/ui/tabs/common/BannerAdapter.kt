@@ -7,7 +7,7 @@ import com.woowa.banchan.databinding.ItemBannerBinding
 
 class BannerAdapter(
     private val banners: List<String>,
-    private val hasLabel: Boolean
+    private val hasLabel: Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -6,7 +6,7 @@ object Version {
     const val activityKtx = "1.1.0"
 
     const val googleMaterial = "1.6.1"
-    const val recyclerview = "1.2.1"
+    const val recyclerview = "1.3.0-alpha02"
     const val viewModel = "2.2.0"
     const val lifecycleRuntimeKtx = "2.4.1"
 

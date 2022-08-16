@@ -20,4 +20,11 @@
     <string name="detail_quantity">수량</string>
     <string name="detail_total_price">총 주문금액</string>
     <string name="detail_ordering">주문하기</string>
+
+    <string-array name="spinner">
+        <item>기본 정렬순</item>
+        <item>금액 높은순</item>
+        <item>금액 낮은순</item>
+        <item>할인율순</item>
+    </string-array>
 </resources>

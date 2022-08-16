@@ -11,7 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp">
 
@@ -19,7 +19,6 @@
             android:id="@+id/iv_banchan"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:src="@{product.image}"
@@ -30,13 +29,15 @@
             style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{product.title}"
-            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
-            app:layout_constraintStart_toStartOf="@id/iv_banchan"
-            app:layout_constraintTop_toBottomOf="@id/iv_banchan"
+            app:layout_constraintBottom_toTopOf="@id/tv_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_banchan"
+            app:layout_constraintTop_toTopOf="@id/iv_banchan"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="오리 주물럭_반조리" />
 
         <TextView
@@ -47,8 +48,9 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{product.description}"
-            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
-            app:layout_constraintStart_toStartOf="@id/iv_banchan"
+            app:layout_constraintBottom_toTopOf="@id/tv_price_sale"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:text="감칠맛 나는 매콤한 양념" />
 
@@ -59,9 +61,10 @@
             android:layout_height="wrap_content"
             android:paddingEnd="4dp"
             android:text="@{product.discountRate}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_price_sale"
             app:layout_constraintEnd_toStartOf="@id/tv_price_sale"
-            app:layout_constraintStart_toStartOf="@id/iv_banchan"
-            app:layout_constraintTop_toBottomOf="@id/tv_description"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="@id/tv_price_sale"
             app:visibility="@{product.nPrice != null}"
             tools:text="20%" />
 
@@ -71,9 +74,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{product.sPrice}"
+            app:layout_constraintBottom_toTopOf="@id/tv_price_original"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_sale_rate"
-            app:layout_constraintTop_toTopOf="@id/tv_sale_rate"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"
             tools:text="6,000원" />
 
         <TextView
@@ -82,9 +86,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{product.nPrice}"
-            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
-            app:layout_constraintStart_toStartOf="@id/iv_banchan"
-            app:layout_constraintTop_toBottomOf="@id/tv_sale_rate"
+            app:layout_constraintBottom_toBottomOf="@id/iv_banchan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_sale"
             app:textStrikeThrough="@{true}"
             app:visibility="@{product.nPrice != null}"
             tools:text="7,500원" />
