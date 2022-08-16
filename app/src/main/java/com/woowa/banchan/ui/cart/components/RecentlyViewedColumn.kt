@@ -25,10 +25,11 @@ import com.woowa.banchan.extensions.substringShort
 @Composable
 fun RecentlyViewedColumn(
     modifier: Modifier = Modifier,
-    recentlyList: List<TestRecently>
+    recentlyList: List<TestRecently>,
+    navigateToRecently: () -> Unit
 ) {
     Column(modifier = modifier.padding(16.dp, 32.dp)) {
-        RecentlyViewedHeader(onViewTotalClick = {})
+        RecentlyViewedHeader(onViewTotalClick = navigateToRecently)
 
         RecentlyViewedRow(recentlyList)
     }

@@ -11,7 +11,8 @@ import com.woowa.banchan.ui.cart.components.RecentlyViewedColumn
 
 @Composable
 fun CartScreen(
-    cartViewModel: CartViewModel
+    cartViewModel: CartViewModel,
+    navigateToRecently: () -> Unit
 ) {
     val state by cartViewModel.state.collectAsState()
 
@@ -50,7 +51,8 @@ fun CartScreen(
                 },
                 onItemQuantityChanged = { id, q -> cartViewModel.updateCartItem(id, q) })
             RecentlyViewedColumn(
-                recentlyList = state.recentlyList
+                recentlyList = state.recentlyList,
+                navigateToRecently = navigateToRecently
             )
         }
     }
