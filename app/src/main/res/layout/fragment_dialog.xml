@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="com.woowa.banchan.ui.tabs.common.CartDialog" />
+            type="com.woowa.banchan.ui.customview.CartDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

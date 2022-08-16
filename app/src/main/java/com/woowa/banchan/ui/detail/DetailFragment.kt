@@ -17,9 +17,8 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.ui.cart.CartFragment
-import com.woowa.banchan.ui.common.OnCartClickListener
-import com.woowa.banchan.ui.main.MainFragment
-import com.woowa.banchan.utils.toPx
+import com.woowa.banchan.ui.OnCartClickListener
+import com.woowa.banchan.ui.extensions.toPx
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

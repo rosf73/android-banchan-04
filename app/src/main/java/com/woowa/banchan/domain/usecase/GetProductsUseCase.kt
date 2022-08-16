@@ -3,7 +3,7 @@ package com.woowa.banchan.domain.usecase
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.SortType
 import com.woowa.banchan.domain.repository.BanchanRepository
-import com.woowa.banchan.utils.toMoneyInt
+import com.woowa.banchan.extensions.toMoneyInt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
