@@ -5,21 +5,37 @@
     <string name="soup">뜨끈한 국물요리</string>
     <string name="side">정갈한 밑반찬</string>
 
+    <string name="cart_appbar_title">Cart</string>
+
     <string name="plan_banner_title">한 번 주문하면\n두 번 반하는 반찬들</string>
     <string name="maindish_banner_title">모두가 좋아하는\n든든한 메인 요리</string>
     <string name="soup_banner_title">정성이 담긴\n 뜨끈뜨끈 국물 요리</string>
     <string name="side_banner_title">식탁을 풍성하게 하는\n 정갈한 밑반찬</string>
 
+    <string name="label_logo">Logo</string>
+    <string name="label_action_first">Action First</string>
+    <string name="label_action_second">Action Second</string>
     <string name="label_thumb">Thumbnail</string>
     <string name="label_plus">Plus</string>
     <string name="label_minus">Minus</string>
+    <string name="label_checkbox">Check Box</string>
+    <string name="label_close">Close</string>
+
+    <string name="delivery_fee">배송비</string>
+    <string name="total_price">총 주문금액</string>
 
     <string name="detail_point">적립금</string>
     <string name="detail_delivery_info">배송정보</string>
-    <string name="detail_delivery_fee">배송비</string>
     <string name="detail_quantity">수량</string>
-    <string name="detail_total_price">총 주문금액</string>
     <string name="detail_ordering">주문하기</string>
+
+    <string name="cart_select_all">모두 선택</string>
+    <string name="cart_deselect">선택 해제</string>
+    <string name="cart_delete">선택 삭제</string>
+    <string name="cart_empty">장바구니가 비어있어요</string>
+    <string name="cart_recently">최근 본 상품</string>
+    <string name="cart_recently_all">전체 보기</string>
+    <string name="cart_ordering_price">상품 주문 금액</string>
 
     <string-array name="spinner">
         <item>기본 정렬순</item>

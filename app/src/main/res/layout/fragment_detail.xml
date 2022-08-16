@@ -20,6 +20,10 @@
         <variable
             name="description"
             type="String" />
+
+        <variable
+            name="cartClickListener"
+            type="com.woowa.banchan.ui.common.OnCartClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +40,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigation_icon="@drawable/ic_logo" />
+            app:navigation_icon="@drawable/ic_logo"
+            app:onFirstClick="@{cartClickListener.navigateToCart}" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv_detail_container"
@@ -193,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="16dp"
                     android:layout_marginStart="16dp"
-                    android:text="@string/detail_delivery_fee"
+                    android:text="@string/delivery_fee"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_delivery_info_label" />
 
@@ -286,7 +291,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:text="@string/detail_total_price"
+                    android:text="@string/total_price"
                     app:layout_constraintBottom_toBottomOf="@id/tv_total_price"
                     app:layout_constraintEnd_toStartOf="@id/tv_total_price"
                     app:layout_constraintTop_toTopOf="@id/tv_total_price" />

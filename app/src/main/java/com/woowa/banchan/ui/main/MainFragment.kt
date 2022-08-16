@@ -5,15 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.ui.cart.CartFragment
+import com.woowa.banchan.ui.common.OnCartClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.tabs.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), OnCartClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
@@ -30,6 +33,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initListener()
     }
 
     private fun initView() {
@@ -42,10 +46,23 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun initListener() {
+        binding.cartClickListener = this
+    }
+
     fun navigateToDetail(hash: String, name: String, description: String) {
+        parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .addToBackStack(null)
+            .addToBackStack("Main")
             .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .commit()
+    }
+
+    override fun navigateToCart() {
+        parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .addToBackStack("Main")
+            .add(R.id.fcv_main, CartFragment())
             .commit()
     }
 

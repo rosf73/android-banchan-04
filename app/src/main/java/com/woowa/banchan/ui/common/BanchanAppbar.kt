@@ -51,4 +51,22 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         if (title != null) this.title.text = title
     }
 
+    fun onNavigationIconClick(onClick: () -> Unit) {
+        this.navigationIcon.setOnClickListener {
+            onClick()
+        }
+    }
+
+    fun onActionFirstClick(onClick: () -> Unit) {
+        this.actionFirst.setOnClickListener {
+            onClick()
+        }
+    }
+
+    fun onActionSecondClick(onClick: () -> Unit) {
+        this.actionSecond.setOnClickListener {
+            onClick()
+        }
+    }
+
 }
