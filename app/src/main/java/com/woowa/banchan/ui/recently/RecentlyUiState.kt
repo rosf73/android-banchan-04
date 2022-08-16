@@ -1,6 +1,4 @@
-package com.woowa.banchan.ui.recentlyviewed
-
-import com.woowa.banchan.ui.cart.TestRecently
+package com.woowa.banchan.ui.recently
 
 data class RecentlyUiState(
     val recentlyList: List<TestRecently> = emptyList(),
