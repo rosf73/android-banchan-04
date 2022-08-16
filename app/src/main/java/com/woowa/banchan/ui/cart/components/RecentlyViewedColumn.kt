@@ -14,13 +14,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woowa.banchan.R
 import com.woowa.banchan.ui.cart.TestRecently
 import com.woowa.banchan.ui.cart.testRecentlyList
-import com.woowa.banchan.extensions.substringShort
 
 @Composable
 fun RecentlyViewedColumn(
@@ -43,7 +43,8 @@ private fun RecentlyViewedHeader(
             modifier = Modifier
                 .weight(1f)
                 .align(CenterVertically),
-            text = stringResource(R.string.cart_recently))
+            text = stringResource(R.string.cart_recently)
+        )
 
         TextButton(
             onClick = onViewTotalClick,
@@ -66,7 +67,8 @@ private fun RecentlyViewedRow(
                 modifier = Modifier
                     .padding(8.dp)
                     .width(120.dp),
-                item = item)
+                item = item
+            )
         }
     }
 }
@@ -79,17 +81,34 @@ private fun RecentlyViewedItem(
     Column(modifier = modifier) {
         GlideImage(
             modifier = Modifier.size(120.dp),
-            url = item.thumb)
+            url = item.thumb
+        )
 
-        Text(text = item.name.substringShort(), fontWeight = FontWeight(500), color = colorResource(R.color.black), maxLines = 1)
+        Text(
+            text = item.name,
+            overflow = TextOverflow.Ellipsis, maxLines = 1,
+            fontWeight = FontWeight(500), color = colorResource(R.color.black)
+        )
         Row {
-            Text(text = item.sPrice, fontWeight = FontWeight(500), color = colorResource(R.color.black))
-            Text(text = item.nPrice,
-                fontWeight = FontWeight(400), color = colorResource(R.color.gray_default), fontSize = 12.sp,
-                style = TextStyle(textDecoration = TextDecoration.LineThrough))
+            Text(
+                text = item.sPrice,
+                fontWeight = FontWeight(500),
+                color = colorResource(R.color.black)
+            )
+            Text(
+                text = item.nPrice,
+                fontWeight = FontWeight(400),
+                color = colorResource(R.color.gray_default),
+                fontSize = 12.sp,
+                style = TextStyle(textDecoration = TextDecoration.LineThrough)
+            )
         }
-        Text(text = item.viewedAt,
-            fontWeight = FontWeight(400), color = colorResource(R.color.gray_default), fontSize = 12.sp)
+        Text(
+            text = item.viewedAt,
+            fontWeight = FontWeight(400),
+            color = colorResource(R.color.gray_default),
+            fontSize = 12.sp
+        )
     }
 }
 
