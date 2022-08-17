@@ -9,12 +9,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentRecentlyBinding
+import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
+import com.woowa.banchan.ui.OnItemCartClickListener
+import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.detail.DetailFragment
 
-class RecentlyFragment: Fragment(), OnDetailClickListener, OnCartClickListener {
+class RecentlyFragment: Fragment(), OnDetailClickListener, OnItemCartClickListener {
 
     private var _binding: FragmentRecentlyBinding? = null
     private val binding: FragmentRecentlyBinding get() = requireNotNull(_binding)
@@ -40,7 +43,7 @@ class RecentlyFragment: Fragment(), OnDetailClickListener, OnCartClickListener {
                 navigateToDetail(it.detailHash, it.title, it.description)
             },
             onClickCart = {
-                navigateToCart()
+                navigateToCart(it)
             }
         )
     }
@@ -57,7 +60,7 @@ class RecentlyFragment: Fragment(), OnDetailClickListener, OnCartClickListener {
             .commit()
     }
 
-    override fun navigateToCart() {
-
+    override fun navigateToCart(product: Product) {
+        CartBottomSheet(product).show(childFragmentManager, "cart")
     }
 }

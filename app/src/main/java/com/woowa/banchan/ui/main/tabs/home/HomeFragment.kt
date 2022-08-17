@@ -81,9 +81,8 @@ class HomeFragment() : Fragment(), OnDetailClickListener, OnItemCartClickListene
         (parentFragment as MainFragment).navigateToDetail(hash, name, description)
     }
 
-    override fun navigateToCart(product: Product?) {
-        if (product != null)
-            CartBottomSheet(product).show(childFragmentManager, "cart")
+    override fun navigateToCart(product: Product) {
+        CartBottomSheet(product).show(childFragmentManager, "cart")
     }
 
     private fun setAdapter() {

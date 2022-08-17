@@ -4,5 +4,5 @@ import com.woowa.banchan.domain.entity.Product
 
 interface OnItemCartClickListener {
 
-    fun navigateToCart(product: Product?)
+    fun navigateToCart(product: Product)
 }
