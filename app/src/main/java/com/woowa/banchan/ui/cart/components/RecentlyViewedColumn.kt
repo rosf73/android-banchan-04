@@ -18,14 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.recently.TestRecently
+import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.recently.testRecentlyList
 import com.woowa.banchan.extensions.substringShort
 
 @Composable
 fun RecentlyViewedColumn(
     modifier: Modifier = Modifier,
-    recentlyList: List<TestRecently>,
+    recentlyList: List<Product>,
     navigateToRecently: () -> Unit
 ) {
     Column(modifier = modifier.padding(16.dp, 32.dp)) {
@@ -59,7 +59,7 @@ private fun RecentlyViewedHeader(
 
 @Composable
 private fun RecentlyViewedRow(
-    recentlyList: List<TestRecently>
+    recentlyList: List<Product>
 ) {
     LazyRow(modifier = Modifier) {
         items(recentlyList) { item ->
@@ -75,17 +75,17 @@ private fun RecentlyViewedRow(
 @Composable
 private fun RecentlyViewedItem(
     modifier: Modifier = Modifier,
-    item: TestRecently
+    item: Product
 ) {
     Column(modifier = modifier) {
         GlideImage(
             modifier = Modifier.fillMaxWidth(),
-            url = item.thumb)
+            url = item.image)
 
-        Text(text = item.name.substringShort(), fontWeight = FontWeight(500), color = colorResource(R.color.black), maxLines = 1)
+        Text(text = item.title.substringShort(), fontWeight = FontWeight(500), color = colorResource(R.color.black), maxLines = 1)
         Row {
             Text(text = item.sPrice, fontWeight = FontWeight(500), color = colorResource(R.color.black))
-            Text(text = item.nPrice,
+            Text(text = item.nPrice ?: "",
                 fontWeight = FontWeight(400), color = colorResource(R.color.gray_default), fontSize = 12.sp,
                 style = TextStyle(textDecoration = TextDecoration.LineThrough))
         }
@@ -96,6 +96,6 @@ private fun RecentlyViewedItem(
 
 @Preview
 @Composable
-private fun TestRecently() {
+private fun Product() {
     RecentlyViewedItem(item = testRecentlyList[0])
 }
