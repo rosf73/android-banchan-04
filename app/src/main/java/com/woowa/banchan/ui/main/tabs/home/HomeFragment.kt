@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment() : Fragment(), OnDetailClickListener, OnItemCartClickListener {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
@@ -66,8 +66,14 @@ class HomeFragment() : Fragment(), OnDetailClickListener, OnItemCartClickListene
 
                         planAdapter = PlanAdapter(
                             state.plans,
-                            onClick = { navigateToDetail(it.detailHash, it.title, it.description) },
-                            onClickCart = { navigateToCart(it) }
+                            onClick = { product ->
+                                (parentFragment as MainFragment).navigateToDetail(
+                                    product.detailHash,
+                                    product.title,
+                                    product.description
+                                )
+                            },
+                            onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
                         )
                         concatAdapter.addAdapter(planAdapter)
                         binding.rvHome.adapter = concatAdapter
@@ -75,14 +81,6 @@ class HomeFragment() : Fragment(), OnDetailClickListener, OnItemCartClickListene
                 }
             }
         }
-    }
-
-    override fun navigateToDetail(hash: String, name: String, description: String) {
-        (parentFragment as MainFragment).navigateToDetail(hash, name, description)
-    }
-
-    override fun navigateToCart(product: Product) {
-        CartBottomSheet(product).show(childFragmentManager, "cart")
     }
 
     private fun setAdapter() {
