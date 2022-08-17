@@ -16,10 +16,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@ExperimentalCoroutinesApi // 실험적 OptIn api 이용 선언
+@ExperimentalCoroutinesApi     // 실험적 OptIn api 이용 선언
 @RunWith(AndroidJUnit4::class) // 우리가 JVM이 아닌 Android Emulator에서 Unit Test를 한다는 것을 알림
 @SmallTest // Optional. 작은 범위의 리소스 제약으로 테스트할 것이기 때문에 Small 임을 알림
-// Network, Real DB 이용 여부, Time limit 등의 차이에 따라 Medium, Large 선언
+           // Network, Real DB 이용 여부, Time limit 등의 차이에 따라 Medium, Large 선언
 class RecentlyViewedDaoTest {
 
     private lateinit var database: AppDatabase
@@ -28,9 +28,9 @@ class RecentlyViewedDaoTest {
     @Before
     fun setUp() {
         database = Room.inMemoryDatabaseBuilder( // Real DB가 아닌 RAM 상에서만 테스트 용으로 DB를 유지
-            ApplicationProvider.getApplicationContext(),
-            AppDatabase::class.java
-        )
+                ApplicationProvider.getApplicationContext(),
+                AppDatabase::class.java
+            )
             .allowMainThreadQueries() // 테스트 코드에서는 단일 스레드에서 실행되기를 명시
             .build()
 
