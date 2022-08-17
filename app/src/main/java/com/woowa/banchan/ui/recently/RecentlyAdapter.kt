@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemRecentlyBinding
+import com.woowa.banchan.domain.entity.Product
 
 class RecentlyAdapter(
-    private val recentlyItems: List<TestRecently>,
-    private val onClick: (TestRecently) -> Unit,
-    private val onClickCart: (TestRecently) -> Unit
+    private val recentlyItems: List<Product>,
+    private val onClick: (Product) -> Unit,
+    private val onClickCart: (Product) -> Unit
 ) : RecyclerView.Adapter<RecentlyAdapter.RecentlyItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentlyItemViewHolder {
@@ -28,12 +29,15 @@ class RecentlyAdapter(
 
     class RecentlyItemViewHolder(
         private val binding: ItemRecentlyBinding,
-        private val onClick: (TestRecently) -> Unit,
-        private val onClickCart: (TestRecently) -> Unit
+        private val onClick: (Product) -> Unit,
+        private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TestRecently) {
+        fun bind(item: Product) {
+            itemView.setOnClickListener { onClick(item) }
+            binding.ivCart.setOnClickListener { onClickCart(item) }
             binding.recentlyItem = item
+            binding.executePendingBindings()
         }
     }
 }

@@ -12,6 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
+import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.ui.OnDetailClickListener
+import com.woowa.banchan.ui.OnItemCartClickListener
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.customview.CartBottomSheet
@@ -20,7 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment() : Fragment() {
+class HomeFragment() : Fragment(), OnDetailClickListener, OnItemCartClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
@@ -63,14 +66,8 @@ class HomeFragment() : Fragment() {
 
                         planAdapter = PlanAdapter(
                             state.plans,
-                            onClick = { product ->
-                                (parentFragment as MainFragment).navigateToDetail(
-                                    product.detailHash,
-                                    product.title,
-                                    product.description
-                                )
-                            },
-                            onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
+                            onClick = { navigateToDetail(it.detailHash, it.title, it.description) },
+                            onClickCart = { navigateToCart(it) }
                         )
                         concatAdapter.addAdapter(planAdapter)
                         binding.rvHome.adapter = concatAdapter
@@ -78,6 +75,15 @@ class HomeFragment() : Fragment() {
                 }
             }
         }
+    }
+
+    override fun navigateToDetail(hash: String, name: String, description: String) {
+        (parentFragment as MainFragment).navigateToDetail(hash, name, description)
+    }
+
+    override fun navigateToCart(product: Product?) {
+        if (product != null)
+            CartBottomSheet(product).show(childFragmentManager, "cart")
     }
 
     private fun setAdapter() {
