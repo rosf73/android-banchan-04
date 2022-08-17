@@ -17,5 +17,5 @@ interface RecentlyViewedDao {
     fun findTop7ByViewedAtDesc(): Flow<List<RecentlyViewedEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(recentlyViewed: RecentlyViewedEntity)
+    fun insertRecentlyViewed(recentlyViewed: RecentlyViewedEntity)
 }

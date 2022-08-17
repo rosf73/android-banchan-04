@@ -39,8 +39,8 @@ class RecentlyViewedDaoTest {
 
     @Test
     fun `최근_본_상품이_정상_등록된다`() = runTest {
-        val item = RecentlyViewedEntity(0L, "", "소고기", "", 0, 0, 100L)
-        dao.insert(item)
+        val item = RecentlyViewedEntity(id = 0L, "", "소고기", "", 0, 0, 100L)
+        dao.insertRecentlyViewed(item)
 
         val allRecentlyViewed = dao.findAllByViewedAtDesc().first()
         assertThat(allRecentlyViewed).contains(item) // Success
@@ -48,9 +48,9 @@ class RecentlyViewedDaoTest {
 
     @Test
     fun `최근_본_상품이_정상_조회된다`() = runTest {
-        val item1 = RecentlyViewedEntity(0L, "", "소고기", "", 0, 0, 100L)
-        dao.insert(item1)
-        val item2 = RecentlyViewedEntity(1L, "", "돼지고기", "", 0, 0, 100L)
+        val item1 = RecentlyViewedEntity(id = 0L, "", "소고기", "", 0, 0, 100L)
+        dao.insertRecentlyViewed(item1)
+        val item2 = RecentlyViewedEntity(id = 1L, "", "돼지고기", "", 0, 0, 100L)
 
         val allRecentlyViewed = dao.findAllByViewedAtDesc().first()
         assertThat(allRecentlyViewed).contains(item1) // Success
@@ -71,7 +71,7 @@ class RecentlyViewedDaoTest {
             RecentlyViewedEntity(8L, "", "기", "", 0, 0, 100L)
         )
         itemList.forEach {
-            dao.insert(it)
+            dao.insertRecentlyViewed(it)
         }
 
         val top7RecentlyViewed = dao.findTop7ByViewedAtDesc().first()
@@ -82,32 +82,35 @@ class RecentlyViewedDaoTest {
     @Test
     fun `최근_본_상품이_가장_최근_순으로_정상_조회된다`() = runTest {
         val itemList = listOf(
-            RecentlyViewedEntity(0L, "", "소", "", 0, 0, 0L),
-            RecentlyViewedEntity(2L, "", "기", "", 0, 0, 1L),
-            RecentlyViewedEntity(1L, "", "고", "", 0, 0, 3L),
-            RecentlyViewedEntity(3L, "", "소", "", 0, 0, 9L),
-            RecentlyViewedEntity(4L, "", "고", "", 0, 0, 5L),
-            RecentlyViewedEntity(8L, "", "기", "", 0, 0, 100L),
-            RecentlyViewedEntity(6L, "", "소", "", 0, 0, 7L),
-            RecentlyViewedEntity(7L, "", "고", "", 0, 0, 11L),
-            RecentlyViewedEntity(5L, "", "기", "", 0, 0, 4L)
+            RecentlyViewedEntity(0L, "", "소", "", 0, 0, viewedAt = 0L),
+            RecentlyViewedEntity(2L, "", "기", "", 0, 0, viewedAt = 1L),
+            RecentlyViewedEntity(1L, "", "고", "", 0, 0, viewedAt = 3L),
+            RecentlyViewedEntity(3L, "", "소", "", 0, 0, viewedAt = 9L),
+            RecentlyViewedEntity(4L, "", "고", "", 0, 0, viewedAt = 5L),
+            RecentlyViewedEntity(8L, "", "기", "", 0, 0, viewedAt = 100L),
+            RecentlyViewedEntity(6L, "", "소", "", 0, 0, viewedAt = 7L),
+            RecentlyViewedEntity(7L, "", "고", "", 0, 0, viewedAt = 11L),
+            RecentlyViewedEntity(5L, "", "기", "", 0, 0, viewedAt = 4L)
         )
         itemList.forEach {
-            dao.insert(it)
+            dao.insertRecentlyViewed(it)
         }
 
         val top7RecentlyViewed = dao.findAllByViewedAtDesc().first()
         assertThat(top7RecentlyViewed).isInOrder { first, second -> // Success
             ((second as RecentlyViewedEntity).viewedAt - (first as RecentlyViewedEntity).viewedAt).toInt()
         }
+        assertThat(top7RecentlyViewed).isInOrder { first, second -> // Fail
+            ((first as RecentlyViewedEntity).viewedAt - (second as RecentlyViewedEntity).viewedAt).toInt()
+        }
     }
 
     @Test
     fun `최근_본_상품이_정상_업데이트된다`() = runTest {
         val item = RecentlyViewedEntity(0L, "", "소고기", "", 0, 0, 100L)
-        dao.insert(item)
+        dao.insertRecentlyViewed(item)
         val updateItem = item.copy(viewedAt = 2500L)
-        dao.insert(updateItem)
+        dao.insertRecentlyViewed(updateItem)
 
         val allRecentlyViewed = dao.findAllByViewedAtDesc().first()
         assertThat(allRecentlyViewed).isEqualTo(listOf(updateItem)) // Success
