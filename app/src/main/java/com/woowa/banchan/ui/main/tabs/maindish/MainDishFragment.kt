@@ -28,7 +28,7 @@ class MainDishFragment : Fragment() {
 
     private var _binding: FragmentMaindishBinding? = null
     private val binding: FragmentMaindishBinding get() = requireNotNull(_binding)
-    private val productsViewModel: ProductsViewModel by viewModels({ requireParentFragment() })
+    private val productsViewModel: ProductsViewModel by viewModels()
     private val gridItemDecoration by lazy { ItemDecoration(0) }
     private val verticalItemDecoration by lazy { ItemDecoration(1) }
     private val productAdapter by lazy {
@@ -109,14 +109,14 @@ class MainDishFragment : Fragment() {
         productAdapter.setViewType(ProductViewType.Grid)
         binding.rvMainDish.removeItemDecoration(verticalItemDecoration)
         binding.rvMainDish.addItemDecoration(gridItemDecoration)
-        val layoutManger = GridLayoutManager(context, 2)
-        layoutManger.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        val layoutManager = GridLayoutManager(context, 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val adapter = concatAdapter.getWrappedAdapterAndPosition(position).first
                 return if (adapter is ProductAdapter) 1 else 2
             }
         }
-        binding.rvMainDish.layoutManager = layoutManger
+        binding.rvMainDish.layoutManager = layoutManager
     }
 
     private fun setLinearLayoutManager() {
