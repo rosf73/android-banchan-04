@@ -10,8 +10,8 @@
 
     <string name="plan_banner_title">한 번 주문하면\n두 번 반하는 반찬들</string>
     <string name="maindish_banner_title">모두가 좋아하는\n든든한 메인 요리</string>
-    <string name="soup_banner_title">정성이 담긴\n 뜨끈뜨끈 국물 요리</string>
-    <string name="side_banner_title">식탁을 풍성하게 하는\n 정갈한 밑반찬</string>
+    <string name="soup_banner_title">정성이 담긴\n뜨끈뜨끈 국물 요리</string>
+    <string name="side_banner_title">식탁을 풍성하게 하는\n정갈한 밑반찬</string>
 
     <string name="label_logo">Logo</string>
     <string name="label_action_first">Action First</string>
@@ -45,4 +45,6 @@
         <item>금액 낮은순</item>
         <item>할인율순</item>
     </string-array>
+
+    <string name="product_total_count">총 %d개 상품</string>
 </resources>

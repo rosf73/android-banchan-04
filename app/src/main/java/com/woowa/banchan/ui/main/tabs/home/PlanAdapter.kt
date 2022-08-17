@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
+import com.woowa.banchan.databinding.ItemBanchanPlanBinding
 import com.woowa.banchan.domain.entity.Category
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.main.tabs.adapter.ProductAdapter
@@ -17,7 +18,7 @@ class PlanAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return CategoryViewHolder(
-            ItemBanchanHorizontalBinding.inflate(inflater, parent, false),
+            ItemBanchanPlanBinding.inflate(inflater, parent, false),
             onClick,
             onClickCart = { onClickCart(it) }
         )
@@ -35,7 +36,7 @@ class PlanAdapter(
     override fun getItemCount(): Int = planItems.size
 
     class CategoryViewHolder(
-        private val binding: ItemBanchanHorizontalBinding,
+        private val binding: ItemBanchanPlanBinding,
         private val onClick: (Product) -> Unit,
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {

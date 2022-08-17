@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="viewMode"
-            type="com.woowa.banchan.domain.entity.ProductViewType" />
-
-        <import type="com.woowa.banchan.domain.entity.ProductViewType" />
+            name="count"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,32 +14,17 @@
         android:layout_height="80dp"
         android:paddingVertical="24dp">
 
-        <RadioGroup
-            android:id="@+id/rg_filter"
+        <TextView
+            android:id="@+id/tv_product_count"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_grid"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/rb_selector_grid"
-                android:button="@null"
-                android:checked="@{viewMode==ProductViewType.Grid ? true:false}" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_linear"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/rb_selector_vertical"
-                android:button="@null"
-                android:checked="@{viewMode==ProductViewType.Vertical ? true:false}" />
-        </RadioGroup>
+            android:text="@{@string/product_total_count(count)}"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="총 3개 상품" />
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_filter"

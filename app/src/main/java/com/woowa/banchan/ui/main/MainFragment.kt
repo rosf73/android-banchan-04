@@ -48,6 +48,8 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener {
 
     private fun initListener() {
         binding.cartClickListener = this
+        binding.active = true
+        binding.cartCount = 10
     }
 
     override fun navigateToDetail(hash: String, name: String, description: String) {

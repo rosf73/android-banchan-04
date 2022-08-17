@@ -19,6 +19,8 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
     private val title = binding.tvTitle
     private val actionFirst = binding.ivActionFirst
     private val actionSecond = binding.ivActionSecond
+    private val actionOverflowText = binding.tvCartCount
+    private val actionSecondActive = binding.ivProfileActive
 
     init {
         initAttrs(attrs)
@@ -49,6 +51,19 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
 
     private fun setTitle(title: String?) {
         if (title != null) this.title.text = title
+    }
+
+    fun setOverflowText(title: String?) {
+        if (title != null) {
+            this.actionOverflowText.isVisible = true
+            this.actionOverflowText.text = title
+        }
+    }
+
+    fun setSecondActive(isActive: Boolean) {
+        if (title != null) {
+            this.actionSecondActive.isVisible = isActive
+        }
     }
 
     fun onNavigationIconClick(onClick: () -> Unit) {
