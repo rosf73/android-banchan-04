@@ -7,6 +7,14 @@
         <variable
             name="cartClickListener"
             type="com.woowa.banchan.ui.OnCartClickListener" />
+
+        <variable
+            name="active"
+            type="Boolean" />
+
+        <variable
+            name="cartCount"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +25,8 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:actionFirstOverflowText="@{cartCount}"
+            app:actionSecondActive="@{active}"
             app:action_first="@drawable/ic_cart"
             app:action_second="@drawable/ic_user"
             app:layout_constraintEnd_toEndOf="parent"

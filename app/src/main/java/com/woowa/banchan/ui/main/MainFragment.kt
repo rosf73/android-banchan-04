@@ -47,6 +47,8 @@ class MainFragment : Fragment(), OnCartClickListener {
 
     private fun initListener() {
         binding.cartClickListener = this
+        binding.active = true
+        binding.cartCount = 10
     }
 
     fun navigateToDetail(hash: String, name: String, description: String) {
