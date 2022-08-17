@@ -30,6 +30,7 @@ class CountFilterAdapter(
 
     fun submitTotalCount(count: Int) {
         this.count = count
+        notifyDataSetChanged()
     }
 
     fun setSortType(sortType: SortType) {
