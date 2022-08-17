@@ -37,6 +37,10 @@ class RecentlyFragment: Fragment(), OnDetailClickListener, OnItemCartClickListen
         super.onViewCreated(view, savedInstanceState)
 
         initListener()
+        initView()
+    }
+
+    private fun initView() {
         binding.rvRecently.adapter = RecentlyAdapter(
             testRecentlyList,
             onClick = {
