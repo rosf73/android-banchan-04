@@ -90,6 +90,6 @@ dependencies {
 
     implementation(Lib.Room.runtime)
     kapt(Lib.Room.compiler)
+    implementation(Lib.Room.roomKtx)
     testImplementation(Lib.Room.test)
-    implementation(Lib.Room.paging)
 }

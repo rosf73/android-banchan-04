@@ -103,7 +103,7 @@ object Lib {
     object Room {
         const val runtime = "androidx.room:room-runtime:${Version.room}"
         const val compiler = "androidx.room:room-compiler:${Version.room}"
+        const val roomKtx = "androidx.room:room-ktx:${Version.room}"
         const val test = "androidx.room:room-testing:${Version.room}"
-        const val paging= "androidx.room:room-paging:${Version.paging}"
     }
 }
