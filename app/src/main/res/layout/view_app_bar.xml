@@ -17,12 +17,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:contentDescription="@string/label_logo"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_logo"
-            android:contentDescription="@string/label_logo" />
+            tools:src="@drawable/ic_logo" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -42,13 +42,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:contentDescription="@string/label_action_first"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_action_second"
             app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_cart"
-            android:contentDescription="@string/label_action_first" />
+            tools:src="@drawable/ic_cart" />
+
+        <TextView
+            android:id="@+id/tv_cart_count"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="13dp"
+            android:background="@drawable/bg_black_circle"
+            android:gravity="center"
+            android:paddingHorizontal="1dp"
+            android:paddingVertical="1dp"
+            android:text="3"
+            android:textColor="@color/white"
+            android:textSize="6sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_action_first"
+            app:layout_constraintTop_toTopOf="@id/iv_action_first" />
 
         <ImageButton
             android:id="@+id/iv_action_second"
@@ -56,13 +73,28 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@null"
+            android:contentDescription="@string/label_action_second"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_action_first"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_user"
-            android:contentDescription="@string/label_action_second" />
+            tools:src="@drawable/ic_user" />
+
+        <ImageView
+            android:id="@+id/iv_profile_active"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_black_circle"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_action_second"
+            app:layout_constraintTop_toTopOf="@id/iv_action_second"
+            tools:text="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
