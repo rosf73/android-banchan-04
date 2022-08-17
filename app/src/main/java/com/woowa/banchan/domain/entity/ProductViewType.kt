@@ -1,5 +1,5 @@
 package com.woowa.banchan.domain.entity
 
 enum class ProductViewType {
-    Grid, Vertical
+    Grid, Vertical, Horizontal
 }

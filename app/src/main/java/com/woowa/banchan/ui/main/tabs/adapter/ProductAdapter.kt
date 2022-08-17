@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.databinding.ItemBanchanBinding
+import com.woowa.banchan.databinding.ItemBanchanGridBinding
+import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
 import com.woowa.banchan.databinding.ItemBanchanVerticalBinding
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.ProductViewType
@@ -14,15 +15,15 @@ class ProductAdapter(
     private val onClickCart: (Product) -> Unit
 ) : ListAdapter<Product, RecyclerView.ViewHolder>(productDiffUtil) {
 
-    private var viewType = ProductViewType.Grid
+    private var viewType = ProductViewType.Horizontal
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            ProductViewType.Grid.ordinal -> {
-                GridViewHolder(
-                    ItemBanchanBinding.inflate(inflater, parent, false),
+            ProductViewType.Horizontal.ordinal -> {
+                PlanViewHolder(
+                    ItemBanchanHorizontalBinding.inflate(inflater, parent, false),
                     onClick,
                     onClickCart
                 )
@@ -30,6 +31,13 @@ class ProductAdapter(
             ProductViewType.Vertical.ordinal -> {
                 LinearViewHolder(
                     ItemBanchanVerticalBinding.inflate(inflater, parent, false),
+                    onClick,
+                    onClickCart
+                )
+            }
+            ProductViewType.Grid.ordinal -> {
+                GridViewHolder(
+                    ItemBanchanGridBinding.inflate(inflater, parent, false),
                     onClick,
                     onClickCart
                 )
@@ -44,6 +52,7 @@ class ProductAdapter(
         when (holder) {
             is GridViewHolder -> holder.bind(getItem(position))
             is LinearViewHolder -> holder.bind(getItem(position))
+            is PlanViewHolder -> holder.bind(getItem(position))
         }
     }
 
@@ -53,8 +62,22 @@ class ProductAdapter(
         this.viewType = viewType
     }
 
+    class PlanViewHolder(
+        private val binding: ItemBanchanHorizontalBinding,
+        private val onClick: (Product) -> Unit,
+        private val onClickCart: (Product) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(product: Product) {
+            itemView.setOnClickListener { onClick(product) }
+            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.product = product
+            binding.executePendingBindings()
+        }
+    }
+
     class GridViewHolder(
-        private val binding: ItemBanchanBinding,
+        private val binding: ItemBanchanGridBinding,
         private val onClick: (Product) -> Unit,
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
