@@ -10,10 +10,10 @@ interface CartDao {
     fun findAll(): Flow<List<CartEntity>>
 
     @Delete
-    suspend fun deleteCart(cartEntity: CartEntity)
+    suspend fun deleteCart(vararg cartEntity: CartEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCart(cartEntity: CartEntity)
+    suspend fun insertCart(vararg cartEntity: CartEntity)
 
     @Query("SELECT EXISTS(SELECT * FROM cart WHERE id = :id)")
     fun existById(id: Long): Flow<Boolean>
