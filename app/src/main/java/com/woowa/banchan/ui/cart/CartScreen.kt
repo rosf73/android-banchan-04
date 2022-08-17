@@ -49,7 +49,9 @@ fun CartScreen(
                     else if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
                     else CheckState.UNCHECKED_NOT_ALL
                 },
-                onItemQuantityChanged = { id, q -> cartViewModel.updateCartItem(id, q) })
+                onItemQuantityChanged = { id, quantity ->
+                    cartViewModel.updateCartItem(id, quantity)
+                })
             RecentlyViewedColumn(
                 recentlyList = state.recentlyList,
                 navigateToRecently = navigateToRecently
