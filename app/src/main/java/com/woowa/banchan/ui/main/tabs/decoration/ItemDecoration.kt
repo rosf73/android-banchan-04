@@ -26,32 +26,14 @@ class ItemDecoration(private val type: Int) : RecyclerView.ItemDecoration() {
                 } else if (position >= 2) {
                     if (position != 2) outRect.top = 4f.toPx()
                     outRect.bottom = 4f.toPx()
-                } else {
-                    outRect.left = (-8f).toPx()
-                    outRect.right = (-8f).toPx()
                 }
             }
         }
 
         when (type) {
             GRID -> {
-                val layoutManager = parent.layoutManager as? GridLayoutManager ?: return
-                val cols: Int = layoutManager.spanCount
-
                 if (position >= 2) {
-                    when (position % cols) {
-                        1 -> {
-                            outRect.left = 20f.toPx()
-                            outRect.bottom = 32f.toPx()
-                        }
-                        else -> {
-                            outRect.right = 20f.toPx()
-                            outRect.bottom = 32f.toPx()
-                        }
-                    }
-                } else {
-                    outRect.left = (-8f).toPx()
-                    outRect.right = (-8f).toPx()
+                    outRect.bottom = 32f.toPx()
                 }
             }
         }
