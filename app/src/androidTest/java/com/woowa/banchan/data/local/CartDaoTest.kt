@@ -23,6 +23,7 @@ class CartDaoTest {
     private lateinit var dao: CartDao
     private val cart = CartEntity(
         1L,
+        "HD123",
         "새콤달콤 오징어무침",
         "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
         3,
@@ -53,6 +54,7 @@ class CartDaoTest {
         var insertList = arrayOf(
             cart, CartEntity(
                 2L,
+                "HD124",
                 "무진장 매운 오이무침",
                 "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
                 2,
@@ -80,6 +82,7 @@ class CartDaoTest {
         var insertList = arrayOf(
             cart, CartEntity(
                 2L,
+                "HD125",
                 "무진장 매운 오이무침",
                 "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
                 2,
@@ -97,7 +100,7 @@ class CartDaoTest {
     @Test
     fun `장바구니에_데이터가_존재하는지_확인할_수_있다`() = runTest {
         dao.insertCart(cart)
-        val result = dao.existById(cart.id).first()
+        val result = dao.existByHash(cart.hash).first()
         assertThat(result).isTrue()
     }
 
