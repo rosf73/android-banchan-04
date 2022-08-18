@@ -108,12 +108,15 @@ class RecentlyViewedDaoTest {
     @Test
     fun `최근_본_상품이_정상_업데이트된다`() = runTest {
         val item = RecentlyViewedEntity(0L, "", "소고기", "", "0원", "0원", 100L)
-        dao.insertRecentlyViewed(item)
-        val updateItem = item.copy(viewedAt = 2500L)
-        dao.insertRecentlyViewed(updateItem)
+        dao.insertOrUpdate(item)
 
-        val allRecentlyViewed = dao.findAllByViewedAtDesc().first()
-        assertThat(allRecentlyViewed).isEqualTo(listOf(updateItem)) // Success
+        var allRecentlyViewed = dao.findAllByViewedAtDesc().first()
+
+        val updateItem = allRecentlyViewed[0].copy(viewedAt = 2500L)
+        dao.insertOrUpdate(updateItem)
+
+        allRecentlyViewed = dao.findAllByViewedAtDesc().first()
+        assertThat(allRecentlyViewed).isEqualTo(listOf(updateItem))
     }
 
     @After

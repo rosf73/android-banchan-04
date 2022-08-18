@@ -1,9 +1,6 @@
 package com.woowa.banchan.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.woowa.banchan.data.local.entity.RecentlyViewedEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -17,5 +14,15 @@ interface RecentlyViewedDao {
     fun findTop7ByViewedAtDesc(): Flow<List<RecentlyViewedEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecentlyViewed(recentlyViewed: RecentlyViewedEntity)
+    suspend fun insertRecentlyViewed(recentlyViewed: RecentlyViewedEntity): Long
+
+    @Update
+    suspend fun updateRecentlyViewed(recentlyViewed: RecentlyViewedEntity)
+
+    @Transaction
+    suspend fun insertOrUpdate(recentlyViewed: RecentlyViewedEntity) {
+        if (insertRecentlyViewed(recentlyViewed) == -1L) {
+            updateRecentlyViewed(recentlyViewed)
+        }
+    }
 }
