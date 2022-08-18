@@ -19,30 +19,36 @@ fun CartPriceColumn(
     totalPrice: Int,
     deliveryFee: Int = 2500
 ) {
-    Column(modifier = modifier
-        .padding(16.dp, 8.dp)
-        .width(IntrinsicSize.Max)) {
+    Column(
+        modifier = modifier
+            .padding(16.dp, 8.dp)
+            .width(IntrinsicSize.Max)
+    ) {
         PriceRow(
             label = stringResource(R.string.cart_ordering_price),
             price = totalPrice.toMoneyString(),
-            color = colorResource(R.color.gray_default))
+            color = colorResource(R.color.gray_default)
+        )
 
         PriceRow(
             label = stringResource(R.string.delivery_fee),
             price = deliveryFee.toMoneyString(),
-            color = colorResource(R.color.gray_default))
-        
+            color = colorResource(R.color.gray_default)
+        )
+
         Divider(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
             thickness = 1.dp,
-            color = colorResource(R.color.gray_line))
+            color = colorResource(R.color.gray_line)
+        )
 
         PriceRow(
             label = stringResource(R.string.total_price),
             price = (totalPrice + deliveryFee).toMoneyString(),
-            color = colorResource(R.color.black))
+            color = colorResource(R.color.black)
+        )
     }
 }
 
@@ -52,7 +58,9 @@ private fun PriceRow(
     price: String,
     color: Color
 ) {
-    Row(modifier = Modifier.padding(0.dp, 8.dp).width(240.dp)) {
+    Row(modifier = Modifier
+        .padding(0.dp, 8.dp)
+        .width(240.dp)) {
         Text(modifier = Modifier.weight(1f), text = label, color = color)
         Text(modifier = Modifier.weight(1f), text = price, color = color, textAlign = TextAlign.End)
     }

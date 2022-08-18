@@ -119,7 +119,8 @@ private fun CartItemQuantityRow(
                 Image(
                     modifier = Modifier.align(Alignment.Center),
                     painter = painterResource(R.drawable.ic_minus_mini),
-                    contentDescription = stringResource(R.string.label_minus))
+                    contentDescription = stringResource(R.string.label_minus)
+                )
             }
         }
         BasicTextField(
@@ -143,7 +144,8 @@ private fun CartItemQuantityRow(
                 Image(
                     modifier = Modifier.align(Alignment.Center),
                     painter = painterResource(R.drawable.ic_plus_mini),
-                    contentDescription = stringResource(R.string.label_plus))
+                    contentDescription = stringResource(R.string.label_plus)
+                )
             }
         }
     }

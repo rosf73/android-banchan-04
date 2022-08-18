@@ -16,11 +16,13 @@ fun CartScreen(
 ) {
     val state by cartViewModel.state.collectAsState()
 
-    var checkState by remember { mutableStateOf(
-        if (cartViewModel.isAllChecked()) CheckState.CHECKED
-        else if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-        else CheckState.UNCHECKED_NOT_ALL
-    ) }
+    var checkState by remember {
+        mutableStateOf(
+            if (cartViewModel.isAllChecked()) CheckState.CHECKED
+            else if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
+            else CheckState.UNCHECKED_NOT_ALL
+        )
+    }
 
     LazyColumn {
         item {

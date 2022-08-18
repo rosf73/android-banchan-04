@@ -12,12 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
-import com.woowa.banchan.domain.entity.Product
-import com.woowa.banchan.ui.OnDetailClickListener
-import com.woowa.banchan.ui.OnItemCartClickListener
+import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
-import com.woowa.banchan.ui.customview.CartBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

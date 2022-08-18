@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMaindishBinding
 import com.woowa.banchan.domain.entity.ProductViewType
+import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.ProductsViewModel
-import com.woowa.banchan.ui.main.tabs.adapter.ProductAdapter
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
-import com.woowa.banchan.ui.customview.CartBottomSheet
+import com.woowa.banchan.ui.main.tabs.adapter.ProductAdapter
 import com.woowa.banchan.ui.main.tabs.adapter.TypeFilterAdapter
 import com.woowa.banchan.ui.main.tabs.decoration.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint

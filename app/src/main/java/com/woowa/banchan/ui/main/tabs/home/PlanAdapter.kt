@@ -3,7 +3,6 @@ package com.woowa.banchan.ui.main.tabs.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
 import com.woowa.banchan.databinding.ItemBanchanPlanBinding
 import com.woowa.banchan.domain.entity.Category
 import com.woowa.banchan.domain.entity.Product
