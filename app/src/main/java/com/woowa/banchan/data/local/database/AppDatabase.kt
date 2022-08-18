@@ -12,8 +12,7 @@ import com.woowa.banchan.data.local.entity.RecentlyViewedEntity
 
 @Database(
     entities = [CartEntity::class, OrderEntity::class, OrderLineItemEntity::class, RecentlyViewedEntity::class],
-    version = 1,
-    exportSchema = false
+    version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
