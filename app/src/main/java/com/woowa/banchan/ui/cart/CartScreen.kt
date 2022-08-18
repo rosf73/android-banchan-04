@@ -8,13 +8,16 @@ import com.woowa.banchan.ui.cart.components.CartCheckBox
 import com.woowa.banchan.ui.cart.components.CartColumn
 import com.woowa.banchan.ui.cart.components.CheckState
 import com.woowa.banchan.ui.cart.components.RecentlyViewedColumn
+import com.woowa.banchan.ui.recently.RecentlyViewModel
 
 @Composable
 fun CartScreen(
     cartViewModel: CartViewModel,
+    recentlyViewModel: RecentlyViewModel,
     navigateToRecently: () -> Unit
 ) {
-    val state by cartViewModel.state.collectAsState()
+    val cartState by cartViewModel.state.collectAsState()
+    val recentlyState by recentlyViewModel.state.collectAsState()
 
     var checkState by remember { mutableStateOf(
         if (cartViewModel.isAllChecked()) CheckState.CHECKED
@@ -32,7 +35,7 @@ fun CartScreen(
                 onDeleteClick = { cartViewModel.deleteCartItem() })
             CartColumn(
                 modifier = Modifier.fillMaxWidth(),
-                cart = state.cart,
+                cart = cartState.cart,
                 onItemCheck = { id ->
                     cartViewModel.check(id)
                     checkState = if (cartViewModel.isAllChecked()) CheckState.CHECKED
@@ -53,7 +56,7 @@ fun CartScreen(
                     cartViewModel.updateCartItem(id, quantity)
                 })
             RecentlyViewedColumn(
-                recentlyList = state.recentlyList,
+                recentlyList = recentlyState.recentlyList,
                 navigateToRecently = navigateToRecently
             )
         }

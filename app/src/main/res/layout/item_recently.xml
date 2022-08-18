@@ -8,6 +8,8 @@
         <variable
             name="recentlyItem"
             type="com.woowa.banchan.domain.entity.RecentlyViewed" />
+
+        <import type="com.woowa.banchan.extensions.TimeStringConverterKt"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +70,7 @@
             style="@style/Theme.Banchan.Caption.ItemOriginal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{Long.toString(recentlyItem.viewedAt)}"
+            android:text="@{TimeStringConverterKt.toTimeString(recentlyItem.viewedAt)}"
             app:layout_constraintTop_toBottomOf="@id/tv_price_sale"
             app:layout_constraintStart_toStartOf="@id/tv_price_sale"
             tools:text="10분 전" />
