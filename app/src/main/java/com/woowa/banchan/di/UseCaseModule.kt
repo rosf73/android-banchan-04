@@ -1,6 +1,8 @@
 package com.woowa.banchan.di
 
 import com.woowa.banchan.domain.repository.BanchanRepository
+import com.woowa.banchan.domain.repository.RecentlyViewedRepository
+import com.woowa.banchan.domain.usecase.GetAllRecentlyViewedUseCase
 import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
 import com.woowa.banchan.domain.usecase.GetPlanUseCase
 import com.woowa.banchan.domain.usecase.GetProductsUseCase
@@ -30,5 +32,11 @@ object UseCaseModule {
     @Singleton
     fun providesGetProductsUseCase(repository: BanchanRepository): GetProductsUseCase {
         return GetProductsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetAllRecentlyViewedUseCase(repository: RecentlyViewedRepository): GetAllRecentlyViewedUseCase {
+        return GetAllRecentlyViewedUseCase(repository)
     }
 }
