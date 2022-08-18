@@ -5,14 +5,12 @@ import androidx.room.RoomDatabase
 import com.woowa.banchan.data.local.dao.CartDao
 import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.RecentlyViewedDao
-import com.woowa.banchan.data.local.entity.CartEntity
-import com.woowa.banchan.data.local.entity.OrderEntity
-import com.woowa.banchan.data.local.entity.OrderLineItemEntity
-import com.woowa.banchan.data.local.entity.RecentlyViewedEntity
+import com.woowa.banchan.data.local.entity.*
 
 @Database(
     entities = [CartEntity::class, OrderEntity::class, OrderLineItemEntity::class, RecentlyViewedEntity::class],
-    version = 1
+    views = [OrderLineItemView::class],
+    version = 1,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
