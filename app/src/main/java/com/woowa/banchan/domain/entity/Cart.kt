@@ -10,6 +10,6 @@ data class Cart(
     var checked: Boolean = false
 ) {
     companion object {
-        const val DEFAULT_ID = -1L
+        const val DEFAULT_ID = 0L
     }
 }
