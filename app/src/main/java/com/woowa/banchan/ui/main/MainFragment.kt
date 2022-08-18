@@ -11,11 +11,12 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.cart.CartFragment
 import com.woowa.banchan.ui.OnCartClickListener
+import com.woowa.banchan.ui.OnDetailClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), OnCartClickListener {
+class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
@@ -51,7 +52,7 @@ class MainFragment : Fragment(), OnCartClickListener {
         binding.cartCount = 10
     }
 
-    fun navigateToDetail(hash: String, name: String, description: String) {
+    override fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
             .addToBackStack("Main")

@@ -1,9 +1,8 @@
-package com.woowa.banchan.ui.cart
+package com.woowa.banchan.ui.recently
 
 import com.woowa.banchan.domain.entity.Product
 
-data class CartUiState(
-    val cart: MutableList<TestCartItem> = mutableListOf(),
+data class RecentlyUiState(
     val recentlyList: List<Product> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String = ""

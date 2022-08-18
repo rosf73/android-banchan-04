@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
+import com.woowa.banchan.ui.OnRecentlyClickListener
+import com.woowa.banchan.ui.recently.RecentlyFragment
 
-class CartFragment: Fragment() {
+class CartFragment: Fragment(), OnRecentlyClickListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
@@ -28,7 +32,9 @@ class CartFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.composeCart.setContent {
-            CartScreen(cartViewModel)
+            CartScreen(
+                cartViewModel,
+                navigateToRecently = { navigateToRecently() })
         }
 
         initListener()
@@ -36,5 +42,13 @@ class CartFragment: Fragment() {
 
     private fun initListener() {
         binding.listener = activity as OnBackClickListener
+    }
+
+    override fun navigateToRecently() {
+        parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .addToBackStack("Cart")
+            .replace(R.id.fcv_main, RecentlyFragment())
+            .commit()
     }
 }
