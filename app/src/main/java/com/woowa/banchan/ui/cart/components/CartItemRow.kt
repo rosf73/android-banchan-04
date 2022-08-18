@@ -20,14 +20,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.cart.TestCartItem
+import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
 
 @Composable
 fun CartItemRow(
     modifier: Modifier = Modifier,
-    item: TestCartItem,
+    item: Cart,
     onCheck: () -> Unit,
     onUncheck: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -62,7 +62,7 @@ fun CartItemRow(
                 modifier = Modifier
                     .padding(20.dp, 0.dp, 16.dp, 0.dp)
                     .size(80.dp),
-                url = item.thumb
+                url = item.imageUrl
             )
 
             Column(

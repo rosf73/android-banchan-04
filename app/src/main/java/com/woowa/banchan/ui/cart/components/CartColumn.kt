@@ -16,14 +16,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.cart.TestCartItem
+import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
 
 @Composable
 fun CartColumn(
     modifier: Modifier = Modifier,
-    cart: List<TestCartItem>,
+    cart: List<Cart>,
     onItemCheck: (Long) -> Unit,
     onItemUnCheck: (Long) -> Unit,
     onItemDeleteClick: (Long) -> Unit,
@@ -35,7 +35,6 @@ fun CartColumn(
     Column(modifier = modifier) {
         if (cart.isEmpty())
             CartItemEmpty(modifier = Modifier.fillMaxWidth())
-
         else {
             cart.forEach { item ->
                 CartItemRow(
@@ -57,7 +56,8 @@ fun CartColumn(
 
             CartPriceColumn(
                 modifier = Modifier.align(Alignment.End),
-                totalPrice = totalPrice)
+                totalPrice = totalPrice
+            )
 
             Button(
                 modifier = Modifier
@@ -73,7 +73,8 @@ fun CartColumn(
             if (totalPrice < 40000)
                 Text(
                     modifier = Modifier.align(CenterHorizontally),
-                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 무료!")
+                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 무료!"
+                )
         }
     }
 }
@@ -85,5 +86,6 @@ private fun CartItemEmpty(
     Text(
         modifier = modifier.padding(0.dp, 100.dp),
         text = stringResource(R.string.cart_empty),
-        textAlign = TextAlign.Center)
+        textAlign = TextAlign.Center
+    )
 }
