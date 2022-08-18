@@ -87,4 +87,9 @@ dependencies {
     implementation(Lib.Compose.viewModel)
     implementation(Lib.Compose.tooling)
     androidTestImplementation(Lib.Compose.junit4)
+
+    implementation(Lib.Room.runtime)
+    kapt(Lib.Room.compiler)
+    implementation(Lib.Room.roomKtx)
+    testImplementation(Lib.Room.test)
 }

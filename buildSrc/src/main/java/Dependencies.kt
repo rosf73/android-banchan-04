@@ -28,6 +28,9 @@ object Version {
     const val compose = "1.4.0"
     const val material = "1.1.1"
     const val composeViewModel = "2.4.1"
+
+    const val room = "2.4.3"
+    const val paging = "2.5.0-alpha02"
 }
 
 object Lib {
@@ -47,7 +50,8 @@ object Lib {
 
         const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerview}"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.viewModel}"
-        const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleRuntimeKtx}"
+        const val lifecycleRuntimeKtx =
+            "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleRuntimeKtx}"
     }
 
     object Hilt {
@@ -91,7 +95,15 @@ object Lib {
         const val material = "androidx.compose.material:material:${Version.material}"
         const val animation = "androidx.compose.animation:animation:${Version.material}"
         const val tooling = "androidx.compose.ui:ui-tooling:${Version.material}"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.composeViewModel}"
+        const val viewModel =
+            "androidx.lifecycle:lifecycle-viewmodel-compose:${Version.composeViewModel}"
         const val junit4 = "androidx.compose.ui:ui-test-junit4:${Version.material}"
+    }
+
+    object Room {
+        const val runtime = "androidx.room:room-runtime:${Version.room}"
+        const val compiler = "androidx.room:room-compiler:${Version.room}"
+        const val roomKtx = "androidx.room:room-ktx:${Version.room}"
+        const val test = "androidx.room:room-testing:${Version.room}"
     }
 }
