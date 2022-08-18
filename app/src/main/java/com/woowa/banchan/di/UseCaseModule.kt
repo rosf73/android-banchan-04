@@ -1,9 +1,8 @@
 package com.woowa.banchan.di
 
 import com.woowa.banchan.domain.repository.BanchanRepository
-import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
-import com.woowa.banchan.domain.usecase.GetPlanUseCase
-import com.woowa.banchan.domain.usecase.GetProductsUseCase
+import com.woowa.banchan.domain.repository.CartRepository
+import com.woowa.banchan.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +29,33 @@ object UseCaseModule {
     @Singleton
     fun providesGetProductsUseCase(repository: BanchanRepository): GetProductsUseCase {
         return GetProductsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesAddCartUseCase(
+        repository: CartRepository,
+        existCartUseCase: ExistCartUseCase,
+        modifyCartUseCase: ModifyCartUseCase
+    ): AddCartUseCase {
+        return AddCartUseCase(repository, existCartUseCase, modifyCartUseCase)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetCartUseCase(repository: CartRepository): GetCartUseCase {
+        return GetCartUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesExistCartUseCase(repository: CartRepository): ExistCartUseCase {
+        return ExistCartUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesModifyCartUseCase(repository: CartRepository): ModifyCartUseCase {
+        return ModifyCartUseCase(repository)
     }
 }

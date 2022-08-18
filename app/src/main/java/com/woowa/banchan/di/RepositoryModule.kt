@@ -3,7 +3,7 @@ package com.woowa.banchan.di
 import com.woowa.banchan.data.local.datasource.CartDataSource
 import com.woowa.banchan.data.remote.datasource.BanchanDataSource
 import com.woowa.banchan.data.remote.repository.BanchanRepositoryImpl
-import com.woowa.banchan.data.remote.repository.CartRepositoryImpl
+import com.woowa.banchan.data.local.repository.CartRepositoryImpl
 import com.woowa.banchan.domain.repository.BanchanRepository
 import com.woowa.banchan.domain.repository.CartRepository
 import dagger.Module
