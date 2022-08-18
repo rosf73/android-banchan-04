@@ -10,6 +10,7 @@ data class RecentlyViewedEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long,
     @ColumnInfo(name = "hash") val hash: String,
     @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
     @ColumnInfo(name = "n_price") val nPrice: String,
     @ColumnInfo(name = "s_price") val sPrice: String,
@@ -17,5 +18,5 @@ data class RecentlyViewedEntity(
 )
 
 fun RecentlyViewedEntity.toRecentlyViewed(): RecentlyViewed {
-    return RecentlyViewed(id, hash, name, imageUrl, nPrice, sPrice, viewedAt)
+    return RecentlyViewed(id, hash, name, description, imageUrl, nPrice, sPrice, viewedAt)
 }
