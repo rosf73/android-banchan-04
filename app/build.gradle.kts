@@ -59,6 +59,7 @@ dependencies {
     testImplementation(Lib.Test.junit4)
     androidTestImplementation(Lib.Test.androidxJunit)
     androidTestImplementation(Lib.Test.espressoCore)
+    androidTestImplementation(Lib.Test.truth)
     testImplementation(Lib.OkHttp3.mockWebServer)
     testImplementation(Lib.Test.mockk)
     testImplementation(Lib.Test.truth)
