@@ -9,10 +9,11 @@ import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.ui.main.tabs.adapter.ProductAdapter
 
 class PlanAdapter(
-    private val planItems: List<Category>,
     private val onClick: (Product) -> Unit,
     private val onClickCart: (Product) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var planItems = mutableListOf<Category>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -30,6 +31,11 @@ class PlanAdapter(
                 holder.bind(planItems[position])
             }
         }
+    }
+
+    fun submitListCategory(categories: List<Category>) {
+        planItems = categories.toMutableList()
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = planItems.size
