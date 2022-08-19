@@ -11,6 +11,7 @@ data class Product(
     val sPrice: String,
     val badge: List<String>?,
     val viewedAt: String = "",
+    var hasCart: Boolean = false
 ) {
     val discountRate: String
         get() = if (nPrice == null) ""
