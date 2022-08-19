@@ -18,10 +18,6 @@ class RecentlyViewedDataSourceImpl @Inject constructor(
         return recentlyViewedDao.findAllByViewedAtDesc()
     }
 
-    override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewedEntity) = withContext(ioDispatcher) {
-        recentlyViewedDao.insertRecentlyViewed(recentlyViewed)
-    }
-
     override suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewedEntity) = withContext(ioDispatcher) {
         recentlyViewedDao.insertOrUpdate(recentlyViewed)
     }

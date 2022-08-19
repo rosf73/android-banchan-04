@@ -39,12 +39,6 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesAddRecentlyViewedUseCase(repository: RecentlyViewedRepository): AddRecentlyViewedUseCase {
-        return AddRecentlyViewedUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
     fun providesModifyRecentlyViewedUseCase(repository: RecentlyViewedRepository): ModifyRecentlyViewedUseCase {
         return ModifyRecentlyViewedUseCase(repository)
     }

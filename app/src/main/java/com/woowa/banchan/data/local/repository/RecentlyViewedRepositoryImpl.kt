@@ -23,23 +23,6 @@ class RecentlyViewedRepositoryImpl @Inject constructor(
         emit(Result.success(list.map { it.toRecentlyViewed() }))
     }
 
-    override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewed) {
-        coroutineScope {
-            launch {
-                val newRecentlyViewed = RecentlyViewedEntity(
-                    hash = recentlyViewed.hash,
-                    name = recentlyViewed.name,
-                    description = recentlyViewed.description,
-                    imageUrl = recentlyViewed.imageUrl,
-                    nPrice = recentlyViewed.nPrice,
-                    sPrice = recentlyViewed.sPrice,
-                    viewedAt = recentlyViewed.viewedAt
-                )
-                recentlyViewedDataSource.addRecentlyViewed(newRecentlyViewed)
-            }
-        }
-    }
-
     override suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewed) {
         coroutineScope {
             launch {
