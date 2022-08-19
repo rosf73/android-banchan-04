@@ -19,13 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.woowa.banchan.R
-import com.woowa.banchan.domain.entity.Product
-import com.woowa.banchan.ui.recently.testRecentlyList
+import com.woowa.banchan.domain.entity.RecentlyViewed
+import com.woowa.banchan.extensions.toTimeString
 
 @Composable
 fun RecentlyViewedColumn(
     modifier: Modifier = Modifier,
-    recentlyList: List<Product>,
+    recentlyList: List<RecentlyViewed>,
     navigateToRecently: () -> Unit
 ) {
     Column(modifier = modifier.padding(16.dp, 32.dp)) {
@@ -60,7 +60,7 @@ private fun RecentlyViewedHeader(
 
 @Composable
 private fun RecentlyViewedRow(
-    recentlyList: List<Product>
+    recentlyList: List<RecentlyViewed>
 ) {
     LazyRow(modifier = Modifier) {
         items(recentlyList) { item ->
@@ -77,16 +77,16 @@ private fun RecentlyViewedRow(
 @Composable
 private fun RecentlyViewedItem(
     modifier: Modifier = Modifier,
-    item: Product
+    item: RecentlyViewed
 ) {
     Column(modifier = modifier) {
         GlideImage(
             modifier = Modifier.fillMaxWidth(),
-            url = item.image
+            url = item.imageUrl
         )
 
         Text(
-            text = item.title,
+            text = item.name,
             overflow = TextOverflow.Ellipsis, maxLines = 1,
             fontWeight = FontWeight(500), color = colorResource(R.color.black)
         )
@@ -105,7 +105,7 @@ private fun RecentlyViewedItem(
             )
         }
         Text(
-            text = item.viewedAt,
+            text = item.viewedAt.toTimeString(),
             fontWeight = FontWeight(400),
             color = colorResource(R.color.gray_default),
             fontSize = 12.sp
@@ -116,5 +116,5 @@ private fun RecentlyViewedItem(
 @Preview
 @Composable
 private fun TestRecently() {
-    RecentlyViewedItem(item = testRecentlyList[0])
+//    RecentlyViewedItem(item = testRecentlyList[0])
 }

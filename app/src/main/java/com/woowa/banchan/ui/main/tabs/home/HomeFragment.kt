@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,9 +19,11 @@ import com.woowa.banchan.ui.OnItemCartClickListener
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.customview.CartBottomSheet
+import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -32,6 +35,7 @@ class HomeFragment : Fragment() {
     private lateinit var planAdapter: PlanAdapter
 
     private val planViewModel: PlanViewModel by viewModels()
+    private val recentlyViewModel: RecentlyViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,6 +75,15 @@ class HomeFragment : Fragment() {
                                     product.detailHash,
                                     product.title,
                                     product.description
+                                )
+                                recentlyViewModel.modifyRecently(
+                                    hash = product.detailHash,
+                                    name = product.title,
+                                    description = product.description,
+                                    imageUrl = product.image,
+                                    nPrice = product.nPrice,
+                                    sPrice = product.sPrice,
+                                    viewedAt = Calendar.getInstance().time.time
                                 )
                             },
                             onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }

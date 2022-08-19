@@ -1,9 +1,8 @@
 package com.woowa.banchan.di
 
 import com.woowa.banchan.domain.repository.BanchanRepository
-import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
-import com.woowa.banchan.domain.usecase.GetPlanUseCase
-import com.woowa.banchan.domain.usecase.GetProductsUseCase
+import com.woowa.banchan.domain.repository.RecentlyViewedRepository
+import com.woowa.banchan.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +29,17 @@ object UseCaseModule {
     @Singleton
     fun providesGetProductsUseCase(repository: BanchanRepository): GetProductsUseCase {
         return GetProductsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetAllRecentlyViewedUseCase(repository: RecentlyViewedRepository): GetAllRecentlyViewedUseCase {
+        return GetAllRecentlyViewedUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesModifyRecentlyViewedUseCase(repository: RecentlyViewedRepository): ModifyRecentlyViewedUseCase {
+        return ModifyRecentlyViewedUseCase(repository)
     }
 }

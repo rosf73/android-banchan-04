@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.cart
 
 import androidx.lifecycle.ViewModel
-import com.woowa.banchan.ui.recently.testRecentlyList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,10 +19,10 @@ class CartViewModel @Inject constructor(
     }
 
     private fun getCart() {
-        _state.value = state.value.copy(cart = mutableListOf(), recentlyList = emptyList(), isLoading = true, errorMessage = "")
+        _state.value = state.value.copy(cart = mutableListOf(), isLoading = true, errorMessage = "")
 
         //TODO: Room Repository 와 연결
-        _state.value = state.value.copy(cart = testCartItem, recentlyList = testRecentlyList, isLoading = false, errorMessage = "")
+        _state.value = state.value.copy(cart = testCartItem, isLoading = false, errorMessage = "")
     }
 
     fun isAllChecked(): Boolean = state.value.cart.count { it.checked } == state.value.cart.size
@@ -34,7 +33,6 @@ class CartViewModel @Inject constructor(
         if (id == -1L)
             _state.value = state.value.copy(
                 cart = state.value.cart.map { it.apply { checked = true } }.toMutableList(),
-                recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
@@ -44,7 +42,6 @@ class CartViewModel @Inject constructor(
                     if (it.id == id) it.apply { checked = true }
                     else it
                 }.toMutableList(),
-                recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
@@ -54,7 +51,6 @@ class CartViewModel @Inject constructor(
         if (id == -1L)
             _state.value = state.value.copy(
                 cart = state.value.cart.map { it.apply { checked = false } }.toMutableList(),
-                recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
@@ -64,7 +60,6 @@ class CartViewModel @Inject constructor(
                     if (it.id == id) it.apply { checked = false }
                     else it
                 }.toMutableList(),
-                recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
@@ -74,14 +69,12 @@ class CartViewModel @Inject constructor(
         if (id == -1L)
             _state.value = state.value.copy(
                 cart = state.value.cart.filter { !it.checked }.toMutableList(),
-                recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
         else
             _state.value = state.value.copy(
                 cart = state.value.cart.filter { it.id != id }.toMutableList(),
-                recentlyList = state.value.recentlyList,
                 isLoading = false,
                 errorMessage = ""
             )
@@ -93,7 +86,6 @@ class CartViewModel @Inject constructor(
                 if (it.id == id) it.apply { this.quantity = quantity }
                 else it
             }.toMutableList(),
-            recentlyList = state.value.recentlyList,
             isLoading = false,
             errorMessage = ""
         )
