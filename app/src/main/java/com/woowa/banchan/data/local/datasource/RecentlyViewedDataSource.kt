@@ -7,8 +7,6 @@ interface RecentlyViewedDataSource {
 
     fun getAllRecentlyViewed(): Flow<List<RecentlyViewedEntity>>
 
-    fun getTop7RecentlyViewed(): Flow<List<RecentlyViewedEntity>>
-
     suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewedEntity): Long
 
     suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewedEntity)

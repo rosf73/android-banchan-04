@@ -18,10 +18,6 @@ class RecentlyViewedDataSourceImpl @Inject constructor(
         return recentlyViewedDao.findAllByViewedAtDesc()
     }
 
-    override fun getTop7RecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
-        return recentlyViewedDao.findTop7ByViewedAtDesc()
-    }
-
     override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewedEntity) = withContext(ioDispatcher) {
         recentlyViewedDao.insertRecentlyViewed(recentlyViewed)
     }

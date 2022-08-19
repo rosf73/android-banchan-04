@@ -23,11 +23,6 @@ class RecentlyViewedRepositoryImpl @Inject constructor(
         emit(Result.success(list.map { it.toRecentlyViewed() }))
     }
 
-    override suspend fun getTop7RecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
-        val list = recentlyViewedDataSource.getTop7RecentlyViewed().first()
-        emit(Result.success(list.map { it.toRecentlyViewed() }))
-    }
-
     override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewed) {
         coroutineScope {
             launch {

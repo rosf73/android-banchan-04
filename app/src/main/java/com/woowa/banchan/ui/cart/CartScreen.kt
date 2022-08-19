@@ -56,7 +56,9 @@ fun CartScreen(
                     cartViewModel.updateCartItem(id, quantity)
                 })
             RecentlyViewedColumn(
-                recentlyList = recentlyState.recentlyList,
+                recentlyList =
+                    if (recentlyState.recentlyList.size < 7) recentlyState.recentlyList
+                    else recentlyState.recentlyList.subList(0, 7),
                 navigateToRecently = navigateToRecently
             )
         }

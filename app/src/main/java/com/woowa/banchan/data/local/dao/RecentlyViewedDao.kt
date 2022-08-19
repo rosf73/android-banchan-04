@@ -10,9 +10,6 @@ interface RecentlyViewedDao {
     @Query("SELECT * FROM recently_viewed ORDER BY viewed_at DESC")
     fun findAllByViewedAtDesc(): Flow<List<RecentlyViewedEntity>>
 
-    @Query("SELECT * FROM recently_viewed ORDER BY viewed_at DESC LIMIT 7")
-    fun findTop7ByViewedAtDesc(): Flow<List<RecentlyViewedEntity>>
-
     @Query("SELECT * FROM recently_viewed WHERE hash = :hash")
     suspend fun findRecentlyViewedByHash(hash: String): List<RecentlyViewedEntity>
 
