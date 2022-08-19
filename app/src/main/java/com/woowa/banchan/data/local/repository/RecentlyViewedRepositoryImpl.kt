@@ -7,13 +7,15 @@ import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RecentlyViewedRepositoryImpl @Inject constructor(
     private val recentlyViewedDataSource: RecentlyViewedDataSource
-): RecentlyViewedRepository {
+) : RecentlyViewedRepository {
 
     override suspend fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
         recentlyViewedDataSource.getAllRecentlyViewed()
