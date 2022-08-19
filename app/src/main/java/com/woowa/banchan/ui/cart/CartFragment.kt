@@ -12,6 +12,7 @@ import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnRecentlyClickListener
 import com.woowa.banchan.ui.recently.RecentlyFragment
+import com.woowa.banchan.ui.recently.RecentlyViewModel
 
 class CartFragment : Fragment(), OnRecentlyClickListener {
 
@@ -19,6 +20,7 @@ class CartFragment : Fragment(), OnRecentlyClickListener {
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
 
     private val cartViewModel: CartViewModel by activityViewModels()
+    private val recentlyViewModel: RecentlyViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +37,7 @@ class CartFragment : Fragment(), OnRecentlyClickListener {
         binding.composeCart.setContent {
             CartScreen(
                 cartViewModel,
+                recentlyViewModel,
                 navigateToRecently = { navigateToRecently() })
         }
 

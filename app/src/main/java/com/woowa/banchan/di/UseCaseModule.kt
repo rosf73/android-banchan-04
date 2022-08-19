@@ -3,6 +3,7 @@ package com.woowa.banchan.di
 import com.woowa.banchan.domain.repository.BanchanRepository
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.usecase.*
+import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,5 +58,17 @@ object UseCaseModule {
     @Singleton
     fun providesModifyCartUseCase(repository: CartRepository): ModifyCartUseCase {
         return ModifyCartUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetAllRecentlyViewedUseCase(repository: RecentlyViewedRepository): GetAllRecentlyViewedUseCase {
+        return GetAllRecentlyViewedUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesModifyRecentlyViewedUseCase(repository: RecentlyViewedRepository): ModifyRecentlyViewedUseCase {
+        return ModifyRecentlyViewedUseCase(repository)
     }
 }

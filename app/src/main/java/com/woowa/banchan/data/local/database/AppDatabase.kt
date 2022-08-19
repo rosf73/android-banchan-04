@@ -10,7 +10,7 @@ import com.woowa.banchan.data.local.entity.*
 @Database(
     entities = [CartEntity::class, OrderEntity::class, OrderLineItemEntity::class, RecentlyViewedEntity::class],
     views = [OrderLineItemView::class],
-    version = 1,
+    version = 2,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
