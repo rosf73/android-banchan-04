@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "order")
 data class OrderEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "ordered_at") val orderedAt: Long,
-    @ColumnInfo(name = "status") val status: String
+    @ColumnInfo(name = "status") val status: String = "START" // "START" OR "DONE"
 )
