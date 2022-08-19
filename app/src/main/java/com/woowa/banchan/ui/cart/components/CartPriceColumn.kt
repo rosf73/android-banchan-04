@@ -17,7 +17,7 @@ import com.woowa.banchan.extensions.toMoneyString
 fun CartPriceColumn(
     modifier: Modifier = Modifier,
     totalPrice: Int,
-    deliveryFee: Int = 2500
+    deliveryFee: Int = 0
 ) {
     Column(
         modifier = modifier

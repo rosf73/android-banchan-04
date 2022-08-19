@@ -10,11 +10,13 @@ import androidx.fragment.app.activityViewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
+import com.woowa.banchan.ui.OnDetailClickListener
 import com.woowa.banchan.ui.OnRecentlyClickListener
+import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.recently.RecentlyFragment
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 
-class CartFragment : Fragment(), OnRecentlyClickListener {
+class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
@@ -38,7 +40,9 @@ class CartFragment : Fragment(), OnRecentlyClickListener {
             CartScreen(
                 cartViewModel,
                 recentlyViewModel,
-                navigateToRecently = { navigateToRecently() })
+                navigateToRecently = { navigateToRecently() },
+                onItemClick = { navigateToDetail(it.hash, it.name, it.description) }
+            )
         }
 
         initListener()
@@ -53,6 +57,14 @@ class CartFragment : Fragment(), OnRecentlyClickListener {
         parentFragmentManager.beginTransaction()
             .addToBackStack("Cart")
             .replace(R.id.fcv_main, RecentlyFragment())
+            .commit()
+    }
+
+    override fun navigateToDetail(hash: String, name: String, description: String) {
+        parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .addToBackStack("Cart")
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 }

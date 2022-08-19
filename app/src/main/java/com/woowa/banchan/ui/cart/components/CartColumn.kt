@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,6 +36,7 @@ fun CartColumn(
     Column(modifier = modifier) {
         if (cart.isEmpty())
             CartItemEmpty(modifier = Modifier.fillMaxWidth())
+
         else {
             cart.forEach { item ->
                 CartItemRow(
@@ -56,7 +58,10 @@ fun CartColumn(
 
             CartPriceColumn(
                 modifier = Modifier.align(Alignment.End),
-                totalPrice = totalPrice
+                totalPrice = totalPrice,
+                deliveryFee =
+                    if (totalPrice >= 40000) 0
+                    else 2500
             )
 
             Button(
@@ -64,17 +69,23 @@ fun CartColumn(
                     .padding(16.dp, 0.dp)
                     .fillMaxWidth(),
                 onClick = { /*TODO*/ },
-                enabled = totalPrice >= 40000,
-                contentPadding = PaddingValues(16.dp)
+                enabled = totalPrice >= 10000,
+                contentPadding = PaddingValues(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(R.color.primary_main),
+                    disabledBackgroundColor = colorResource(R.color.primary_disabled)
+                )
             ) {
-                Text(text = "${totalPrice.toMoneyString()} 주문하기")
+                val orderPrice =
+                    if (totalPrice >= 40000) totalPrice
+                    else totalPrice + 2500
+                Text(text = "${orderPrice.toMoneyString()} 주문하기", color = colorResource(R.color.white))
             }
 
-            if (totalPrice < 40000)
+            if (totalPrice < 10000)
                 Text(
                     modifier = Modifier.align(CenterHorizontally),
-                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 무료!"
-                )
+                    text = "${(10000 - totalPrice).toMoneyString()}을 더 담으면 무료!")
         }
     }
 }
@@ -86,6 +97,5 @@ private fun CartItemEmpty(
     Text(
         modifier = modifier.padding(0.dp, 100.dp),
         text = stringResource(R.string.cart_empty),
-        textAlign = TextAlign.Center
-    )
+        textAlign = TextAlign.Center)
 }

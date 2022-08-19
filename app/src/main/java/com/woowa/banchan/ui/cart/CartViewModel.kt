@@ -30,7 +30,7 @@ class CartViewModel @Inject constructor(
         )
     }
 
-    private fun getCart() {
+    fun getCart() {
         _state.value = state.value.copy(
             cart = mutableListOf(),
             isLoading = true,
