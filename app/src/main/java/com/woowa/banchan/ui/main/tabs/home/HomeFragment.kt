@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
                                     name = product.title,
                                     description = product.description,
                                     imageUrl = product.image,
-                                    nPrice = product.nPrice ?: "0원",
+                                    nPrice = product.nPrice,
                                     sPrice = product.sPrice,
                                     viewedAt = Calendar.getInstance().time.time
                                 )

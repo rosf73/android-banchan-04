@@ -16,7 +16,7 @@ data class RecentlyViewedEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-    @ColumnInfo(name = "n_price") val nPrice: String,
+    @ColumnInfo(name = "n_price") val nPrice: String? = null,
     @ColumnInfo(name = "s_price") val sPrice: String,
     @ColumnInfo(name = "viewed_at") val viewedAt: Long
 )

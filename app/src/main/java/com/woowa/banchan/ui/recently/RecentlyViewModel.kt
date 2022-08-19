@@ -58,7 +58,7 @@ class RecentlyViewModel @Inject constructor(
         name: String,
         description: String,
         imageUrl: String,
-        nPrice: String,
+        nPrice: String? = null,
         sPrice: String,
         viewedAt: Long
     ) = viewModelScope.launch {

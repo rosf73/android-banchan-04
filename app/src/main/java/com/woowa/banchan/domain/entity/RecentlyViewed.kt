@@ -5,7 +5,7 @@ data class RecentlyViewed(
     val name: String,
     val description: String,
     val imageUrl: String,
-    val nPrice: String,
+    val nPrice: String? = null,
     val sPrice: String,
     val viewedAt: Long
 )

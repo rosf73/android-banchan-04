@@ -97,7 +97,7 @@ private fun RecentlyViewedItem(
                 color = colorResource(R.color.black)
             )
             Text(
-                text = item.nPrice,
+                text = item.nPrice ?: "",
                 fontWeight = FontWeight(400),
                 color = colorResource(R.color.gray_default),
                 fontSize = 12.sp,
