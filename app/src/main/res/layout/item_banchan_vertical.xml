@@ -100,7 +100,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_circle_cart"
+            android:background="@{product.hasCart == true?@drawable/ic_circle_in_cart:@drawable/ic_circle_cart}"
             app:layout_constraintBottom_toBottomOf="@id/iv_banchan"
             app:layout_constraintEnd_toEndOf="@id/iv_banchan" />
 
