@@ -315,6 +315,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="24dp"
+                    android:onClick="@{()->detailViewModel.onOrderEvent()}"
                     android:padding="16dp"
                     android:text="@string/detail_ordering"
                     android:textColor="@color/white"
