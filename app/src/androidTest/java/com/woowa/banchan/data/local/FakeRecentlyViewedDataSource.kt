@@ -9,11 +9,11 @@ class FakeRecentlyViewedDataSource(
     private val recentlyViewedList: List<RecentlyViewedEntity>
 ): RecentlyViewedDataSource {
 
-    override fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewedEntity>>> {
-        return flow { emit(Result.success(recentlyViewedList)) }
+    override fun getAllRecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
+        return flow { emit(recentlyViewedList) }
     }
 
-    override fun getTop7RecentlyViewed(): Flow<Result<List<RecentlyViewedEntity>>> {
+    override fun getTop7RecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
         TODO("Not yet implemented")
     }
 

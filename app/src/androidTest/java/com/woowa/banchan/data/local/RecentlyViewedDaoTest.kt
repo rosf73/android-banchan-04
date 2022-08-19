@@ -39,7 +39,7 @@ class RecentlyViewedDaoTest {
 
     @Test
     fun `최근_본_상품이_정상_등록된다`() = runTest {
-        val item = RecentlyViewedEntity(id = 0L, "", "소고기", "", "0원", "0원", 100L)
+        val item = RecentlyViewedEntity(id = 0L, "", "소고기", "", "", "0원", "0원", 100L)
         dao.insertRecentlyViewed(item)
 
         val allRecentlyViewed = dao.findAllByViewedAtDesc().first()
@@ -48,9 +48,9 @@ class RecentlyViewedDaoTest {
 
     @Test
     fun `최근_본_상품이_정상_조회된다`() = runTest {
-        val item1 = RecentlyViewedEntity(id = 0L, "", "소고기", "", "0원", "0원", 100L)
+        val item1 = RecentlyViewedEntity(id = 0L, "", "소고기", "", "", "0원", "0원", 100L)
         dao.insertRecentlyViewed(item1)
-        val item2 = RecentlyViewedEntity(id = 1L, "", "돼지고기", "", "0원", "0원", 100L)
+        val item2 = RecentlyViewedEntity(id = 1L, "", "돼지고기", "", "", "0원", "0원", 100L)
 
         val allRecentlyViewed = dao.findAllByViewedAtDesc().first()
         assertThat(allRecentlyViewed).contains(item1) // Success
@@ -60,15 +60,15 @@ class RecentlyViewedDaoTest {
     @Test
     fun `최근_본_상품_7개만_정상_조회된다`() = runTest {
         val itemList = listOf(
-            RecentlyViewedEntity(0L, "", "소", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(2L, "", "기", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(1L, "", "고", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(3L, "", "소", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(4L, "", "고", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(5L, "", "기", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(6L, "", "소", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(7L, "", "고", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(8L, "", "기", "", "0원", "0원", 100L)
+            RecentlyViewedEntity(0L, "", "소", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(2L, "", "기", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(1L, "", "고", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(3L, "", "소", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(4L, "", "고", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(5L, "", "기", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(6L, "", "소", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(7L, "", "고", "", "", "0원", "0원", 100L),
+            RecentlyViewedEntity(8L, "", "기", "", "", "0원", "0원", 100L)
         )
         itemList.forEach {
             dao.insertRecentlyViewed(it)
@@ -82,15 +82,15 @@ class RecentlyViewedDaoTest {
     @Test
     fun `최근_본_상품이_가장_최근_순으로_정상_조회된다`() = runTest {
         val itemList = listOf(
-            RecentlyViewedEntity(0L, "", "소", "", "0원", "0원", viewedAt = 0L),
-            RecentlyViewedEntity(2L, "", "기", "", "0원", "0원", viewedAt = 1L),
-            RecentlyViewedEntity(1L, "", "고", "", "0원", "0원", viewedAt = 3L),
-            RecentlyViewedEntity(3L, "", "소", "", "0원", "0원", viewedAt = 9L),
-            RecentlyViewedEntity(4L, "", "고", "", "0원", "0원", viewedAt = 5L),
-            RecentlyViewedEntity(8L, "", "기", "", "0원", "0원", viewedAt = 100L),
-            RecentlyViewedEntity(6L, "", "소", "", "0원", "0원", viewedAt = 7L),
-            RecentlyViewedEntity(7L, "", "고", "", "0원", "0원", viewedAt = 11L),
-            RecentlyViewedEntity(5L, "", "기", "", "0원", "0원", viewedAt = 4L)
+            RecentlyViewedEntity(0L, "", "소", "", "", "0원", "0원", viewedAt = 0L),
+            RecentlyViewedEntity(2L, "", "기", "", "", "0원", "0원", viewedAt = 1L),
+            RecentlyViewedEntity(1L, "", "고", "", "", "0원", "0원", viewedAt = 3L),
+            RecentlyViewedEntity(3L, "", "소", "", "", "0원", "0원", viewedAt = 9L),
+            RecentlyViewedEntity(4L, "", "고", "", "", "0원", "0원", viewedAt = 5L),
+            RecentlyViewedEntity(8L, "", "기", "", "", "0원", "0원", viewedAt = 100L),
+            RecentlyViewedEntity(6L, "", "소", "", "", "0원", "0원", viewedAt = 7L),
+            RecentlyViewedEntity(7L, "", "고", "", "", "0원", "0원", viewedAt = 11L),
+            RecentlyViewedEntity(5L, "", "기", "", "", "0원", "0원", viewedAt = 4L)
         )
         itemList.forEach {
             dao.insertRecentlyViewed(it)
@@ -107,7 +107,7 @@ class RecentlyViewedDaoTest {
 
     @Test
     fun `최근_본_상품이_정상_업데이트된다`() = runTest {
-        val item = RecentlyViewedEntity(0L, "", "소고기", "", "0원", "0원", 100L)
+        val item = RecentlyViewedEntity(0L, "BEEF", "소고기", "", "", "0원", "0원", 100L)
         dao.insertOrUpdate(item)
 
         var allRecentlyViewed = dao.findAllByViewedAtDesc().first()

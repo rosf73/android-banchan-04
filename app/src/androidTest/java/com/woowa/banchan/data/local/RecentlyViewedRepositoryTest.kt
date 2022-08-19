@@ -6,8 +6,12 @@ import com.google.common.truth.Truth
 import com.woowa.banchan.data.local.entity.RecentlyViewedEntity
 import com.woowa.banchan.data.local.entity.toRecentlyViewed
 import com.woowa.banchan.data.local.repository.RecentlyViewedRepositoryImpl
+import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -30,6 +34,7 @@ class RecentlyViewedRepositoryTest {
                 hash = "H",
                 imageUrl = "http://test",
                 name = "소고기",
+                description = "",
                 nPrice = "0원",
                 sPrice = "0원",
                 viewedAt = 100L
@@ -42,11 +47,11 @@ class RecentlyViewedRepositoryTest {
     @Test
     fun `최근_본_상품이_정상_조회된다`() = runTest {
         // when
-        repository.getAllRecentlyViewed().collect { result ->
-            val actual = result.getOrNull()
-            // then
-            Truth.assertThat(actual)
-                .isEqualTo(fakeEntityList.map { it.toRecentlyViewed() })
-        }
+        val result = repository.getAllRecentlyViewed().firstOrNull()
+        val actual = result?.getOrNull()
+
+        // then
+        Truth.assertThat(actual)
+            .isEqualTo(fakeEntityList.map { it.toRecentlyViewed() })
     }
 }
