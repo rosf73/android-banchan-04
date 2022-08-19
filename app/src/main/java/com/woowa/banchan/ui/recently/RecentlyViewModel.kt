@@ -3,20 +3,20 @@ package com.woowa.banchan.ui.recently
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.entity.DetailProduct
+import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.GetAllRecentlyViewedUseCase
+import com.woowa.banchan.domain.usecase.ModifyRecentlyViewedUseCase
 import com.woowa.banchan.ui.cart.testCartItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecentlyViewModel @Inject constructor(
-    private val getAllRecentlyViewedUseCase: GetAllRecentlyViewedUseCase
+    private val getAllRecentlyViewedUseCase: GetAllRecentlyViewedUseCase,
+    private val modifyRecentlyViewedUseCase: ModifyRecentlyViewedUseCase
 ): ViewModel() {
 
     private val _state = MutableStateFlow(RecentlyUiState())
@@ -51,5 +51,26 @@ class RecentlyViewModel @Inject constructor(
                 }
             }
         }.launchIn(this)
+    }
+
+    fun modifyRecently(
+        hash: String,
+        name: String,
+        description: String,
+        imageUrl: String,
+        nPrice: String,
+        sPrice: String,
+        viewedAt: Long
+    ) = viewModelScope.launch {
+        val newRecently = RecentlyViewed(
+            hash, name, description, imageUrl, nPrice, sPrice, viewedAt
+        )
+        modifyRecentlyViewedUseCase(newRecently)
+        getRecently()
+    }
+
+    fun modifyRecently(recentlyViewed: RecentlyViewed) = viewModelScope.launch {
+        modifyRecentlyViewedUseCase(recentlyViewed)
+        getRecently()
     }
 }
