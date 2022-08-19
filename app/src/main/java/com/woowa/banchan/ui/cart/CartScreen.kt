@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.ui.cart.components.CartCheckBox
 import com.woowa.banchan.ui.cart.components.CartColumn
 import com.woowa.banchan.ui.cart.components.CheckState
@@ -14,7 +15,8 @@ import com.woowa.banchan.ui.recently.RecentlyViewModel
 fun CartScreen(
     cartViewModel: CartViewModel,
     recentlyViewModel: RecentlyViewModel,
-    navigateToRecently: () -> Unit
+    navigateToRecently: () -> Unit,
+    onItemClick: (RecentlyViewed) -> Unit
 ) {
     val cartState by cartViewModel.state.collectAsState()
     val recentlyState by recentlyViewModel.state.collectAsState()
@@ -59,7 +61,8 @@ fun CartScreen(
                 recentlyList =
                     if (recentlyState.recentlyList.size < 7) recentlyState.recentlyList
                     else recentlyState.recentlyList.subList(0, 7),
-                navigateToRecently = navigateToRecently
+                navigateToRecently = navigateToRecently,
+                onItemClick = onItemClick
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.cart.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -26,12 +27,13 @@ import com.woowa.banchan.extensions.toTimeString
 fun RecentlyViewedColumn(
     modifier: Modifier = Modifier,
     recentlyList: List<RecentlyViewed>,
-    navigateToRecently: () -> Unit
+    navigateToRecently: () -> Unit,
+    onItemClick: (RecentlyViewed) -> Unit
 ) {
     Column(modifier = modifier.padding(16.dp, 32.dp)) {
         RecentlyViewedHeader(onViewTotalClick = navigateToRecently)
 
-        RecentlyViewedRow(recentlyList)
+        RecentlyViewedRow(recentlyList, onItemClick)
     }
 }
 
@@ -60,7 +62,8 @@ private fun RecentlyViewedHeader(
 
 @Composable
 private fun RecentlyViewedRow(
-    recentlyList: List<RecentlyViewed>
+    recentlyList: List<RecentlyViewed>,
+    onItemClick: (RecentlyViewed) -> Unit
 ) {
     LazyRow(modifier = Modifier) {
         items(recentlyList) { item ->
@@ -68,7 +71,8 @@ private fun RecentlyViewedRow(
                 modifier = Modifier
                     .padding(8.dp)
                     .width(120.dp),
-                item = item
+                item = item,
+                onItemClick = onItemClick
             )
         }
     }
@@ -77,9 +81,10 @@ private fun RecentlyViewedRow(
 @Composable
 private fun RecentlyViewedItem(
     modifier: Modifier = Modifier,
-    item: RecentlyViewed
+    item: RecentlyViewed,
+    onItemClick: (RecentlyViewed) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.clickable { onItemClick(item) }) {
         GlideImage(
             modifier = Modifier.fillMaxWidth(),
             url = item.imageUrl
