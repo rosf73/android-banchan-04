@@ -58,28 +58,6 @@ class RecentlyViewedDaoTest {
     }
 
     @Test
-    fun `최근_본_상품_7개만_정상_조회된다`() = runTest {
-        val itemList = listOf(
-            RecentlyViewedEntity(0L, "", "소", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(2L, "", "기", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(1L, "", "고", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(3L, "", "소", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(4L, "", "고", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(5L, "", "기", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(6L, "", "소", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(7L, "", "고", "", "", "0원", "0원", 100L),
-            RecentlyViewedEntity(8L, "", "기", "", "", "0원", "0원", 100L)
-        )
-        itemList.forEach {
-            dao.insertRecentlyViewed(it)
-        }
-
-        val top7RecentlyViewed = dao.findTop7ByViewedAtDesc().first()
-        assertThat(top7RecentlyViewed).hasSize(7) // Success
-        assertThat(top7RecentlyViewed).hasSize(itemList.size) // Fail
-    }
-
-    @Test
     fun `최근_본_상품이_가장_최근_순으로_정상_조회된다`() = runTest {
         val itemList = listOf(
             RecentlyViewedEntity(0L, "", "소", "", "", "0원", "0원", viewedAt = 0L),

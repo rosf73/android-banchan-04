@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentRecentlyBinding
 import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.domain.entity.toProduct
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
@@ -54,7 +55,7 @@ class RecentlyFragment: Fragment(), OnDetailClickListener, OnItemCartClickListen
                         recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
                     },
                     onClickCart = {
-//                        navigateToCart(it)
+                        navigateToCart(it.toProduct())
                     }
                 )
             }
