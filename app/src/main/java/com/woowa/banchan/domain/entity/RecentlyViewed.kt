@@ -1,7 +1,6 @@
 package com.woowa.banchan.domain.entity
 
 data class RecentlyViewed(
-    val id: Long,
     val hash: String,
     val name: String,
     val description: String,

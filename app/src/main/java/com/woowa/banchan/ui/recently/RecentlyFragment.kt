@@ -19,6 +19,7 @@ import com.woowa.banchan.ui.OnItemCartClickListener
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
+import java.util.*
 
 class RecentlyFragment: Fragment(), OnDetailClickListener, OnItemCartClickListener {
 
@@ -50,6 +51,7 @@ class RecentlyFragment: Fragment(), OnDetailClickListener, OnItemCartClickListen
                     state.recentlyList,
                     onClick = {
                         navigateToDetail(it.hash, it.name, it.description)
+                        recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
                     },
                     onClickCart = {
 //                        navigateToCart(it)
