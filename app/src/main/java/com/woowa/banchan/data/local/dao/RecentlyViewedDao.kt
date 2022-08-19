@@ -13,7 +13,10 @@ interface RecentlyViewedDao {
     @Query("SELECT * FROM recently_viewed ORDER BY viewed_at DESC LIMIT 7")
     fun findTop7ByViewedAtDesc(): Flow<List<RecentlyViewedEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM recently_viewed WHERE hash = :hash")
+    suspend fun findRecentlyViewedByHash(hash: String): List<RecentlyViewedEntity>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertRecentlyViewed(recentlyViewed: RecentlyViewedEntity): Long
 
     @Update
@@ -21,8 +24,11 @@ interface RecentlyViewedDao {
 
     @Transaction
     suspend fun insertOrUpdate(recentlyViewed: RecentlyViewedEntity) {
-        if (insertRecentlyViewed(recentlyViewed) == -1L) {
-            updateRecentlyViewed(recentlyViewed)
+        val res = findRecentlyViewedByHash(recentlyViewed.hash)
+        if (res.isEmpty()) {
+            insertRecentlyViewed(recentlyViewed)
+        } else {
+            updateRecentlyViewed(recentlyViewed.copy(id = res[0].id))
         }
     }
 }

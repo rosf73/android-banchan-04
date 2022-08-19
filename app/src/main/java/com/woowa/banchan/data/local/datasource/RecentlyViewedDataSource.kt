@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecentlyViewedDataSource {
 
-    fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewedEntity>>>
+    fun getAllRecentlyViewed(): Flow<List<RecentlyViewedEntity>>
 
-    fun getTop7RecentlyViewed(): Flow<Result<List<RecentlyViewedEntity>>>
+    fun getTop7RecentlyViewed(): Flow<List<RecentlyViewedEntity>>
 
     suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewedEntity): Long
 

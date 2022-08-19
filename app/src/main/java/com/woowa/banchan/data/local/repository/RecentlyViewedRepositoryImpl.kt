@@ -8,6 +8,7 @@ import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -18,32 +19,19 @@ class RecentlyViewedRepositoryImpl @Inject constructor(
 ): RecentlyViewedRepository {
 
     override suspend fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
-        recentlyViewedDataSource.getAllRecentlyViewed().map { result ->
-            result.onSuccess { list ->
-                emit(Result.success(list.map { it.toRecentlyViewed() }))
-            }
-            .onFailure {
-                emit(Result.failure(NotFoundProductsException()))
-            }
-        }
+        val list = recentlyViewedDataSource.getAllRecentlyViewed().first()
+        emit(Result.success(list.map { it.toRecentlyViewed() }))
     }
 
     override suspend fun getTop7RecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
-        recentlyViewedDataSource.getTop7RecentlyViewed().map { result ->
-            result.onSuccess { list ->
-                emit(Result.success(list.map { it.toRecentlyViewed() }))
-            }
-            .onFailure {
-                emit(Result.failure(NotFoundProductsException()))
-            }
-        }
+        val list = recentlyViewedDataSource.getTop7RecentlyViewed().first()
+        emit(Result.success(list.map { it.toRecentlyViewed() }))
     }
 
     override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewed) {
         coroutineScope {
             launch {
                 val newRecentlyViewed = RecentlyViewedEntity(
-                    id = recentlyViewed.id,
                     hash = recentlyViewed.hash,
                     name = recentlyViewed.name,
                     description = recentlyViewed.description,
@@ -61,7 +49,6 @@ class RecentlyViewedRepositoryImpl @Inject constructor(
         coroutineScope {
             launch {
                 val newRecentlyViewed = RecentlyViewedEntity(
-                    id = recentlyViewed.id,
                     hash = recentlyViewed.hash,
                     name = recentlyViewed.name,
                     description = recentlyViewed.description,

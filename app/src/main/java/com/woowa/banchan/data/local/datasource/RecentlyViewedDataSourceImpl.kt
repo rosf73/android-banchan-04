@@ -14,16 +14,12 @@ class RecentlyViewedDataSourceImpl @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): RecentlyViewedDataSource {
 
-    override fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewedEntity>>> {
-        return recentlyViewedDao.findAllByViewedAtDesc().map {
-            Result.success(it)
-        }
+    override fun getAllRecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
+        return recentlyViewedDao.findAllByViewedAtDesc()
     }
 
-    override fun getTop7RecentlyViewed(): Flow<Result<List<RecentlyViewedEntity>>> {
-        return recentlyViewedDao.findTop7ByViewedAtDesc().map {
-            Result.success(it)
-        }
+    override fun getTop7RecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
+        return recentlyViewedDao.findTop7ByViewedAtDesc()
     }
 
     override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewedEntity) = withContext(ioDispatcher) {

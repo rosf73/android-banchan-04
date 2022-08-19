@@ -2,12 +2,16 @@ package com.woowa.banchan.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.woowa.banchan.domain.entity.RecentlyViewed
 
-@Entity(tableName = "recently_viewed")
+@Entity(
+    tableName = "recently_viewed",
+    indices = [Index(value = ["hash"], unique = true)]
+)
 data class RecentlyViewedEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "hash") val hash: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
@@ -18,5 +22,5 @@ data class RecentlyViewedEntity(
 )
 
 fun RecentlyViewedEntity.toRecentlyViewed(): RecentlyViewed {
-    return RecentlyViewed(id, hash, name, description, imageUrl, nPrice, sPrice, viewedAt)
+    return RecentlyViewed(hash, name, description, imageUrl, nPrice, sPrice, viewedAt)
 }
