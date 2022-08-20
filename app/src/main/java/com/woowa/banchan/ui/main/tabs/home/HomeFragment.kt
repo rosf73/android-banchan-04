@@ -7,19 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
 import com.woowa.banchan.ui.customview.CartBottomSheet
+import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -28,11 +25,39 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = requireNotNull(_binding)
 
-    private lateinit var concatAdapter: ConcatAdapter
-    private lateinit var planAdapter: PlanAdapter
+    private val planAdapter by lazy {
+        PlanAdapter(
+            onClick = { product ->
+                (parentFragment as MainFragment).navigateToDetail(
+                    product.detailHash,
+                    product.title,
+                    product.description,
+                )
+                recentlyViewModel.modifyRecently(
+                    hash = product.detailHash,
+                    name = product.title,
+                    description = product.description,
+                    imageUrl = product.image,
+                    nPrice = product.nPrice,
+                    sPrice = product.sPrice,
+                    viewedAt = Calendar.getInstance().time.time
+                )
+            },
+            onClickCart = {
+                if (it.hasCart) return@PlanAdapter
+                CartBottomSheet(it).show(childFragmentManager, "cart")
+            },
+        )
+    }
 
     private val planViewModel: PlanViewModel by viewModels()
     private val recentlyViewModel: RecentlyViewModel by activityViewModels()
+    private val concatAdapter by lazy {
+        ConcatAdapter(
+            BannerAdapter(listOf(getString(R.string.plan_banner_title)), true),
+            planAdapter
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,51 +75,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
-        setAdapter()
+        binding.rvHome.adapter = concatAdapter
     }
 
     private fun observeData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                planViewModel.state.collectLatest { state ->
-                    if (state.plans.isNotEmpty()) {
-                        concatAdapter.addAdapter(
-                            BannerAdapter(
-                                listOf(getString(R.string.plan_banner_title)),
-                                true
-                            )
-                        )
-
-                        planAdapter = PlanAdapter(
-                            state.plans,
-                            onClick = { product ->
-                                (parentFragment as MainFragment).navigateToDetail(
-                                    product.detailHash,
-                                    product.title,
-                                    product.description
-                                )
-                                recentlyViewModel.modifyRecently(
-                                    hash = product.detailHash,
-                                    name = product.title,
-                                    description = product.description,
-                                    imageUrl = product.image,
-                                    nPrice = product.nPrice,
-                                    sPrice = product.sPrice,
-                                    viewedAt = Calendar.getInstance().time.time
-                                )
-                            },
-                            onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
-                        )
-                        concatAdapter.addAdapter(planAdapter)
-                        binding.rvHome.adapter = concatAdapter
-                    }
+        viewLifecycleOwner.repeatOnLifecycle {
+            planViewModel.state.collectLatest { state ->
+                if (state.plans.isNotEmpty()) {
+                    planAdapter.submitList(state.plans)
                 }
             }
         }
-    }
-
-    private fun setAdapter() {
-        concatAdapter = ConcatAdapter()
     }
 
     override fun onDestroyView() {

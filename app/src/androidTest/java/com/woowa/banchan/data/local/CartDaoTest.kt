@@ -107,8 +107,8 @@ class CartDaoTest {
     @Test
     fun `장바구니에_데이터의_수량과_선택을_수정할_수_있다`() = runTest {
         dao.insertCart(cart)
-        val updateCart = cart.copy(quantity = 1, check = false)
-        dao.insertCart(updateCart)
+        val updateCart = cart.copy(quantity = 9, check = true)
+        dao.updateCart(updateCart)
 
         val result = dao.findAll().first()
         assertThat(result).isEqualTo(listOf(updateCart))

@@ -4,6 +4,10 @@ import com.woowa.banchan.domain.repository.BanchanRepository
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.usecase.*
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
+import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
+import com.woowa.banchan.domain.usecase.GetPlanUseCase
+import com.woowa.banchan.domain.usecase.GetProductsUseCase
+import com.woowa.banchan.domain.usecase.cart.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +20,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetPlanUseCase(banchanRepository: BanchanRepository): GetPlanUseCase {
-        return GetPlanUseCase(banchanRepository)
+    fun provideGetPlanUseCase(
+        banchanRepository: BanchanRepository,
+        getCartUseCase: GetCartUseCase
+    ): GetPlanUseCase {
+        return GetPlanUseCase(banchanRepository, getCartUseCase)
     }
 
     @Provides
@@ -28,8 +35,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesGetProductsUseCase(repository: BanchanRepository): GetProductsUseCase {
-        return GetProductsUseCase(repository)
+    fun providesGetProductsUseCase(
+        repository: BanchanRepository,
+        getCartUseCase: GetCartUseCase
+    ): GetProductsUseCase {
+        return GetProductsUseCase(repository, getCartUseCase)
     }
 
     @Provides
@@ -37,9 +47,15 @@ object UseCaseModule {
     fun providesAddCartUseCase(
         repository: CartRepository,
         existCartUseCase: ExistCartUseCase,
-        modifyCartUseCase: ModifyCartUseCase
+        modifyCartUseCase: ModifyCartUseCase,
+        getCartWithHashUseCase: GetCartWithHashUseCase
     ): AddCartUseCase {
-        return AddCartUseCase(repository, existCartUseCase, modifyCartUseCase)
+        return AddCartUseCase(
+            repository,
+            existCartUseCase,
+            modifyCartUseCase,
+            getCartWithHashUseCase
+        )
     }
 
     @Provides
@@ -58,6 +74,18 @@ object UseCaseModule {
     @Singleton
     fun providesModifyCartUseCase(repository: CartRepository): ModifyCartUseCase {
         return ModifyCartUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetCartWithHashUseCase(repository: CartRepository): GetCartWithHashUseCase {
+        return GetCartWithHashUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesRemoveUseCase(repository: CartRepository): RemoveCartUseCase {
+        return RemoveCartUseCase(repository)
     }
 
     @Provides

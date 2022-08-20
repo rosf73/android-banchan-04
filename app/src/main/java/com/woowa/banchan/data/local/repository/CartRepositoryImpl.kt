@@ -12,17 +12,28 @@ import javax.inject.Inject
 class CartRepositoryImpl @Inject constructor(
     private val cartDataSource: CartDataSource
 ) : CartRepository {
-    override fun addCart(cart: Cart) {
+    override suspend fun addCart(cart: Cart) {
         cartDataSource.addCart(cart.toCartEntity())
     }
 
-    override fun removeCart(vararg carts: Cart) {
+    override suspend fun updateCart(vararg cart: Cart) {
+        cartDataSource.updateCart(*cart.map { it.toCartEntity() }.toTypedArray())
+    }
+
+    override suspend fun removeCart(vararg carts: Cart) {
         val cartEntities = carts.map { it.toCartEntity() }.toTypedArray()
         cartDataSource.removeCart(*cartEntities)
     }
 
-    override fun getCarts(): Flow<List<Cart>> {
-        return cartDataSource.getCarts().map { it.toCart() }
+    override fun getCarts(): Flow<Map<String, Cart>> {
+        return cartDataSource.getCarts().map {
+            it.toCart()
+                .associateBy { cart -> cart.hash }
+        }
+    }
+
+    override fun getCart(hash: String): Flow<Cart> {
+        return cartDataSource.getCart(hash).map { it.toCart() }
     }
 
     override fun isExistCart(hash: String): Flow<Boolean> {

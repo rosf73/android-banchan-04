@@ -6,10 +6,15 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
+import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDialogBinding
+import com.woowa.banchan.ui.OnCartClickListener
+import com.woowa.banchan.ui.cart.CartFragment
 import com.woowa.banchan.ui.extensions.currentWindowMetricsPointCompat
+import dagger.hilt.android.AndroidEntryPoint
 
-class CartDialog : DialogFragment() {
+@AndroidEntryPoint
+class CartDialog : DialogFragment(), OnCartClickListener {
 
     private var _binding: FragmentDialogBinding? = null
     private val binding: FragmentDialogBinding get() = requireNotNull(_binding)
@@ -52,5 +57,13 @@ class CartDialog : DialogFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun navigateToCart() {
+        dismiss()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .addToBackStack("main")
+            .add(R.id.fcv_main, CartFragment())
+            .commit()
     }
 }

@@ -1,21 +1,19 @@
-package com.woowa.banchan.domain.usecase
+package com.woowa.banchan.domain.usecase.cart
 
 import com.woowa.banchan.domain.entity.Cart
-import com.woowa.banchan.domain.exception.ExistCartException
 import com.woowa.banchan.domain.repository.CartRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class AddCartUseCase(
+class ExistCartUseCase @Inject constructor(
     private val cartRepository: CartRepository
 ) {
 
     operator fun invoke(cart: Cart) = flow {
-        when (cartRepository.isExistCart(cart.hash).first()) {
-            false -> cartRepository.addCart(cart)
-            true -> emit(Result.failure<Throwable>(ExistCartException()))
+        cartRepository.isExistCart(cart.hash).collect {
+            emit(Result.success(it))
         }
     }.flowOn(Dispatchers.IO)
 }
