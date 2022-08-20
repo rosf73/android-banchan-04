@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
@@ -102,17 +104,22 @@ private fun CartItemQuantityRow(
     initQuantity: Int = 1,
     onQuantityChanged: (Int, Boolean) -> Unit
 ) {
-    var quantity by remember { mutableStateOf(initQuantity) }
-    quantity = initQuantity
+    val (quantity, setQuantity) = remember { mutableStateOf(TextFieldValue(initQuantity.toString())) }
 
     Row {
         Surface(modifier = Modifier.size(24.dp), shape = CircleShape, elevation = 6.dp) {
             Box(
                 modifier = Modifier
                     .clickable {
-                        if (quantity > 1) {
-                            onQuantityChanged(quantity - 1, false)
-                            quantity--
+                        val quantityInt = quantity.text.toInt()
+                        if (quantityInt > 1) {
+                            onQuantityChanged(quantityInt-1, false)
+                            setQuantity(
+                                TextFieldValue(
+                                    text = (quantityInt-1).toString(),
+                                    selection = TextRange((quantityInt-1).toString().length)
+                                )
+                            )
                         }
                     }
             ) {
@@ -123,22 +130,29 @@ private fun CartItemQuantityRow(
                 )
             }
         }
-        BasicTextField(
-            modifier = Modifier.width(32.dp),
-            value = quantity.toString(),
-            onValueChange = { text ->
-                quantity = text.toInt()
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            singleLine = true,
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
+
+        CartItemQuantityTextField(
+            text = quantity,
+            onTextChanged = {
+                val newQuantity = it.text.toInt()
+                val oldQuantity = quantity.text.toInt()
+                onQuantityChanged(newQuantity, newQuantity >= oldQuantity)
+                setQuantity(it)
+            }
         )
+
         Surface(modifier = Modifier.size(24.dp), shape = CircleShape, elevation = 4.dp) {
             Box(
                 modifier = Modifier
                     .clickable {
-                        onQuantityChanged(quantity + 1, true)
-                        quantity++
+                        val quantityInt = quantity.text.toInt()
+                        onQuantityChanged(quantityInt+1, true)
+                        setQuantity(
+                            TextFieldValue(
+                                text = (quantityInt+1).toString(),
+                                selection = TextRange((quantityInt+1).toString().length)
+                            )
+                        )
                     }
             ) {
                 Image(
@@ -149,4 +163,26 @@ private fun CartItemQuantityRow(
             }
         }
     }
+}
+
+@Composable
+private fun CartItemQuantityTextField(
+    text: TextFieldValue,
+    onTextChanged: (TextFieldValue) -> Unit
+) {
+    BasicTextField(
+        modifier = Modifier.width(32.dp),
+        value = text,
+        onValueChange = {
+            if (it.text.isEmpty())
+                onTextChanged(TextFieldValue("1", selection = TextRange(1)))
+            else if (it.text.length < 12) {
+                val newQuantity = it.text
+                onTextChanged(TextFieldValue(newQuantity, selection = TextRange(newQuantity.length)))
+            }
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        singleLine = true,
+        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
+    )
 }
