@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
@@ -20,7 +17,6 @@ import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -86,7 +82,7 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.repeatOnLifecycle {
             planViewModel.state.collectLatest { state ->
                 if (state.plans.isNotEmpty()) {
-                    planAdapter.submitListCategory(state.plans)
+                    planAdapter.submitList(state.plans)
                 }
             }
         }

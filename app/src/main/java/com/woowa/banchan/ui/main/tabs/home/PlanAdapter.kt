@@ -2,6 +2,8 @@ package com.woowa.banchan.ui.main.tabs.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBanchanPlanBinding
 import com.woowa.banchan.domain.entity.Category
@@ -11,11 +13,12 @@ import com.woowa.banchan.ui.main.tabs.adapter.ProductAdapter
 class PlanAdapter(
     private val onClick: (Product) -> Unit,
     private val onClickCart: (Product) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : ListAdapter<Category, PlanAdapter.CategoryViewHolder>(categoryDiffUtil) {
 
-    private var planItems = mutableListOf<Category>()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CategoryViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return CategoryViewHolder(
             ItemBanchanPlanBinding.inflate(inflater, parent, false),
@@ -24,21 +27,22 @@ class PlanAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder) {
-            is CategoryViewHolder -> {
-                val item = planItems[position] as Category
-                holder.bind(planItems[position])
-            }
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    override fun onBindViewHolder(
+        holder: CategoryViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if (payloads[0] == true)
+                holder.bindCategoryList(getItem(position).menus)
         }
     }
-
-    fun submitListCategory(categories: List<Category>) {
-        planItems = categories.toMutableList()
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int = planItems.size
 
     class CategoryViewHolder(
         private val binding: ItemBanchanPlanBinding,
@@ -58,6 +62,23 @@ class PlanAdapter(
             binding.rvHome.addOnItemTouchListener(HorizontalScrollListener())
             productAdapter.submitList(item.menus)
         }
+
+        fun bindCategoryList(menus: List<Product>) {
+            productAdapter.submitList(menus)
+        }
+    }
+}
+
+val categoryDiffUtil = object : DiffUtil.ItemCallback<Category>() {
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem.title == newItem.title
     }
 
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun getChangePayload(oldItem: Category, newItem: Category): Any? {
+        return if (oldItem.menus != newItem.menus) true else null
+    }
 }
