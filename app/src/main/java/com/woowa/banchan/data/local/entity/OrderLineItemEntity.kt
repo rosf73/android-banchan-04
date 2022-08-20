@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.woowa.banchan.domain.entity.OrderLineItem
 
 @Entity(
     tableName = "order_line_item",
@@ -23,3 +24,13 @@ data class OrderLineItemEntity(
     @ColumnInfo(name = "quantity") val quantity: Int,
     @ColumnInfo(name = "price") val price: String
 )
+
+fun OrderLineItem.toOrderLineItemEntity(orderId: Long): OrderLineItemEntity {
+    return OrderLineItemEntity(
+        orderId = orderId,
+        name = name,
+        imageUrl = imageUrl,
+        quantity = quantity,
+        price = price
+    )
+}
