@@ -1,9 +1,6 @@
 package com.woowa.banchan.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.woowa.banchan.data.local.entity.OrderEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemView
@@ -15,10 +12,12 @@ interface OrderDao {
     @Query("SELECT * FROM OrderLineItemView")
     fun findAll(): Flow<List<OrderLineItemView>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrder(orderEntity: OrderEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrderLineItem(vararg orderLineItemEntity: OrderLineItemEntity)
 
+    @Update
+    suspend fun updateOrder(orderEntity: OrderEntity)
 }

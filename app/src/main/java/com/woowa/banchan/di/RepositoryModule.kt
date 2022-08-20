@@ -1,14 +1,10 @@
 package com.woowa.banchan.di
 
-import com.woowa.banchan.data.local.datasource.RecentlyViewedDataSource
-import com.woowa.banchan.data.local.repository.RecentlyViewedRepositoryImpl
-import com.woowa.banchan.data.local.datasource.CartDataSource
-import com.woowa.banchan.data.local.repository.CartRepositoryImpl
+import com.woowa.banchan.data.local.datasource.*
+import com.woowa.banchan.data.local.repository.*
 import com.woowa.banchan.data.remote.datasource.BanchanDataSource
 import com.woowa.banchan.data.remote.repository.BanchanRepositoryImpl
-import com.woowa.banchan.domain.repository.BanchanRepository
-import com.woowa.banchan.domain.repository.RecentlyViewedRepository
-import com.woowa.banchan.domain.repository.CartRepository
+import com.woowa.banchan.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +25,12 @@ object RepositoryModule {
     @Singleton
     fun provideCartRepository(cartDataSource: CartDataSource): CartRepository {
         return CartRepositoryImpl(cartDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(orderDataSource: OrderDataSource): OrderRepository {
+        return OrderRepositoryImpl(orderDataSource)
     }
 
     @Provides

@@ -2,6 +2,8 @@ package com.woowa.banchan.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.woowa.banchan.domain.entity.Order
+import com.woowa.banchan.domain.entity.OrderLineItem
 
 @DatabaseView(
     """
@@ -17,3 +19,15 @@ data class OrderLineItemView(
     @ColumnInfo(name = "quantity") val quantity: Int,
     @ColumnInfo(name = "price") val price: String
 )
+
+fun OrderLineItemView.toOrder(): Order {
+    return Order(
+        id, orderedAt, status
+    )
+}
+
+fun OrderLineItemView.toOrderLineItem(): OrderLineItem {
+    return OrderLineItem(
+        name, imageUrl, quantity, price
+    )
+}
