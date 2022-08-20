@@ -17,9 +17,7 @@ class OrderDataSourceImpl @Inject constructor(
 
     override suspend fun addOrder(orderEntity: OrderEntity, vararg orderLineItemEntity: OrderLineItemEntity) {
         orderDao.insertOrder(orderEntity)
-        orderLineItemEntity.forEach {
-            orderDao.insertOrderLineItem(it)
-        }
+        orderDao.insertOrderLineItem(*orderLineItemEntity)
     }
 
     override suspend fun modifyOrder(orderEntity: OrderEntity) {
