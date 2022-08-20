@@ -9,12 +9,18 @@ interface CartDao {
     @Query("SELECT * FROM cart")
     fun findAll(): Flow<List<CartEntity>>
 
+    @Query("SELECT * FROM cart WHERE hash = :hash")
+    fun findByHash(hash: String): Flow<CartEntity>
+
+    @Update
+    fun updateCart(vararg cartEntity: CartEntity)
+
     @Delete
     suspend fun deleteCart(vararg cartEntity: CartEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCart(vararg cartEntity: CartEntity)
+    fun insertCart(vararg cartEntity: CartEntity)
 
-    @Query("SELECT EXISTS(SELECT * FROM cart WHERE id = :id)")
-    fun existById(id: Long): Flow<Boolean>
+    @Query("SELECT EXISTS(SELECT * FROM cart WHERE hash = :hash)")
+    fun existByHash(hash: String): Flow<Boolean>
 }

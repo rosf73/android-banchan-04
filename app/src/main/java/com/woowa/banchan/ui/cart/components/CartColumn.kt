@@ -17,14 +17,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.cart.TestCartItem
+import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
 
 @Composable
 fun CartColumn(
     modifier: Modifier = Modifier,
-    cart: List<TestCartItem>,
+    cart: List<Cart>,
     onItemCheck: (Long) -> Unit,
     onItemUnCheck: (Long) -> Unit,
     onItemDeleteClick: (Long) -> Unit,

@@ -11,4 +11,8 @@ val productDiffUtil = object : DiffUtil.ItemCallback<Product>() {
     override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
         return oldItem == newItem
     }
+
+    override fun getChangePayload(oldItem: Product, newItem: Product): Any? {
+        return if (oldItem.hasCart != newItem.hasCart) true else null
+    }
 }
