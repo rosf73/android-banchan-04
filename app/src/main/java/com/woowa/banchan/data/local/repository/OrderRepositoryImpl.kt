@@ -1,10 +1,7 @@
 package com.woowa.banchan.data.local.repository
 
 import com.woowa.banchan.data.local.datasource.OrderDataSource
-import com.woowa.banchan.data.local.entity.OrderEntity
-import com.woowa.banchan.data.local.entity.OrderLineItemEntity
-import com.woowa.banchan.data.local.entity.toOrder
-import com.woowa.banchan.data.local.entity.toOrderLineItem
+import com.woowa.banchan.data.local.entity.*
 import com.woowa.banchan.domain.entity.Order
 import com.woowa.banchan.domain.entity.OrderLineItem
 import com.woowa.banchan.domain.exception.NotFoundProductsException
@@ -38,22 +35,12 @@ class OrderRepositoryImpl @Inject constructor(
         emit(Result.failure(NotFoundProductsException()))
     }
 
-    override suspend fun addOrder(orderPair: Pair<Order, List<OrderLineItem>>) {
-        val order = orderPair.first
-        val orderLineItemList = orderPair.second.map {
-            OrderLineItemEntity(
-                orderId = order.id,
-                name = it.name,
-                imageUrl = it.imageUrl,
-                quantity = it.quantity,
-                price = it.price
-            )
-        }
+    override suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem) {
+        val orderLineItemList = orderLineItem.map {
+            it.toOrderLineItemEntity(order.id)
+        }.toTypedArray()
 
-        orderDataSource.addOrder(
-            orderEntity = OrderEntity(order.id, order.orderedAt, order.status),
-            orderLineItemEntity = orderLineItemList.toTypedArray()
-        )
+        orderDataSource.addOrder(order.toOrderEntity(), *orderLineItemList)
     }
 
     override suspend fun modifyOrder(order: Order) {
