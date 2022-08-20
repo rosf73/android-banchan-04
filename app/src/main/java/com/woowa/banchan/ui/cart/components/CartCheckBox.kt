@@ -3,13 +3,12 @@ package com.woowa.banchan.ui.cart.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -17,7 +16,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.cart.CartViewModel
 
 @Composable
 fun CartCheckBox(
@@ -38,7 +36,7 @@ fun CartCheckBox(
                 }
                 .padding(20.dp),
             painter = if (state == CheckState.CHECKED) painterResource(R.drawable.ic_checkbox)
-                      else painterResource(R.drawable.ic_checkbox_empty),
+            else painterResource(R.drawable.ic_checkbox_empty),
             contentDescription = stringResource(R.string.label_checkbox))
 
         Text(
@@ -46,8 +44,9 @@ fun CartCheckBox(
                 .weight(1f)
                 .align(CenterVertically),
             text = if (state == CheckState.CHECKED) stringResource(R.string.cart_deselect)
-                   else stringResource(R.string.cart_select_all),
-            color = colorResource(R.color.black))
+            else stringResource(R.string.cart_select_all),
+            color = colorResource(R.color.black)
+        )
 
         TextButton(
             modifier = Modifier

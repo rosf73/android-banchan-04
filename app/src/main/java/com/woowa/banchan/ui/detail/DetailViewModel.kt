@@ -9,10 +9,7 @@ import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +20,9 @@ class DetailViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(DetailUiState())
     val state = _state.asStateFlow()
+
+    private val _cartEvent = MutableSharedFlow<DetailProduct>()
+    val cartEvent = _cartEvent.asSharedFlow()
 
     private val _quantity = MutableLiveData(1)
     val quantity: LiveData<Int> get() = _quantity
@@ -72,5 +72,9 @@ class DetailViewModel @Inject constructor(
     fun minusQuantity(view: View) {
         if (quantity.value!! > 1)
             _quantity.value = quantity.value!! - 1
+    }
+
+    fun onOrderEvent() = viewModelScope.launch {
+        _cartEvent.emit(state.value.product)
     }
 }

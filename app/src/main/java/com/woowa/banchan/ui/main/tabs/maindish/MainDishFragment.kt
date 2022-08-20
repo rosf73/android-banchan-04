@@ -24,6 +24,7 @@ import com.woowa.banchan.ui.main.tabs.decoration.ItemDecoration
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -96,26 +97,28 @@ class MainDishFragment : Fragment() {
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            productsViewModel.state.collectLatest { state ->
-                if (state.products.isNotEmpty()) {
-                    productAdapter.submitList(state.products)
+            launch {
+                productsViewModel.state.collectLatest { state ->
+                    if (state.products.isNotEmpty()) {
+                        productAdapter.submitList(state.products)
+                    }
                 }
             }
-        }
 
-        viewLifecycleOwner.repeatOnLifecycle {
-            productsViewModel.viewMode.collectLatest { viewMode ->
-                typeFilterAdapter.setViewMode(viewMode)
-                when (viewMode) {
-                    ProductViewType.Grid -> setGridLayoutManager()
-                    ProductViewType.Vertical -> setLinearLayoutManager()
+            launch {
+                productsViewModel.viewMode.collectLatest { viewMode ->
+                    typeFilterAdapter.setViewMode(viewMode)
+                    when (viewMode) {
+                        ProductViewType.Grid -> setGridLayoutManager()
+                        ProductViewType.Vertical -> setLinearLayoutManager()
+                    }
                 }
             }
-        }
 
-        viewLifecycleOwner.repeatOnLifecycle {
-            productsViewModel.sortType.collectLatest { sortType ->
-                typeFilterAdapter.setSortType(sortType)
+            launch {
+                productsViewModel.sortType.collectLatest { sortType ->
+                    typeFilterAdapter.setSortType(sortType)
+                }
             }
         }
     }
