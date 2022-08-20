@@ -23,6 +23,7 @@ import com.woowa.banchan.ui.main.tabs.decoration.ItemDecoration
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -95,17 +96,19 @@ class SideFragment : Fragment() {
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            productsViewModel.state.collectLatest { state ->
-                if (state.products.isNotEmpty()) {
-                    productAdapter.submitList(state.products)
-                    countFilterAdapter.submitTotalCount(state.products.size)
+            launch {
+                productsViewModel.state.collectLatest { state ->
+                    if (state.products.isNotEmpty()) {
+                        productAdapter.submitList(state.products)
+                        countFilterAdapter.submitTotalCount(state.products.size)
+                    }
                 }
             }
-        }
 
-        viewLifecycleOwner.repeatOnLifecycle {
-            productsViewModel.sortType.collectLatest { sortType ->
-                countFilterAdapter.setSortType(sortType)
+            launch {
+                productsViewModel.sortType.collectLatest { sortType ->
+                    countFilterAdapter.setSortType(sortType)
+                }
             }
         }
     }
