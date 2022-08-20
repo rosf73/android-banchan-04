@@ -22,6 +22,12 @@ object DataSourceModule {
 
     @Provides
     @Singleton
+    fun provideCartDataSource(cartDao: CartDao): CartDataSource {
+        return CartLocalDataSource(cartDao)
+    }
+
+    @Provides
+    @Singleton
     fun provideOrderDataSource(orderDao: OrderDao): OrderDataSource {
         return OrderDataSourceImpl(orderDao)
     }

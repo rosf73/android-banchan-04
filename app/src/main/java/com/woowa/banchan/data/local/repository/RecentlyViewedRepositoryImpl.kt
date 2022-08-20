@@ -8,19 +8,22 @@ import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RecentlyViewedRepositoryImpl @Inject constructor(
     private val recentlyViewedDataSource: RecentlyViewedDataSource
-): RecentlyViewedRepository {
+) : RecentlyViewedRepository {
 
     override suspend fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
-        val list = recentlyViewedDataSource.getAllRecentlyViewed().first()
-        emit(Result.success(list.map { it.toRecentlyViewed() }))
+        recentlyViewedDataSource.getAllRecentlyViewed()
+            .collect { list ->
+                emit(Result.success(list.map { it.toRecentlyViewed() }))
+            }
+    }.catch {
+        emit(Result.failure(NotFoundProductsException()))
     }
 
     override suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewed) {

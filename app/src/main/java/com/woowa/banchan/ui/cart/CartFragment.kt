@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
@@ -15,14 +15,17 @@ import com.woowa.banchan.ui.OnRecentlyClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.recently.RecentlyFragment
 import com.woowa.banchan.ui.recently.RecentlyViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
+@AndroidEntryPoint
 class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
 
-    private val cartViewModel: CartViewModel by activityViewModels()
-    private val recentlyViewModel: RecentlyViewModel by activityViewModels()
+    private val cartViewModel: CartViewModel by viewModels()
+    private val recentlyViewModel: RecentlyViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +38,16 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        cartViewModel.getCart()
         binding.composeCart.setContent {
             CartScreen(
                 cartViewModel,
                 recentlyViewModel,
                 navigateToRecently = { navigateToRecently() },
-                onItemClick = { navigateToDetail(it.hash, it.name, it.description) }
+                onItemClick = {
+                    navigateToDetail(it.hash, it.name, it.description)
+                    recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
+                }
             )
         }
 
@@ -57,6 +64,11 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
             .addToBackStack("Cart")
             .replace(R.id.fcv_main, RecentlyFragment())
             .commit()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        cartViewModel.updateCarts()
     }
 
     override fun navigateToDetail(hash: String, name: String, description: String) {

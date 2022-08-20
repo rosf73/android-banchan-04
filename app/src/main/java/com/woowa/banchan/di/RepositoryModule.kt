@@ -23,6 +23,12 @@ object RepositoryModule {
 
     @Provides
     @Singleton
+    fun provideCartRepository(cartDataSource: CartDataSource): CartRepository {
+        return CartRepositoryImpl(cartDataSource)
+    }
+
+    @Provides
+    @Singleton
     fun provideOrderRepository(orderDataSource: OrderDataSource): OrderRepository {
         return OrderRepositoryImpl(orderDataSource)
     }

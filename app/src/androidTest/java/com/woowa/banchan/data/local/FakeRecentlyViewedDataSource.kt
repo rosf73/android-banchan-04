@@ -13,14 +13,6 @@ class FakeRecentlyViewedDataSource(
         return flow { emit(recentlyViewedList) }
     }
 
-    override fun getTop7RecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun addRecentlyViewed(recentlyViewed: RecentlyViewedEntity): Long {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewedEntity) {
         TODO("Not yet implemented")
     }

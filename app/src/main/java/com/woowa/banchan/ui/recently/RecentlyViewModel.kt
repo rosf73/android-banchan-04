@@ -66,11 +66,9 @@ class RecentlyViewModel @Inject constructor(
             hash, name, description, imageUrl, nPrice, sPrice, viewedAt
         )
         modifyRecentlyViewedUseCase(newRecently)
-        getRecently()
     }
 
     fun modifyRecently(recentlyViewed: RecentlyViewed) = viewModelScope.launch {
         modifyRecentlyViewedUseCase(recentlyViewed)
-        getRecently()
     }
 }

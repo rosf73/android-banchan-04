@@ -56,6 +56,24 @@ class ProductAdapter(
         }
     }
 
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if (payloads[0] == true) {
+                when (holder) {
+                    is GridViewHolder -> holder.bindHasCart(getItem(position))
+                    is LinearViewHolder -> holder.bindHasCart(getItem(position))
+                    is PlanViewHolder -> holder.bindHasCart(getItem(position))
+                }
+            }
+        }
+    }
+
     override fun getItemViewType(position: Int): Int = viewType.ordinal
 
     fun setViewType(viewType: ProductViewType) {
@@ -74,6 +92,10 @@ class ProductAdapter(
             binding.product = product
             binding.executePendingBindings()
         }
+
+        fun bindHasCart(product: Product) {
+            binding.product = product
+        }
     }
 
     class GridViewHolder(
@@ -88,6 +110,10 @@ class ProductAdapter(
             binding.product = product
             binding.executePendingBindings()
         }
+
+        fun bindHasCart(product: Product) {
+            binding.product = product
+        }
     }
 
     class LinearViewHolder(
@@ -95,11 +121,16 @@ class ProductAdapter(
         private val onClick: (Product) -> Unit,
         private val onClickCart: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(product: Product) {
             itemView.setOnClickListener { onClick(product) }
             binding.ivCart.setOnClickListener { onClickCart(product) }
             binding.product = product
             binding.executePendingBindings()
+        }
+
+        fun bindHasCart(product: Product) {
+            binding.product = product
         }
     }
 }
