@@ -27,93 +27,96 @@ class CartViewModel @Inject constructor(
     private val _state = MutableStateFlow(CartUiState())
     val state = _state.asStateFlow()
 
-    fun addCart(cart: Cart) = viewModelScope.launch {
-        addCartUseCase(cart).onEach { result ->
-            result.onFailure {
-                _state.value = state.value.copy(
-                    cart = mutableListOf(),
-                    isLoading = false,
-                    errorMessage = "상품이 존재하지 않습니다."
-                )
-            }
-        }.launchIn(this)
+    init {
+        getCart()
     }
 
-    fun getCart() = viewModelScope.launch {
-        getCartUseCase().onEach { result ->
-            result.onSuccess {
-                val cartList = it.map { cartMap -> cartMap.value }
-                _state.value = state.value.copy(
-                    cart = cartList.toMutableList(),
-                    isLoading = false,
-                    errorMessage = ""
-                )
-            }
-                .onFailure { }
-        }.launchIn(this)
+    fun addCart(cart: Cart) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addCartUseCase(cart).onEach { result ->
+                result.onFailure {
+                    _state.value = state.value.copy(
+                        cart = mutableListOf(),
+                        isLoading = false,
+                        errorMessage = "상품이 존재하지 않습니다."
+                    )
+                }
+            }.launchIn(this)
+        }
+    }
+
+    private fun getCart() {
+        viewModelScope.launch(Dispatchers.IO) {
+            getCartUseCase().onEach { result ->
+                result.onSuccess {
+                    val cartList = it.map { cartMap -> cartMap.value }
+                    _state.value = state.value.copy(
+                        cart = cartList.toMutableList(),
+                        isLoading = false,
+                        errorMessage = ""
+                    )
+                }
+                    .onFailure { }
+            }.launchIn(this)
+        }
     }
 
     fun isAllChecked(): Boolean = state.value.cart.count { it.checked } == state.value.cart.size
-
     fun isAllUnChecked(): Boolean = state.value.cart.count { !it.checked } == state.value.cart.size
 
-    fun check(id: Long = -1L) {
-        if (id == -1L)
-            _state.value = state.value.copy(
-                cart = state.value.cart.map { it.apply { checked = true } }.toMutableList(),
-                isLoading = false,
-                errorMessage = ""
-            )
-        else
-            _state.value = state.value.copy(
-                cart = state.value.cart.map {
-                    if (it.id == id) it.apply { checked = true }
-                    else it
-                }.toMutableList(),
-                isLoading = false,
-                errorMessage = ""
-            )
-    }
-
-    fun uncheck(id: Long = -1L) {
-        if (id == -1L)
-            _state.value = state.value.copy(
-                cart = state.value.cart.map { it.apply { checked = false } }.toMutableList(),
-                isLoading = false,
-                errorMessage = ""
-            )
-        else
-            _state.value = state.value.copy(
-                cart = state.value.cart.map {
-                    if (it.id == id) it.apply { checked = false }
-                    else it
-                }.toMutableList(),
-                isLoading = false,
-                errorMessage = ""
-            )
-    }
-
-    fun deleteCartItem(id: Long = -1L) = viewModelScope.launch(Dispatchers.IO) {
-        if (isAllUnChecked()) return@launch
-        val deleteList = when (id) {
-            -1L -> _state.value.cart.filter { it.checked }.toTypedArray()
-            else -> _state.value.cart.filter { it.id == id }.toTypedArray()
+    fun deleteCart(id: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateCartAll()
+            _state.value.cart.find { it.id == id }?.let {
+                removeCartUseCase(it)
+            }
         }
-        removeCartUseCase(*deleteList)
     }
 
-    fun updateCartItem(id: Long, quantity: Int) {
-        _state.value = state.value.copy(
-            cart = state.value.cart.map {
-                if (it.id == id) it.apply { this.quantity = quantity }
-                else it
-            }.toMutableList(),
-            isLoading = false,
-            errorMessage = ""
-        )
+    fun deleteCartMany() {
+        if (isAllUnChecked()) return
+        viewModelScope.launch(Dispatchers.IO) {
+            updateCartAll()
+            _state.value.cart.filter { it.checked }.let {
+                removeCartUseCase(*it.toTypedArray())
+            }
+        }
     }
 
-    fun updateCarts() = viewModelScope.launch(Dispatchers.IO) {
-        modifyCartUseCase(*_state.value.cart.toTypedArray())
+    fun updateCart(id: Long, quantity: Int) {
+        _state.value.cart.map {
+            if (it.id == id) it.apply { this.quantity = quantity }
+            else it
+        }
+    }
+
+    fun updateCartAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            modifyCartUseCase(*_state.value.cart.toTypedArray())
+        }
+    }
+
+    fun check(id: Long): Boolean {
+        _state.value.cart.map {
+            if (it.id == id) it.apply { checked = true }
+            else it
+        }
+        return isAllChecked()
+    }
+
+    fun checkAll() {
+        _state.value.cart.map { it.apply { checked = true } }
+    }
+
+    fun uncheck(id: Long): Boolean {
+        _state.value.cart.map {
+            if (it.id == id) it.apply { checked = false }
+            else it
+        }
+        return isAllUnChecked()
+    }
+
+    fun uncheckAll() {
+        _state.value.cart.map { it.apply { checked = false } }
     }
 }
