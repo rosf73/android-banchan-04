@@ -6,12 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderBinding
-import com.woowa.banchan.domain.entity.OrderDetailSection.*
+import com.woowa.banchan.domain.entity.OrderInfo
+import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
 
 class OrderListAdapter(
     private val onClickItem: () -> Unit
-) : ListAdapter<Triple<Order, OrderLineItem, OrderFooter>, OrderListAdapter.ViewHolder>(orderListDiffUtil) {
+) : ListAdapter<OrderInfo, OrderListAdapter.ViewHolder>(orderListDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,27 +35,28 @@ class OrderListAdapter(
         private val onClick: () -> Unit
     ): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Triple<Order, OrderLineItem, OrderFooter>) {
+        fun bind(item: OrderInfo) {
             binding.clItemView.setOnClickListener { onClick() }
-            binding.count = item.first.count
-            binding.deliveryState = item.first.status == "START"
-            binding.orderLineItem = item.second
-            binding.totalPrice = item.third.price.toMoneyString()
+            binding.count = item.count
+            binding.deliveryState = item.status == "START"
+            binding.name = item.name
+            binding.imageUrl = item.imageUrl
+            binding.totalPrice = item.price.toMoneyInt().toMoneyString()
         }
     }
 }
 
-val orderListDiffUtil = object : DiffUtil.ItemCallback<Triple<Order, OrderLineItem, OrderFooter>>() {
+val orderListDiffUtil = object : DiffUtil.ItemCallback<OrderInfo>() {
     override fun areItemsTheSame(
-        oldItem: Triple<Order, OrderLineItem, OrderFooter>,
-        newItem: Triple<Order, OrderLineItem, OrderFooter>
+        oldItem: OrderInfo,
+        newItem: OrderInfo
     ): Boolean {
-        return oldItem.first.id == newItem.first.id
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: Triple<Order, OrderLineItem, OrderFooter>,
-        newItem: Triple<Order, OrderLineItem, OrderFooter>
+        oldItem: OrderInfo,
+        newItem: OrderInfo
     ): Boolean {
         return oldItem == newItem
     }
