@@ -9,7 +9,7 @@ interface OrderRepository {
 
     fun getAllOrder(): Flow<Result<List<OrderInfo>>>
 
-    fun getOrderLineItem(orderId: Int): Flow<Result<Map<Order, List<OrderLineItem>>>>
+    fun getOrderLineItem(orderId: Long): Flow<Result<Map<Order, List<OrderLineItem>>>>
 
     suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem): Long
 

@@ -16,7 +16,7 @@ class OrderDataSourceImpl @Inject constructor(
         return orderDao.findAllGroupByOrderId()
     }
 
-    override fun getOrderLineItem(orderId: Int): Flow<List<OrderLineItemView>> {
+    override fun getOrderLineItem(orderId: Long): Flow<List<OrderLineItemView>> {
         return orderDao.findByOrderId(orderId)
     }
 

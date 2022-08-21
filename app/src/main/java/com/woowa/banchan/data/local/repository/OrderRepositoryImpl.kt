@@ -25,7 +25,7 @@ class OrderRepositoryImpl @Inject constructor(
         emit(Result.failure(NotFoundProductsException()))
     }
 
-    override fun getOrderLineItem(orderId: Int): Flow<Result<Map<Order, List<OrderLineItem>>>> = flow {
+    override fun getOrderLineItem(orderId: Long): Flow<Result<Map<Order, List<OrderLineItem>>>> = flow {
         val orderMap = mutableMapOf<Order, MutableList<OrderLineItem>>()
 
         orderDataSource.getOrderLineItem(orderId)
