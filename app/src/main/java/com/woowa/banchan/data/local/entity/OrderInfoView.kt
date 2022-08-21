@@ -3,6 +3,7 @@ package com.woowa.banchan.data.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 import com.woowa.banchan.domain.entity.OrderInfo
+import com.woowa.banchan.extensions.toMoneyString
 
 @DatabaseView(
     """
@@ -18,13 +19,13 @@ data class OrderInfoView(
     @ColumnInfo(name = "id") val id: Long,
     @ColumnInfo(name = "status") val status: String,
     @ColumnInfo(name = "count") val count: Int,
-    @ColumnInfo(name = "price") val price: String,
+    @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image_url") val imageUrl: String
 )
 
 fun OrderInfoView.toOrderInfo(): OrderInfo {
     return OrderInfo(
-        id, status, count, price, name, imageUrl
+        id, status, count, price.toMoneyString(), name, imageUrl
     )
 }
