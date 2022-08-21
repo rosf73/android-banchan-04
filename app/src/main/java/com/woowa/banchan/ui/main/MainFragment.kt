@@ -11,12 +11,14 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
+import com.woowa.banchan.ui.OnOrderClickListener
 import com.woowa.banchan.ui.cart.CartFragment
 import com.woowa.banchan.ui.detail.DetailFragment
+import com.woowa.banchan.ui.orderdetail.OrderDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener {
+class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnOrderClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
@@ -48,6 +50,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener {
 
     private fun initListener() {
         binding.cartClickListener = this
+        binding.orderClickListener = this
         binding.active = true
         binding.cartCount = 10
     }
@@ -65,6 +68,15 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener {
         parentFragmentManager.beginTransaction()
             .addToBackStack("Main")
             .add(R.id.fcv_main, CartFragment())
+            .commit()
+    }
+
+
+    override fun navigateToOrderDetail() {
+        parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .addToBackStack("Main")
+            .add(R.id.fcv_main, OrderDetailFragment())
             .commit()
     }
 
