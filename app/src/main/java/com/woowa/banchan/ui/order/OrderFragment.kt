@@ -24,7 +24,7 @@ class OrderFragment: Fragment(), OnOrderDetailClickListener {
     private val orderListAdapter by lazy {
         OrderListAdapter(
             onClickItem = {
-                navigateToOrderDetail()
+                navigateToOrderDetail(it)
             }
         )
     }
@@ -64,12 +64,12 @@ class OrderFragment: Fragment(), OnOrderDetailClickListener {
         }
     }
 
-    override fun navigateToOrderDetail() {
+    override fun navigateToOrderDetail(id: Long) {
         parentFragmentManager.popBackStack("Order", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Order")
-            .add(R.id.fcv_main, OrderDetailFragment())
+            .add(R.id.fcv_main, OrderDetailFragment.newInstance(id))
             .commit()
     }
 

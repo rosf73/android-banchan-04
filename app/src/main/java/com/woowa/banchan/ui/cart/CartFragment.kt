@@ -13,16 +13,18 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
+import com.woowa.banchan.ui.OnOrderDetailClickListener
 import com.woowa.banchan.ui.OnRecentlyClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.order.OrderViewModel
+import com.woowa.banchan.ui.orderdetail.OrderDetailFragment
 import com.woowa.banchan.ui.recently.RecentlyFragment
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
+class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener, OnOrderDetailClickListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
@@ -54,7 +56,9 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
                         recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
                     },
                     onOrderClick = {
-                        orderViewModel.addOrder(cartViewModel.state.value.cart)
+                        orderViewModel.addOrder(cartViewModel.state.value.cart) {
+                            navigateToOrderDetail(it)
+                        }
                     }
                 )
             }
@@ -82,6 +86,15 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
             .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Cart")
             .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .commit()
+    }
+
+    override fun navigateToOrderDetail(id: Long) {
+        parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+            .addToBackStack("Cart")
+            .add(R.id.fcv_main, OrderDetailFragment.newInstance(id))
             .commit()
     }
 

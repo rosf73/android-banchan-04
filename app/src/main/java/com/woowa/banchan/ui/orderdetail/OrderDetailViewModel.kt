@@ -23,7 +23,7 @@ class OrderDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(OrderLineItemUiState())
     val state = _state.asStateFlow()
 
-    fun getOrderLineItem(orderId: Int) {
+    fun getOrderLineItem(orderId: Long) {
         viewModelScope.launch {
             getOrderLineItemUseCase(orderId).onEach { result ->
                 result.onSuccess {

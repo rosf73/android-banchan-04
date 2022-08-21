@@ -2,5 +2,5 @@ package com.woowa.banchan.ui
 
 interface OnOrderDetailClickListener {
 
-    fun navigateToOrderDetail()
+    fun navigateToOrderDetail(id: Long)
 }

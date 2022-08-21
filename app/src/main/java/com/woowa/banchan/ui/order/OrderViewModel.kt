@@ -47,9 +47,9 @@ class OrderViewModel @Inject constructor(
         }
     }
 
-    fun addOrder(carts: List<Cart>) {
+    fun addOrder(carts: List<Cart>, onAdded: (Long) -> Unit) {
         viewModelScope.launch {
-            addOrderUserCase(carts, System.currentTimeMillis())
+            onAdded(addOrderUserCase(carts, System.currentTimeMillis()))
         }
     }
 }

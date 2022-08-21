@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderBinding
 import com.woowa.banchan.domain.entity.OrderInfo
-import com.woowa.banchan.extensions.toMoneyInt
-import com.woowa.banchan.extensions.toMoneyString
 
 class OrderListAdapter(
-    private val onClickItem: () -> Unit
+    private val onClickItem: (Long) -> Unit
 ) : ListAdapter<OrderInfo, OrderListAdapter.ViewHolder>(orderListDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,11 +30,11 @@ class OrderListAdapter(
 
     inner class ViewHolder(
         private val binding: ItemOrderBinding,
-        private val onClick: () -> Unit
+        private val onClick: (Long) -> Unit
     ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: OrderInfo) {
-            binding.clItemView.setOnClickListener { onClick() }
+            binding.clItemView.setOnClickListener { onClick(item.id) }
             binding.count = item.count
             binding.deliveryState = item.status == "START"
             binding.name = item.name
