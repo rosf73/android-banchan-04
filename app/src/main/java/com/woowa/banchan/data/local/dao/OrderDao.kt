@@ -12,6 +12,9 @@ interface OrderDao {
     @Query("SELECT * FROM OrderLineItemView")
     fun findAll(): Flow<List<OrderLineItemView>>
 
+    @Query("SELECT * FROM order_line_item, `order` WHERE order_id = :orderId AND `order`.id = order_line_item.order_id")
+    fun findByOrderId(orderId: Int): Flow<List<OrderLineItemView>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrder(orderEntity: OrderEntity)
 
@@ -19,5 +22,5 @@ interface OrderDao {
     suspend fun insertOrderLineItem(vararg orderLineItemEntity: OrderLineItemEntity)
 
     @Update
-    suspend fun updateOrder(orderEntity: OrderEntity)
+    suspend fun updateOrder(orderEntity: OrderEntity): Int
 }
