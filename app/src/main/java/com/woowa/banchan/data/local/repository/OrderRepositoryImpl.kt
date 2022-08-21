@@ -2,8 +2,8 @@ package com.woowa.banchan.data.local.repository
 
 import com.woowa.banchan.data.local.datasource.OrderDataSource
 import com.woowa.banchan.data.local.entity.*
-import com.woowa.banchan.domain.entity.Order
-import com.woowa.banchan.domain.entity.OrderLineItem
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
     private val orderDataSource: OrderDataSource
-): OrderRepository {
+) : OrderRepository {
 
     private val orderMap = mutableMapOf<Order, MutableList<OrderLineItem>>()
 
@@ -21,7 +21,7 @@ class OrderRepositoryImpl @Inject constructor(
         orderDataSource.getAllOrder()
             .collect { list ->
                 list.forEach {
-                    val keyOrder = it.toOrder()
+                    val keyOrder = it.toOrder().copy(count = list.size)
                     val orderLineItem = it.toOrderLineItem()
 
                     if (orderMap.containsKey(keyOrder))
