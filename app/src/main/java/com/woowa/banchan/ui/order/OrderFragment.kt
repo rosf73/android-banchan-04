@@ -7,21 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentOrderBinding
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnOrderDetailClickListener
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.orderdetail.OrderDetailFragment
-import com.woowa.banchan.ui.orderdetail.OrderDetailViewModel
 
 class OrderFragment: Fragment(), OnOrderDetailClickListener {
 
     private var _binding: FragmentOrderBinding? = null
     private val binding: FragmentOrderBinding get() = requireNotNull(_binding)
 
-    private val orderViewModel: OrderDetailViewModel by activityViewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     private val orderListAdapter by lazy {
         OrderListAdapter(
@@ -59,7 +57,7 @@ class OrderFragment: Fragment(), OnOrderDetailClickListener {
     private fun observeData() {
         orderViewModel.getAllOrder()
         viewLifecycleOwner.repeatOnLifecycle {
-            orderViewModel.orderState.collect {
+            orderViewModel.state.collect {
                 if (it.orderInfoList.isNotEmpty()) {
                     orderListAdapter.submitList(it.orderInfoList)
                 }
