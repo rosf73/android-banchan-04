@@ -18,14 +18,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_surface"
-        android:paddingHorizontal="16dp">
+        android:background="@color/grey_surface">
 
         <TextView
             android:id="@+id/tv_title"
             style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:paddingVertical="8dp"
             android:text="@{deliveryState ? @string/product_order_start:@string/product_order_done}"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,11 +77,21 @@
             tools:text="총 2개" />
 
         <View
+            android:id="@+id/view_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_count" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
