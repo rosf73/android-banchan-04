@@ -2,12 +2,15 @@ package com.woowa.banchan.di
 
 import com.woowa.banchan.domain.repository.BanchanRepository
 import com.woowa.banchan.domain.repository.CartRepository
+import com.woowa.banchan.domain.repository.OrderRepository
 import com.woowa.banchan.domain.usecase.*
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
 import com.woowa.banchan.domain.usecase.GetPlanUseCase
 import com.woowa.banchan.domain.usecase.GetProductsUseCase
 import com.woowa.banchan.domain.usecase.cart.*
+import com.woowa.banchan.domain.usecase.order.GetOrderLineItemUseCase
+import com.woowa.banchan.domain.usecase.order.ModifyOrderUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -98,5 +101,17 @@ object UseCaseModule {
     @Singleton
     fun providesModifyRecentlyViewedUseCase(repository: RecentlyViewedRepository): ModifyRecentlyViewedUseCase {
         return ModifyRecentlyViewedUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetOrderListUseCase(repository: OrderRepository): GetOrderLineItemUseCase {
+        return GetOrderLineItemUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesModifyOrderUseCase(repository: OrderRepository): ModifyOrderUseCase {
+        return ModifyOrderUseCase(repository)
     }
 }
