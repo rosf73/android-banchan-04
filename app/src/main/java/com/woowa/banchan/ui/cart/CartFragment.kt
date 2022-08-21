@@ -58,6 +58,7 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener, 
                     onOrderClick = {
                         orderViewModel.addOrder(cartViewModel.state.value.cart) {
                             navigateToOrderDetail(it)
+                            cartViewModel.deleteAll()
                         }
                     }
                 )
