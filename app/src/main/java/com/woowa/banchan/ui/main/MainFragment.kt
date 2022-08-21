@@ -14,6 +14,7 @@ import com.woowa.banchan.ui.OnDetailClickListener
 import com.woowa.banchan.ui.OnOrderClickListener
 import com.woowa.banchan.ui.cart.CartFragment
 import com.woowa.banchan.ui.detail.DetailFragment
+import com.woowa.banchan.ui.order.OrderFragment
 import com.woowa.banchan.ui.orderdetail.OrderDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,10 +74,20 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
             .commit()
     }
 
+    override fun navigateToOrder() {
+        parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .addToBackStack("Main")
+            .add(R.id.fcv_main, OrderFragment())
+            .commit()
+    }
+
 
     override fun navigateToOrderDetail() {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
             .addToBackStack("Main")
             .add(R.id.fcv_main, OrderDetailFragment())
             .commit()

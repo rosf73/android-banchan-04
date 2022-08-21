@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navigation_icon="@drawable/ic_logo"
             app:onFirstClick="@{cartClickListener.navigateToCart}"
-            app:onSecondClick="@{orderClickListener.navigateToOrderDetail}" />
+            app:onSecondClick="@{orderClickListener.navigateToOrder}" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_ordering"
