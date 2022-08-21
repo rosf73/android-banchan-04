@@ -41,7 +41,7 @@ class OrderListAdapter(
             binding.deliveryState = item.status == "START"
             binding.name = item.name
             binding.imageUrl = item.imageUrl
-            binding.totalPrice = item.price.toMoneyInt().toMoneyString()
+            binding.totalPrice = item.price
         }
     }
 }
