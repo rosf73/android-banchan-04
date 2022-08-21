@@ -111,8 +111,7 @@ class OrderDetailAdapter(
 
         fun bind(orderLineItem: OrderLineItem) {
             binding.orderLineItem = orderLineItem
-            binding.totalPrice =
-                (orderLineItem.price.toMoneyInt() * orderLineItem.quantity).toMoneyString()
+            binding.totalPrice = orderLineItem.price
         }
     }
 
