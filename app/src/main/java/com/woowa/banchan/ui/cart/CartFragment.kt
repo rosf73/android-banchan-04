@@ -65,8 +65,9 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
     override fun navigateToRecently() {
         parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
             .addToBackStack("Cart")
-            .replace(R.id.fcv_main, RecentlyFragment())
+            .add(R.id.fcv_main, RecentlyFragment())
             .commit()
     }
 
@@ -78,6 +79,7 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
     override fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
             .addToBackStack("Cart")
             .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()

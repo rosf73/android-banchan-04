@@ -69,6 +69,7 @@ class RecentlyFragment: Fragment(), OnDetailClickListener, OnItemCartClickListen
     override fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.popBackStack("Recently", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
             .addToBackStack("Recently")
             .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
