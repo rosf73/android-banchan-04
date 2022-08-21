@@ -22,14 +22,12 @@ class AddOrderUserCase @Inject constructor(
 
         val orderLineItem = mutableListOf<OrderLineItem>()
         carts.forEach {
-            var totalPrice = it.price.toMoneyInt() * it.quantity
-            if (totalPrice < 40000) totalPrice += 2500
             orderLineItem.add(
                 OrderLineItem(
                     name = it.name,
                     imageUrl = it.imageUrl,
                     quantity = it.quantity,
-                    price = totalPrice.toMoneyString()
+                    price = (it.price.toMoneyInt() * it.quantity).toMoneyString()
                 )
             )
         }

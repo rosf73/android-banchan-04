@@ -25,7 +25,9 @@ data class OrderInfoView(
 )
 
 fun OrderInfoView.toOrderInfo(): OrderInfo {
+    var totalPrice = price
+    if (totalPrice < 40000) totalPrice += 2500
     return OrderInfo(
-        id, status, count, price.toMoneyString(), name, imageUrl
+        id, status, count, totalPrice.toMoneyString(), name, imageUrl
     )
 }
