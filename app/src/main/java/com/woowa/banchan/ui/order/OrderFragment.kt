@@ -68,7 +68,7 @@ class OrderFragment: Fragment(), OnOrderDetailClickListener {
     override fun navigateToOrderDetail() {
         parentFragmentManager.popBackStack("Order", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Order")
             .add(R.id.fcv_main, OrderDetailFragment())
             .commit()

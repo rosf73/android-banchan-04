@@ -59,7 +59,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
     override fun navigateToDetail(hash: String, name: String, description: String) {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Main")
             .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
@@ -68,7 +68,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
     override fun navigateToCart() {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Main")
             .add(R.id.fcv_main, CartFragment())
             .commit()
@@ -77,7 +77,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
     override fun navigateToOrder() {
         parentFragmentManager.popBackStack("Main", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Main")
             .add(R.id.fcv_main, OrderFragment())
             .commit()

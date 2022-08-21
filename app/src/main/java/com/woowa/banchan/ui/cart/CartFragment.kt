@@ -8,7 +8,6 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.ui.OnBackClickListener
@@ -65,23 +64,23 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
     override fun navigateToRecently() {
         parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Cart")
             .add(R.id.fcv_main, RecentlyFragment())
+            .commit()
+    }
+
+    override fun navigateToDetail(hash: String, name: String, description: String) {
+        parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+            .addToBackStack("Cart")
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
     override fun onStop() {
         super.onStop()
         cartViewModel.updateCartAll()
-    }
-
-    override fun navigateToDetail(hash: String, name: String, description: String) {
-        parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
-            .addToBackStack("Cart")
-            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
-            .commit()
     }
 }
