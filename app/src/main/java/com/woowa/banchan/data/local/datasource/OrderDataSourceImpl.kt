@@ -9,18 +9,25 @@ import javax.inject.Inject
 
 class OrderDataSourceImpl @Inject constructor(
     private val orderDao: OrderDao
-): OrderDataSource {
+) : OrderDataSource {
 
     override fun getAllOrder(): Flow<List<OrderLineItemView>> {
         return orderDao.findAll()
     }
 
-    override suspend fun addOrder(orderEntity: OrderEntity, vararg orderLineItemEntity: OrderLineItemEntity) {
+    override fun getOrderLineItem(orderId: Int): Flow<List<OrderLineItemView>> {
+        return orderDao.findByOrderId(orderId)
+    }
+
+    override suspend fun addOrder(
+        orderEntity: OrderEntity,
+        vararg orderLineItemEntity: OrderLineItemEntity
+    ) {
         orderDao.insertOrder(orderEntity)
         orderDao.insertOrderLineItem(*orderLineItemEntity)
     }
 
-    override suspend fun modifyOrder(orderEntity: OrderEntity) {
-        orderDao.updateOrder(orderEntity)
+    override suspend fun modifyOrder(orderEntity: OrderEntity): Int {
+        return orderDao.updateOrder(orderEntity)
     }
 }

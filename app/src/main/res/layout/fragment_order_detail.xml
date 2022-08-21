@@ -8,6 +8,10 @@
         <variable
             name="listener"
             type="com.woowa.banchan.ui.OnBackClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.woowa.banchan.ui.orderdetail.OrderDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,10 +23,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:action_first="@drawable/ic_reload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigation_icon="@drawable/ic_left_arrow"
+            app:onFirstClick="@{() -> viewModel.getOrderLineItem(1)}"
             app:onNavigationClick="@{listener::navigateToBack}" />
 
         <androidx.recyclerview.widget.RecyclerView

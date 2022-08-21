@@ -34,3 +34,9 @@ fun OrderLineItem.toOrderLineItemEntity(orderId: Long): OrderLineItemEntity {
         price = price
     )
 }
+
+fun OrderLineItemEntity.toOrderLineItem(): OrderLineItem {
+    return OrderLineItem(
+        name, imageUrl, quantity, price
+    )
+}
