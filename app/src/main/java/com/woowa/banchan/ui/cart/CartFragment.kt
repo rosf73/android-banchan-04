@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
@@ -14,6 +15,7 @@ import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
 import com.woowa.banchan.ui.OnRecentlyClickListener
 import com.woowa.banchan.ui.detail.DetailFragment
+import com.woowa.banchan.ui.order.OrderViewModel
 import com.woowa.banchan.ui.recently.RecentlyFragment
 import com.woowa.banchan.ui.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +29,7 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
 
     private val cartViewModel: CartViewModel by viewModels()
     private val recentlyViewModel: RecentlyViewModel by viewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +52,9 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener {
                     onItemClick = {
                         navigateToDetail(it.hash, it.name, it.description)
                         recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
+                    },
+                    onOrderClick = {
+                        orderViewModel.addOrder(cartViewModel.state.value.cart)
                     }
                 )
             }

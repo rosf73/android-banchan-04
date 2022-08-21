@@ -55,7 +55,6 @@ class OrderFragment: Fragment(), OnOrderDetailClickListener {
     }
 
     private fun observeData() {
-        orderViewModel.getAllOrder()
         viewLifecycleOwner.repeatOnLifecycle {
             orderViewModel.state.collect {
                 if (it.orderInfoList.isNotEmpty()) {

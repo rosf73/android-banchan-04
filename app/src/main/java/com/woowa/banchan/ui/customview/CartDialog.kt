@@ -62,7 +62,7 @@ class CartDialog : DialogFragment(), OnCartClickListener {
     override fun navigateToCart() {
         dismiss()
         requireActivity().supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("main")
             .add(R.id.fcv_main, CartFragment())
             .commit()

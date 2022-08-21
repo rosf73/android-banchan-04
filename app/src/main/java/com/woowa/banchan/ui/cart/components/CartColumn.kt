@@ -28,7 +28,8 @@ fun CartColumn(
     onItemCheck: (Long) -> Unit,
     onItemUnCheck: (Long) -> Unit,
     onItemDeleteClick: (Long) -> Unit,
-    onItemQuantityChanged: (Long, Int) -> Unit
+    onItemQuantityChanged: (Long, Int) -> Unit,
+    onOrderClick: () -> Unit
 ) {
     var totalPrice by remember { mutableStateOf(cart.sumOf { item -> item.price.toMoneyInt() * item.quantity }) }
     totalPrice = cart.sumOf { item -> item.price.toMoneyInt() * item.quantity }
@@ -68,7 +69,7 @@ fun CartColumn(
                 modifier = Modifier
                     .padding(16.dp, 0.dp)
                     .fillMaxWidth(),
-                onClick = { /*TODO*/ },
+                onClick = onOrderClick,
                 enabled = totalPrice >= 10000,
                 contentPadding = PaddingValues(16.dp),
                 colors = ButtonDefaults.buttonColors(
