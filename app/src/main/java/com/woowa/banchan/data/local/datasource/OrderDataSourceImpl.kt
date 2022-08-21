@@ -23,9 +23,12 @@ class OrderDataSourceImpl @Inject constructor(
     override suspend fun addOrder(
         orderEntity: OrderEntity,
         vararg orderLineItemEntity: OrderLineItemEntity
-    ) {
-        orderDao.insertOrder(orderEntity)
-        orderDao.insertOrderLineItem(*orderLineItemEntity)
+    ): Long {
+        val res = orderDao.insertOrder(orderEntity)
+        val temp = orderLineItemEntity.map { it.copy(orderId = res) }
+        orderDao.insertOrderLineItem(*temp.toTypedArray())
+
+        return res
     }
 
     override suspend fun modifyOrder(orderEntity: OrderEntity): Int {

@@ -45,12 +45,12 @@ class OrderRepositoryImpl @Inject constructor(
         emit(Result.failure(NotFoundProductsException()))
     }
 
-    override suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem) {
+    override suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem): Long {
         val orderLineItemList = orderLineItem.map {
             it.toOrderLineItemEntity(order.id)
         }.toTypedArray()
 
-        orderDataSource.addOrder(order.toOrderEntity(), *orderLineItemList)
+        return orderDataSource.addOrder(order.toOrderEntity(), *orderLineItemList)
     }
 
     override suspend fun modifyOrder(order: Order): Result<Int> {

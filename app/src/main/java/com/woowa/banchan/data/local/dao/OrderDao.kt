@@ -17,7 +17,7 @@ interface OrderDao {
     fun findByOrderId(orderId: Int): Flow<List<OrderLineItemView>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertOrder(orderEntity: OrderEntity)
+    suspend fun insertOrder(orderEntity: OrderEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertOrderLineItem(vararg orderLineItemEntity: OrderLineItemEntity)

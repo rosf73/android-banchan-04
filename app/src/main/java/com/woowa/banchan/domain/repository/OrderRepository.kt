@@ -11,7 +11,7 @@ interface OrderRepository {
 
     fun getOrderLineItem(orderId: Int): Flow<Result<Map<Order, List<OrderLineItem>>>>
 
-    suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem)
+    suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem): Long
 
     suspend fun modifyOrder(order: Order) : Result<Int>
 }
