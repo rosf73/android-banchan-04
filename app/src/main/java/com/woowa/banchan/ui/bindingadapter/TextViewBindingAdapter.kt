@@ -1,10 +1,10 @@
 package com.woowa.banchan.ui.bindingadapter
 
-import android.content.res.Resources
 import android.graphics.Paint
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.woowa.banchan.BanchanApplication
 import com.woowa.banchan.R
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
@@ -31,17 +31,16 @@ fun TextView.setVisibility(condition: Boolean) {
 @BindingAdapter("count", "name")
 fun TextView.setOrderTitle(count: Int, name: String) {
     text = if (count == 1) name
-    else "$name 외 ${count-1}개"
+    else "$name 외 ${count - 1}개"
 }
 
 @BindingAdapter("state")
 fun TextView.setOrderState(state: Boolean) {
-    val resource = Resources.getSystem()
     if (state) {
-        text = resource.getString(R.string.order_start)
-        setTextColor(ResourcesCompat.getColor(resource, R.color.primary_accent, null))
+        text = BanchanApplication.instance.getString(R.string.order_start)
+        setTextColor(ContextCompat.getColor(BanchanApplication.instance, R.color.primary_accent))
     } else {
-        text = resource.getString(R.string.order_done)
-        setTextColor(ResourcesCompat.getColor(resource, R.color.black, null))
+        text = BanchanApplication.instance.getString(R.string.order_done)
+        setTextColor(ContextCompat.getColor(BanchanApplication.instance, R.color.black))
     }
 }
