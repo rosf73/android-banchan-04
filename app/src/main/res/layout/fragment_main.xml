@@ -9,6 +9,10 @@
             type="com.woowa.banchan.ui.OnCartClickListener" />
 
         <variable
+            name="orderClickListener"
+            type="com.woowa.banchan.ui.OnOrderClickListener" />
+
+        <variable
             name="active"
             type="Boolean" />
 
@@ -33,7 +37,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigation_icon="@drawable/ic_logo"
-            app:onFirstClick="@{cartClickListener.navigateToCart}" />
+            app:onFirstClick="@{cartClickListener.navigateToCart}"
+            app:onSecondClick="@{orderClickListener.navigateToOrderDetail}" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_ordering"

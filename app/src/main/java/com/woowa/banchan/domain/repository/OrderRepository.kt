@@ -1,7 +1,7 @@
 package com.woowa.banchan.domain.repository
 
-import com.woowa.banchan.domain.entity.Order
-import com.woowa.banchan.domain.entity.OrderLineItem
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {

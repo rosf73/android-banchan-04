@@ -2,8 +2,8 @@ package com.woowa.banchan.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import com.woowa.banchan.domain.entity.Order
-import com.woowa.banchan.domain.entity.OrderLineItem
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 
 @DatabaseView(
     """

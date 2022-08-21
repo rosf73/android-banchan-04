@@ -3,7 +3,7 @@ package com.woowa.banchan.data.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.woowa.banchan.domain.entity.Order
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 
 @Entity(tableName = "order")
 data class OrderEntity(

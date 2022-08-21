@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.common
+package com.woowa.banchan.ui.bindingadapter
 
 import android.graphics.Paint
 import android.widget.TextView
