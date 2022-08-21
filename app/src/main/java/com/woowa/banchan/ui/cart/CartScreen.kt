@@ -21,10 +21,18 @@ fun CartScreen(
     val cartState by cartViewModel.state.collectAsState()
     val recentlyState by recentlyViewModel.state.collectAsState()
 
-    var checkState by remember {
+    val (checkState, setCheckState) = remember {
         mutableStateOf(
-            if (cartViewModel.isAllChecked()) CheckState.CHECKED
-            else if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
+            if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
+            else if (cartViewModel.isAllChecked()) CheckState.CHECKED
+            else CheckState.UNCHECKED_NOT_ALL
+        )
+    }
+
+    LaunchedEffect(key1 = cartState.cart) {
+        setCheckState(
+            if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
+            else if (cartViewModel.isAllChecked()) CheckState.CHECKED
             else CheckState.UNCHECKED_NOT_ALL
         )
     }
@@ -34,30 +42,31 @@ fun CartScreen(
             CartCheckBox(
                 modifier = Modifier.fillMaxWidth(),
                 state = checkState,
-                onCheck = { cartViewModel.check(); checkState = CheckState.CHECKED },
-                onUncheck = { cartViewModel.uncheck(); checkState = CheckState.UNCHECKED },
-                onDeleteClick = { cartViewModel.deleteCartItem() })
+                onCheck = { cartViewModel.checkAll(); setCheckState(CheckState.CHECKED) },
+                onUncheck = { cartViewModel.uncheckAll(); setCheckState(CheckState.UNCHECKED) },
+                onDeleteClick = { cartViewModel.deleteCartMany() })
             CartColumn(
                 modifier = Modifier.fillMaxWidth(),
                 cart = cartState.cart,
                 onItemCheck = { id ->
                     cartViewModel.check(id)
-                    checkState = if (cartViewModel.isAllChecked()) CheckState.CHECKED
-                    else CheckState.UNCHECKED_NOT_ALL
+                    setCheckState(
+                        if (cartViewModel.isAllChecked()) CheckState.CHECKED
+                        else CheckState.UNCHECKED_NOT_ALL
+                    )
                 },
                 onItemUnCheck = { id ->
                     cartViewModel.uncheck(id)
-                    checkState = if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-                    else CheckState.UNCHECKED_NOT_ALL
+                    setCheckState(
+                        if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
+                        else CheckState.UNCHECKED_NOT_ALL
+                    )
                 },
                 onItemDeleteClick = { id ->
-                    cartViewModel.deleteCartItem(id)
-                    checkState = if (cartViewModel.isAllChecked()) CheckState.CHECKED
-                    else if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-                    else CheckState.UNCHECKED_NOT_ALL
+                    cartViewModel.deleteCart(id)
                 },
                 onItemQuantityChanged = { id, quantity ->
-                    cartViewModel.updateCartItem(id, quantity)
+                    cartViewModel.updateCart(id, quantity)
                 })
             RecentlyViewedColumn(
                 recentlyList =

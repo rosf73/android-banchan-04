@@ -82,10 +82,10 @@ fun CartColumn(
                 Text(text = "${orderPrice.toMoneyString()} 주문하기", color = colorResource(R.color.white))
             }
 
-            if (totalPrice < 10000)
+            if (totalPrice < 40000)
                 Text(
                     modifier = Modifier.align(CenterHorizontally),
-                    text = "${(10000 - totalPrice).toMoneyString()}을 더 담으면 무료!")
+                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 배송비가 무료!")
         }
     }
 }

@@ -2,12 +2,10 @@ package com.woowa.banchan.ui.recently
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.GetAllRecentlyViewedUseCase
 import com.woowa.banchan.domain.usecase.ModifyRecentlyViewedUseCase
-import com.woowa.banchan.ui.cart.testCartItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
