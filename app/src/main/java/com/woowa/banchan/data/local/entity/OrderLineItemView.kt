@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
+import com.woowa.banchan.extensions.toMoneyString
 
 @DatabaseView(
     """
@@ -17,7 +18,7 @@ data class OrderLineItemView(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
     @ColumnInfo(name = "quantity") val quantity: Int,
-    @ColumnInfo(name = "price") val price: String
+    @ColumnInfo(name = "price") val price: Int
 )
 
 fun OrderLineItemView.toOrder(): Order {
@@ -28,6 +29,6 @@ fun OrderLineItemView.toOrder(): Order {
 
 fun OrderLineItemView.toOrderLineItem(): OrderLineItem {
     return OrderLineItem(
-        name, imageUrl, quantity, price
+        name, imageUrl, quantity, price.toMoneyString()
     )
 }
