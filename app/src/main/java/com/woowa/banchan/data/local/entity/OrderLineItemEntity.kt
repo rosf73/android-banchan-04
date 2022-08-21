@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.woowa.banchan.domain.entity.OrderLineItem
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 
 @Entity(
     tableName = "order_line_item",
