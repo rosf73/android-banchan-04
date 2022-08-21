@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="count"
+            type="Integer" />
+
+        <variable
+            name="deliveryState"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_surface"
+        android:paddingHorizontal="16dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="@{deliveryState ? @string/product_order_start:@string/product_order_done}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="주문이 시작되었습니다." />
+
+        <TextView
+            android:id="@+id/tv_delivery_time_title"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="배송까지 남은 시간 "
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_delivery_time"
+            style="@style/Theme.Banchan.Subtitle2.ItemRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_delivery_time_title"
+            app:layout_constraintStart_toEndOf="@id/tv_delivery_time_title"
+            app:layout_constraintTop_toTopOf="@id/tv_delivery_time_title"
+            tools:text="20분" />
+
+        <TextView
+            android:id="@+id/tv_delivery_count_title"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="주문한 상품 "
+            app:layout_constraintStart_toStartOf="@id/tv_delivery_time_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_time_title" />
+
+        <TextView
+            android:id="@+id/tv_delivery_count"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingVertical="8dp"
+            android:text="@{@string/product_format(count)}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_delivery_count_title"
+            app:layout_constraintStart_toEndOf="@id/tv_delivery_count_title"
+            app:layout_constraintTop_toTopOf="@id/tv_delivery_count_title"
+            tools:text="총 2개" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
