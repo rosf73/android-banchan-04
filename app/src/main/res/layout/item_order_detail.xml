@@ -34,6 +34,7 @@
 
         <TextView
             android:id="@+id/order_detail_tv_title"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
@@ -49,6 +50,7 @@
 
         <TextView
             android:id="@+id/order_detail_tv_amount"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
@@ -61,6 +63,7 @@
 
         <TextView
             android:id="@+id/order_detail_tv_sprice"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
