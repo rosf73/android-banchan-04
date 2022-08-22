@@ -2,8 +2,10 @@ package com.woowa.banchan.ui.orderdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
 import com.woowa.banchan.domain.usecase.order.GetOrderLineItemUseCase
 import com.woowa.banchan.domain.usecase.order.ModifyOrderUseCase
+import com.woowa.banchan.ui.order.OrderUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +23,7 @@ class OrderDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(OrderLineItemUiState())
     val state = _state.asStateFlow()
 
-    fun getOrderLineItem(orderId: Int) {
+    fun getOrderLineItem(orderId: Long) {
         viewModelScope.launch {
             getOrderLineItemUseCase(orderId).onEach { result ->
                 result.onSuccess {

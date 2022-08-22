@@ -12,7 +12,7 @@ class GetOrderLineItemUseCase @Inject constructor(
     private val orderRepository: OrderRepository
 ) {
 
-    operator fun invoke(orderId: Int) = flow {
+    operator fun invoke(orderId: Long) = flow {
         orderRepository.getOrderLineItem(orderId).collect { emit(it) }
     }.catch {
         emit(Result.failure(NotFoundProductsException()))

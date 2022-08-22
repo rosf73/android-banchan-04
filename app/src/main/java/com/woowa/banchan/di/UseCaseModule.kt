@@ -9,6 +9,7 @@ import com.woowa.banchan.domain.usecase.GetDetailProductUseCase
 import com.woowa.banchan.domain.usecase.GetPlanUseCase
 import com.woowa.banchan.domain.usecase.GetProductsUseCase
 import com.woowa.banchan.domain.usecase.cart.*
+import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
 import com.woowa.banchan.domain.usecase.order.GetOrderLineItemUseCase
 import com.woowa.banchan.domain.usecase.order.ModifyOrderUseCase
 import dagger.Module
@@ -101,6 +102,12 @@ object UseCaseModule {
     @Singleton
     fun providesModifyRecentlyViewedUseCase(repository: RecentlyViewedRepository): ModifyRecentlyViewedUseCase {
         return ModifyRecentlyViewedUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetOrderInfoUseCase(repository: OrderRepository): GetOrderInfoUseCase {
+        return GetOrderInfoUseCase(repository)
     }
 
     @Provides

@@ -83,6 +83,12 @@ class CartViewModel @Inject constructor(
         }
     }
 
+    fun deleteAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            removeCartUseCase(*state.value.cart.toTypedArray())
+        }
+    }
+
     fun updateCart(id: Long, quantity: Int) {
         _state.value.cart.map {
             if (it.id == id) it.apply { this.quantity = quantity }

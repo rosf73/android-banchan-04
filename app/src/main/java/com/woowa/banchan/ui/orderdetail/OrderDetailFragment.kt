@@ -41,7 +41,8 @@ class OrderDetailFragment : Fragment() {
         binding.listener = activity as OnBackClickListener
         binding.rvOrder.adapter = orderDetailAdapter
         binding.viewModel = orderDetailViewModel
-        orderDetailViewModel.getOrderLineItem(1)
+
+        arguments?.getLong(ORDER_ID)?.let { orderDetailViewModel.getOrderLineItem(it) }
     }
 
     private fun observeData() {
@@ -61,5 +62,18 @@ class OrderDetailFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        private const val ORDER_ID = "ORDER_ID"
+
+        fun newInstance(id: Long): OrderDetailFragment {
+            val fragment = OrderDetailFragment()
+
+            val args = Bundle()
+            args.putLong(ORDER_ID, id)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

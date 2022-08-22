@@ -144,7 +144,7 @@ class DetailFragment : Fragment(), OnCartClickListener {
     override fun navigateToCart() {
         parentFragmentManager.popBackStack("Detail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, 0, 0, R.anim.slide_out)
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Detail")
             .add(R.id.fcv_main, CartFragment())
             .commit()

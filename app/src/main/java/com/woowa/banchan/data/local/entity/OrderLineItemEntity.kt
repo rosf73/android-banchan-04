@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
+import com.woowa.banchan.extensions.toMoneyInt
+import com.woowa.banchan.extensions.toMoneyString
 
 @Entity(
     tableName = "order_line_item",
@@ -22,7 +24,7 @@ data class OrderLineItemEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
     @ColumnInfo(name = "quantity") val quantity: Int,
-    @ColumnInfo(name = "price") val price: String
+    @ColumnInfo(name = "price") val price: Int
 )
 
 fun OrderLineItem.toOrderLineItemEntity(orderId: Long): OrderLineItemEntity {
@@ -31,12 +33,12 @@ fun OrderLineItem.toOrderLineItemEntity(orderId: Long): OrderLineItemEntity {
         name = name,
         imageUrl = imageUrl,
         quantity = quantity,
-        price = price
+        price = price.toMoneyInt()
     )
 }
 
 fun OrderLineItemEntity.toOrderLineItem(): OrderLineItem {
     return OrderLineItem(
-        name, imageUrl, quantity, price
+        name, imageUrl, quantity, price.toMoneyString()
     )
 }

@@ -77,7 +77,7 @@ class OrderDetailAdapter(
             orderItem.addAll(entry.value)
             val value = entry.value
             val totalSum = value.fold(0) { sum, orderLineItem ->
-                sum + if (orderLineItem is OrderLineItem) orderLineItem.quantity * orderLineItem.price.toMoneyInt() else 0
+                sum + if (orderLineItem is OrderLineItem) orderLineItem.price.toMoneyInt() else 0
             }
             orderItem.add(OrderFooter(totalSum))
         }
@@ -111,8 +111,7 @@ class OrderDetailAdapter(
 
         fun bind(orderLineItem: OrderLineItem) {
             binding.orderLineItem = orderLineItem
-            binding.totalPrice =
-                (orderLineItem.price.toMoneyInt() * orderLineItem.quantity).toMoneyString()
+            binding.totalPrice = orderLineItem.price
         }
     }
 
@@ -124,7 +123,8 @@ class OrderDetailAdapter(
             binding.composePrice.setContent {
                 CartPriceColumn(
                     totalPrice = orderFooter.price,
-                    deliveryFee = 2500
+                    deliveryFee = if (orderFooter.price < 40000) 2500
+                    else 0
                 )
             }
         }
