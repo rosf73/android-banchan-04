@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui
+package com.woowa.banchan.ui.network
 
 import android.content.Context
 import android.net.ConnectivityManager

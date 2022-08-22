@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui
+package com.woowa.banchan.ui.network
 
 import kotlinx.coroutines.flow.Flow
 

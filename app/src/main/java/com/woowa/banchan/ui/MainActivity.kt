@@ -7,6 +7,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.woowa.banchan.R
+import com.woowa.banchan.ui.network.ConnectivityObserver
+import com.woowa.banchan.ui.network.NetworkConnectivityObserver
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
