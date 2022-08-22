@@ -26,15 +26,13 @@ class PlanViewModel @Inject constructor(
 
     fun getPlan() {
         viewModelScope.launch {
-            _state.value =
-                state.value.copy(plans = emptyList(), isLoading = true, errorMessage = "")
+            _state.value = state.value.copy(isLoading = true)
             getPlanUseCase()
                 .onEach { result ->
                     result.onSuccess {
                         _state.value = state.value.copy(
                             plans = it,
-                            isLoading = false,
-                            errorMessage = ""
+                            isLoading = false
                         )
                     }
                         .onFailure { exception ->

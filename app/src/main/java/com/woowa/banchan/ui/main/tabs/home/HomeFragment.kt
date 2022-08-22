@@ -12,6 +12,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentHomeBinding
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
+import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.recently.RecentlyViewModel
@@ -81,6 +82,7 @@ class HomeFragment : Fragment() {
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
             planViewModel.state.collectLatest { state ->
+                binding.pbHome.visibility = state.isLoading.toVisibility()
                 if (state.plans.isNotEmpty()) {
                     planAdapter.submitList(state.plans)
                 }
