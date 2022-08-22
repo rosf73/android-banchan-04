@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private val planViewModel: PlanViewModel by viewModels()
+    private val planViewModel: PlanViewModel by activityViewModels()
     private val recentlyViewModel: RecentlyViewModel by activityViewModels()
     private val concatAdapter by lazy {
         ConcatAdapter(

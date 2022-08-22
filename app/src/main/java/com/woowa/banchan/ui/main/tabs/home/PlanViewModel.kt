@@ -24,35 +24,38 @@ class PlanViewModel @Inject constructor(
         getPlan()
     }
 
-    fun getPlan() = viewModelScope.launch {
-        _state.value = state.value.copy(plans = emptyList(), isLoading = true, errorMessage = "")
-        getPlanUseCase()
-            .onEach { result ->
-                result.onSuccess {
-                    _state.value = state.value.copy(
-                        plans = it,
-                        isLoading = false,
-                        errorMessage = ""
-                    )
-                }
-                    .onFailure { exception ->
-                        when (exception) {
-                            is NotFoundProductsException -> {
-                                _state.value = state.value.copy(
-                                    plans = emptyList(),
-                                    isLoading = false,
-                                    errorMessage = "기획전 상품을 찾을 수 없습니다."
-                                )
-                            }
-                            else -> {
-                                _state.value = state.value.copy(
-                                    plans = emptyList(),
-                                    isLoading = false,
-                                    errorMessage = "에러가 발생했습니다."
-                                )
+    fun getPlan() {
+        viewModelScope.launch {
+            _state.value =
+                state.value.copy(plans = emptyList(), isLoading = true, errorMessage = "")
+            getPlanUseCase()
+                .onEach { result ->
+                    result.onSuccess {
+                        _state.value = state.value.copy(
+                            plans = it,
+                            isLoading = false,
+                            errorMessage = ""
+                        )
+                    }
+                        .onFailure { exception ->
+                            when (exception) {
+                                is NotFoundProductsException -> {
+                                    _state.value = state.value.copy(
+                                        plans = emptyList(),
+                                        isLoading = false,
+                                        errorMessage = "기획전 상품을 찾을 수 없습니다."
+                                    )
+                                }
+                                else -> {
+                                    _state.value = state.value.copy(
+                                        plans = emptyList(),
+                                        isLoading = false,
+                                        errorMessage = "에러가 발생했습니다."
+                                    )
+                                }
                             }
                         }
-                    }
-            }.launchIn(this)
+                }.launchIn(this)
+        }
     }
 }
