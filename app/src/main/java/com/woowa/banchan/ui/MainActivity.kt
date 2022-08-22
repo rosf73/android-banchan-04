@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         connectivityObserver = NetworkConnectivityObserver(applicationContext)
         setContentView(R.layout.activity_main)
 
-        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        checkNetwork(cm.activeNetwork != null)
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        checkNetwork(connectivityManager.activeNetwork != null)
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
