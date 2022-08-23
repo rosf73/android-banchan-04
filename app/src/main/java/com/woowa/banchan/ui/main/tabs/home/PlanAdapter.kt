@@ -59,7 +59,7 @@ class PlanAdapter(
         fun bind(item: Category) {
             binding.category = item.title
             binding.rvHome.adapter = productAdapter
-            binding.rvHome.addOnItemTouchListener(HorizontalScrollListener())
+            binding.rvHome.addOnItemTouchListener(NestedScrollListener())
             productAdapter.submitList(item.menus)
         }
 
