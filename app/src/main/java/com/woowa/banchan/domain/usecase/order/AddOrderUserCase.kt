@@ -1,7 +1,9 @@
 package com.woowa.banchan.domain.usecase.order
 
 import com.woowa.banchan.domain.entity.Cart
-import com.woowa.banchan.domain.entity.OrderDetailSection.*
+import com.woowa.banchan.domain.entity.DeliveryStatus
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import com.woowa.banchan.domain.repository.OrderRepository
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
@@ -17,7 +19,7 @@ class AddOrderUserCase @Inject constructor(
     ): Long {
         val order = Order(
             orderedAt = orderedAt,
-            status = "START"
+            status = DeliveryStatus.START
         )
 
         val orderLineItem = mutableListOf<OrderLineItem>()
