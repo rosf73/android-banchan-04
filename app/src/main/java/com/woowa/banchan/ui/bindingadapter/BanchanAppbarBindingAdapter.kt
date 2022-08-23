@@ -20,8 +20,11 @@ fun BanchanAppbar.setOnActionSecondClick(onClick: () -> Unit) {
 
 @BindingAdapter("actionFirstOverflowText")
 fun BanchanAppbar.setActionFirstOverflowCount(count: Int) {
-    val format = if (count >= 10) "10+" else count.toString()
-    this.setOverflowText(format)
+    if (count == 0) this.removeOverflowText()
+    else {
+        val format = if (count >= 10) "10+" else count.toString()
+        this.showOverflowText(format)
+    }
 }
 
 @BindingAdapter("actionSecondActive")
