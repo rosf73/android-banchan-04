@@ -1,10 +1,8 @@
 package com.woowa.banchan.ui.screen.cart.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -13,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
 import com.woowa.banchan.domain.entity.Cart
@@ -36,7 +34,9 @@ fun CartColumn(
 
     Column(modifier = modifier) {
         if (cart.isEmpty())
-            CartItemEmpty(modifier = Modifier.fillMaxWidth())
+            CartItemEmpty(modifier = Modifier
+                .background(color = colorResource(id = R.color.white))
+                .fillMaxWidth())
 
         else {
             cart.forEach { item ->
@@ -95,8 +95,11 @@ fun CartColumn(
 private fun CartItemEmpty(
     modifier: Modifier = Modifier
 ) {
-    Text(
-        modifier = modifier.padding(0.dp, 100.dp),
-        text = stringResource(R.string.cart_empty),
-        textAlign = TextAlign.Center)
+    Image(
+        modifier = modifier
+            .padding(0.dp, 100.dp)
+            .height(150.dp),
+        painter = painterResource(id = R.drawable.empty),
+        contentDescription = stringResource(R.string.label_empty)
+    )
 }
