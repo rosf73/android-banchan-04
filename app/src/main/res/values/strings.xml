@@ -25,9 +25,11 @@
     <string name="label_cart">Shopping Cart</string>
     <string name="label_right">Right</string>
     <string name="label_active">Active</string>
+    <string name="label_empty">Empty</string>
 
     <string name="delivery_fee">배송비</string>
     <string name="total_price">총 주문금액</string>
+    <string name="emtpy_lockandlock">반찬 통이 비어있네요..</string>
 
     <string name="detail_point">적립금</string>
     <string name="detail_delivery_info">배송정보</string>
