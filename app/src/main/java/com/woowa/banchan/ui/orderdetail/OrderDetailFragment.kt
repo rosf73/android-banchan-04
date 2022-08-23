@@ -10,6 +10,8 @@ import com.woowa.banchan.databinding.FragmentOrderDetailBinding
 import com.woowa.banchan.ui.OnBackClickListener
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderDetailFragment : Fragment() {
@@ -42,14 +44,25 @@ class OrderDetailFragment : Fragment() {
         binding.rvOrder.adapter = orderDetailAdapter
         binding.viewModel = orderDetailViewModel
 
-        arguments?.getLong(ORDER_ID)?.let { orderDetailViewModel.getOrderLineItem(it) }
+        arguments?.getLong(ORDER_ID)?.let {
+            orderDetailViewModel.getOrderLineItem(it)
+            binding.orderId = it
+        }
     }
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            orderDetailViewModel.state.collect {
-                if (it.orderLineItemList.isNotEmpty()) {
-                    orderDetailAdapter.submitHeaderAndOrderList(it.orderLineItemList)
+            launch {
+                orderDetailViewModel.state.collect {
+                    if (it.orderLineItemList.isNotEmpty()) {
+                        orderDetailAdapter.submitHeaderAndOrderList(it.orderLineItemList)
+                    }
+                }
+            }
+
+            launch {
+                orderDetailViewModel.refreshEvent.collectLatest {
+                    orderDetailAdapter.notifyItemChanged(0)
                 }
             }
         }
