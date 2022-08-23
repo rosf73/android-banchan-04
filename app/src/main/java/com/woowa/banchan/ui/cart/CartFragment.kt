@@ -29,7 +29,7 @@ class CartFragment: Fragment(), OnRecentlyClickListener, OnDetailClickListener, 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
 
-    private val cartViewModel: CartViewModel by viewModels()
+    private val cartViewModel: CartViewModel by activityViewModels()
     private val recentlyViewModel: RecentlyViewModel by viewModels()
     private val orderViewModel: OrderViewModel by activityViewModels()
 

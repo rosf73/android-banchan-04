@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
@@ -13,16 +14,23 @@ import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
 import com.woowa.banchan.ui.OnOrderClickListener
 import com.woowa.banchan.ui.cart.CartFragment
+import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.detail.DetailFragment
+import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.order.OrderFragment
+import com.woowa.banchan.ui.order.OrderViewModel
 import com.woowa.banchan.ui.orderdetail.OrderDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnOrderClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = requireNotNull(_binding)
+
+    private val cartViewModel: CartViewModel by activityViewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +43,10 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initView()
         initListener()
+        observeData()
     }
 
     private fun initView() {
@@ -52,8 +62,25 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
     private fun initListener() {
         binding.cartClickListener = this
         binding.orderClickListener = this
-        binding.active = true
-        binding.cartCount = 10
+    }
+
+    private fun observeData() {
+        viewLifecycleOwner.repeatOnLifecycle {
+            launch {
+                cartViewModel.state.collect { state ->
+                    if (state.cart.isNotEmpty()) {
+                        binding.cartCount = state.cart.size
+                    }
+                }
+            }
+
+            launch {
+                orderViewModel.state.collect { state ->
+                    val activeCount = state.orderInfoList.count { it.status == "START" }
+                    binding.active = activeCount > 0
+                }
+            }
+        }
     }
 
     override fun navigateToDetail(hash: String, name: String, description: String) {
