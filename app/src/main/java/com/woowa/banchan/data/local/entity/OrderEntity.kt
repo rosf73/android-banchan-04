@@ -9,9 +9,9 @@ import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 data class OrderEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "ordered_at") val orderedAt: Long,
-    @ColumnInfo(name = "status") val status: String = "START" // "START" OR "DONE"
+    @ColumnInfo(name = "status") val status: String = "START"
 )
 
 fun Order.toOrderEntity(): OrderEntity {
-    return OrderEntity(id, orderedAt, status)
+    return OrderEntity(id, orderedAt, status.status)
 }

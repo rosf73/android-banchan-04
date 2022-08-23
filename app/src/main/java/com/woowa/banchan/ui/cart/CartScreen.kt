@@ -18,7 +18,9 @@ fun CartScreen(
     recentlyViewModel: RecentlyViewModel,
     navigateToRecently: () -> Unit,
     onItemClick: (RecentlyViewed) -> Unit,
-    onOrderClick: () -> Unit
+    onOrderClick: () -> Unit,
+    onShowLoading: () -> Unit,
+    onDismissLoading: () -> Unit
 ) {
     val cartState by cartViewModel.state.collectAsState()
     val recentlyState by recentlyViewModel.state.collectAsState()
@@ -31,12 +33,20 @@ fun CartScreen(
         )
     }
 
-    LaunchedEffect(key1 = cartState.cart) {
+    LaunchedEffect(cartState.cart) {
         setCheckState(
             if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
             else if (cartViewModel.isAllChecked()) CheckState.CHECKED
             else CheckState.UNCHECKED_NOT_ALL
         )
+    }
+
+    LaunchedEffect(cartState.isLoading, recentlyState.isLoading) {
+        if (cartState.isLoading || recentlyState.isLoading) {
+            onShowLoading()
+        } else {
+            onDismissLoading()
+        }
     }
 
     LazyColumn {

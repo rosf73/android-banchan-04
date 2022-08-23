@@ -22,5 +22,5 @@ fun Long.toTimeString(): String {
 fun Long.getDiffTime(): Long {
     val current = System.currentTimeMillis()
     val diff = this - current
-    return TimeUnit.MILLISECONDS.toMinutes(diff)
+    return TimeUnit.MILLISECONDS.toSeconds(diff)
 }
