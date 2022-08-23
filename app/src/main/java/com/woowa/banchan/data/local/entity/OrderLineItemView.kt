@@ -2,6 +2,7 @@ package com.woowa.banchan.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import com.woowa.banchan.extensions.toMoneyString
@@ -23,7 +24,7 @@ data class OrderLineItemView(
 
 fun OrderLineItemView.toOrder(): Order {
     return Order(
-        id, orderedAt, status
+        id, orderedAt, DeliveryStatus.of(status)
     )
 }
 

@@ -4,13 +4,15 @@ object Version {
     const val constraintLayout = "2.1.4"
     const val fragmentKtx = "1.3.3"
     const val activityKtx = "1.1.0"
+    const val workRuntimeKtx = "2.7.1"
 
     const val googleMaterial = "1.6.1"
     const val recyclerview = "1.3.0-alpha02"
     const val viewModel = "2.2.0"
     const val lifecycleRuntimeKtx = "2.4.1"
 
-    const val hilt = "2.40"
+    const val hilt = "2.42"
+    const val hiltWork = "1.0.0"
 
     const val junit4 = "4.13.2"
     const val androidxJunit = "1.1.3"
@@ -52,6 +54,8 @@ object Lib {
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.viewModel}"
         const val lifecycleRuntimeKtx =
             "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleRuntimeKtx}"
+
+        const val workRuntimeKtx = "androidx.work:work-runtime-ktx:${Version.workRuntimeKtx}"
     }
 
     object Hilt {
@@ -59,6 +63,8 @@ object Lib {
             "com.google.dagger:hilt-android-gradle-plugin:${Version.hilt}"
         const val android = "com.google.dagger:hilt-android:${Version.hilt}"
         const val androidCompiler = "com.google.dagger:hilt-android-compiler:${Version.hilt}"
+        const val hiltCompiler = "androidx.hilt:hilt-compiler:${Version.hiltWork}"
+        const val hiltWorker = "androidx.hilt:hilt-work:${Version.hiltWork}"
     }
 
     object Test {

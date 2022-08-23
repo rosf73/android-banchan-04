@@ -56,6 +56,7 @@ dependencies {
     implementation(Lib.Androidx.fragmentKtx)
     implementation(Lib.Androidx.activityKtx)
     implementation(Lib.Androidx.lifecycleRuntimeKtx)
+    implementation(Lib.Androidx.workRuntimeKtx)
     testImplementation(Lib.Test.junit4)
     androidTestImplementation(Lib.Test.androidxJunit)
     androidTestImplementation(Lib.Test.espressoCore)
@@ -70,6 +71,8 @@ dependencies {
 
     implementation(Lib.Hilt.android)
     kapt(Lib.Hilt.androidCompiler)
+    kapt(Lib.Hilt.hiltCompiler)
+    implementation(Lib.Hilt.hiltWorker)
 
     implementation(Lib.Coroutine.android)
     implementation(Lib.Coroutine.core)

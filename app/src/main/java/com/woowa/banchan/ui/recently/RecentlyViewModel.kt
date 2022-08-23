@@ -25,11 +25,11 @@ class RecentlyViewModel @Inject constructor(
     }
 
     private fun getRecently() = viewModelScope.launch {
-        _state.value = state.value.copy(recentlyList = emptyList(), isLoading = true, errorMessage = "")
+        _state.value = state.value.copy(recentlyList = emptyList(), isLoading = true)
 
         getAllRecentlyViewedUseCase().onEach { result ->
             result.onSuccess {
-                _state.value = state.value.copy(recentlyList = it, isLoading = false, errorMessage = "")
+                _state.value = state.value.copy(recentlyList = it, isLoading = false)
             }.onFailure { exception ->
                 when (exception) {
                     is NotFoundProductsException -> {
