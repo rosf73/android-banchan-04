@@ -17,8 +17,6 @@ import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.navigator.OnItemCartClickListener
-import com.woowa.banchan.ui.customview.CartBottomSheet
-import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.screen.detail.DetailFragment
 import java.util.*
