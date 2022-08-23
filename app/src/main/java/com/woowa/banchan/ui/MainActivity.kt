@@ -2,6 +2,7 @@ package com.woowa.banchan.ui
 
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -38,8 +39,11 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         setContentView(R.layout.activity_main)
 
         val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        checkNetwork(connectivityManager.activeNetwork != null)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkNetwork(connectivityManager.activeNetwork != null)
+        } else {
+            checkNetwork(connectivityManager.isDefaultNetworkActive)
+        }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 connectivityObserver.observe().collect {
