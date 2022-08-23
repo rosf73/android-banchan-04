@@ -12,6 +12,8 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentRecentlyBinding
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.toProduct
+import com.woowa.banchan.ui.customview.CartBottomSheet
+import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.navigator.OnItemCartClickListener

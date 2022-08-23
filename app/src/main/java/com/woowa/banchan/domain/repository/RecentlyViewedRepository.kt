@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecentlyViewedRepository {
 
-    suspend fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>>
+    fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>>
 
     suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewed)
 }

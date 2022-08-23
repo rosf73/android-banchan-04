@@ -4,13 +4,13 @@ import com.woowa.banchan.domain.repository.BanchanRepository
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.repository.OrderRepository
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
-import com.woowa.banchan.domain.usecase.product.GetDetailProductUseCase
-import com.woowa.banchan.domain.usecase.product.GetPlanUseCase
-import com.woowa.banchan.domain.usecase.product.GetProductsUseCase
 import com.woowa.banchan.domain.usecase.cart.*
 import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
 import com.woowa.banchan.domain.usecase.order.GetOrderLineItemUseCase
 import com.woowa.banchan.domain.usecase.order.ModifyOrderUseCase
+import com.woowa.banchan.domain.usecase.product.GetDetailProductUseCase
+import com.woowa.banchan.domain.usecase.product.GetPlanUseCase
+import com.woowa.banchan.domain.usecase.product.GetProductsUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.GetAllRecentlyViewedUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
 import dagger.Module
@@ -95,8 +95,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesGetAllRecentlyViewedUseCase(repository: RecentlyViewedRepository): GetAllRecentlyViewedUseCase {
-        return GetAllRecentlyViewedUseCase(repository)
+    fun providesGetAllRecentlyViewedUseCase(
+        repository: RecentlyViewedRepository,
+        getCartUseCase: GetCartUseCase
+    ): GetAllRecentlyViewedUseCase {
+        return GetAllRecentlyViewedUseCase(repository, getCartUseCase)
     }
 
     @Provides

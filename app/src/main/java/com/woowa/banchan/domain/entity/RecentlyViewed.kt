@@ -9,7 +9,8 @@ data class RecentlyViewed(
     val imageUrl: String,
     val nPrice: String? = null,
     val sPrice: String,
-    val viewedAt: Long
+    val viewedAt: Long,
+    var hasCart: Boolean = false
 )
 
 fun RecentlyViewed.toProduct(): Product {
