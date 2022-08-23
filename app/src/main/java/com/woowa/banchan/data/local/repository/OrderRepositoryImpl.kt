@@ -59,7 +59,7 @@ class OrderRepositoryImpl @Inject constructor(
                 OrderEntity(
                     order.id,
                     order.orderedAt,
-                    order.status
+                    order.status.status
                 )
             )
         }

@@ -2,6 +2,7 @@ package com.woowa.banchan.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.OrderInfo
 import com.woowa.banchan.extensions.toMoneyString
 
@@ -28,6 +29,6 @@ fun OrderInfoView.toOrderInfo(): OrderInfo {
     var totalPrice = price
     if (totalPrice < 40000) totalPrice += 2500
     return OrderInfo(
-        id, status, count, totalPrice.toMoneyString(), name, imageUrl
+        id, DeliveryStatus.of(status), count, totalPrice.toMoneyString(), name, imageUrl
     )
 }

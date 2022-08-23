@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.common
+package com.woowa.banchan.ui.bindingadapter
 
 import androidx.databinding.BindingAdapter
 import com.woowa.banchan.ui.customview.BanchanAppbar

@@ -2,6 +2,7 @@ package com.woowa.banchan.ui.orderdetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
 import com.woowa.banchan.domain.usecase.order.GetOrderLineItemUseCase
 import com.woowa.banchan.domain.usecase.order.ModifyOrderUseCase
@@ -48,7 +49,7 @@ class OrderDetailViewModel @Inject constructor(
         val orderMap = _state.value.orderLineItemList
         viewModelScope.launch {
             orderMap.entries.forEach {
-                modifyOrderUseCase(it.key.copy(status = "Done")).collect { result ->
+                modifyOrderUseCase(it.key.copy(status = DeliveryStatus.DONE)).collect { result ->
                     result
                         .onFailure {
                             _state.value = _state.value.copy(
