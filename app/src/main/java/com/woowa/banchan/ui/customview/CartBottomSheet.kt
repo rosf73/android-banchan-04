@@ -11,7 +11,7 @@ import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.extensions.toMoneyString
-import com.woowa.banchan.ui.cart.CartViewModel
+import com.woowa.banchan.ui.screen.cart.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
