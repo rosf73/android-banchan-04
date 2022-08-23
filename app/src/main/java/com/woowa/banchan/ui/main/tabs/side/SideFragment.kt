@@ -61,7 +61,7 @@ class SideFragment : Fragment() {
 
     private val countFilterAdapter by lazy {
         CountFilterAdapter(
-            onClickItem = { type -> productsViewModel.getProduct("soup", type) },
+            onClickItem = { type -> productsViewModel.getProduct("side", type) },
         )
     }
 
