@@ -63,11 +63,11 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
                 binding.rvOrderList.visibility = isNotEmpty.toVisibility()
                 binding.llEmpty.visibility = (!isNotEmpty).toVisibility()
                 binding.ivLockandlock.visibility = (!isNotEmpty).toVisibility()
-                binding.ivLockandlock.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.translate_infinity))
 
-                if (isNotEmpty) {
+                if (isNotEmpty)
                     orderListAdapter.submitList(it.orderInfoList)
-                }
+                else
+                    binding.ivLockandlock.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.translate_infinity))
             }
         }
     }
