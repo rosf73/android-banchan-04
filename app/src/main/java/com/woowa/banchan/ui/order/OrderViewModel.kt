@@ -17,7 +17,7 @@ import javax.inject.Inject
 class OrderViewModel @Inject constructor(
     private val getOrderInfoUseCase: GetOrderInfoUseCase,
     private val addOrderUserCase: AddOrderUserCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(OrderUiState())
     val state = _state.asStateFlow()
@@ -44,12 +44,6 @@ class OrderViewModel @Inject constructor(
                         )
                     }
             }.launchIn(this)
-        }
-    }
-
-    fun addOrder(carts: List<Cart>, onAdded: (Long) -> Unit) {
-        viewModelScope.launch {
-            onAdded(addOrderUserCase(carts, System.currentTimeMillis()))
         }
     }
 }
