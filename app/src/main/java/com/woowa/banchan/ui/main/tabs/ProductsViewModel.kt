@@ -30,14 +30,13 @@ class ProductsViewModel @Inject constructor(
 
     fun getProduct(type: String, sortType: SortType = SortType.Default) = viewModelScope.launch {
         setSortType(sortType)
-        _state.value = state.value.copy(products = emptyList(), isLoading = true, errorMessage = "")
+        _state.value = state.value.copy(products = emptyList(), isLoading = true)
         getProductsUseCase(type, sortType)
             .onEach { result ->
                 result.onSuccess {
                     _state.value = state.value.copy(
                         products = it,
-                        isLoading = false,
-                        errorMessage = ""
+                        isLoading = false
                     )
                 }
                     .onFailure { exception ->

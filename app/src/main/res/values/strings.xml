@@ -61,4 +61,6 @@
     <string name="product_order_done">배송이 완료되었습니다.</string>
     <string name="notification_products">주문하신 %s 외의 %d개 배달되었어요.</string>
     <string name="notification_product">주문하신 %s이(가) 배달되었어요.</string>
+
+    <string name="message_network">네트워크 연결 상태를 확인해주세요</string>
 </resources>

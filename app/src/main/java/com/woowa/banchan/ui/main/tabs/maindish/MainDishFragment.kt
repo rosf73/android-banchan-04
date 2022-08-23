@@ -15,6 +15,7 @@ import com.woowa.banchan.databinding.FragmentMaindishBinding
 import com.woowa.banchan.domain.entity.ProductViewType
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
+import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.main.MainFragment
 import com.woowa.banchan.ui.main.tabs.ProductsViewModel
 import com.woowa.banchan.ui.main.tabs.adapter.BannerAdapter
@@ -99,6 +100,7 @@ class MainDishFragment : Fragment() {
         viewLifecycleOwner.repeatOnLifecycle {
             launch {
                 productsViewModel.state.collectLatest { state ->
+                    binding.pbMainDish.visibility = state.isLoading.toVisibility()
                     if (state.products.isNotEmpty()) {
                         productAdapter.submitList(state.products)
                     }
