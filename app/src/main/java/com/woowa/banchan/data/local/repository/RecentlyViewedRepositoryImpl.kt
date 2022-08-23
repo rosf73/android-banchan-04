@@ -17,7 +17,7 @@ class RecentlyViewedRepositoryImpl @Inject constructor(
     private val recentlyViewedDataSource: RecentlyViewedDataSource
 ) : RecentlyViewedRepository {
 
-    override suspend fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
+    override fun getAllRecentlyViewed(): Flow<Result<List<RecentlyViewed>>> = flow {
         recentlyViewedDataSource.getAllRecentlyViewed()
             .collect { list ->
                 emit(Result.success(list.map { it.toRecentlyViewed() }))
