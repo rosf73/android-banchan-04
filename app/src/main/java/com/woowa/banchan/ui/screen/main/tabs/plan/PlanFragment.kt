@@ -45,7 +45,7 @@ class PlanFragment : Fragment() {
             },
             onClickCart = {
                 if (it.hasCart) return@PlanAdapter
-                CartBottomSheet(it).show(childFragmentManager, "cart")
+                CartBottomSheet.newInstance(it).show(childFragmentManager, "cart")
             },
         )
     }
