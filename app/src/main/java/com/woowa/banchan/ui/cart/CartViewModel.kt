@@ -50,17 +50,21 @@ class CartViewModel @Inject constructor(
     }
 
     private fun getCart() {
+        _state.value = state.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             getCartUseCase().onEach { result ->
                 result.onSuccess {
                     val cartList = it.map { cartMap -> cartMap.value }
                     _state.value = state.value.copy(
                         cart = cartList.toMutableList(),
+                        isLoading = false
+                    )
+                }.onFailure {
+                    _state.value = state.value.copy(
                         isLoading = false,
                         errorMessage = ""
                     )
                 }
-                    .onFailure { }
             }.launchIn(this)
         }
     }

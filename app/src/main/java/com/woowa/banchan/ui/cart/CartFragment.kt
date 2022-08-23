@@ -12,13 +12,16 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 import com.woowa.banchan.ui.*
+import com.woowa.banchan.ui.customview.LoadingFragment
 import com.woowa.banchan.ui.detail.DetailFragment
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
+import com.woowa.banchan.ui.order.OrderViewModel
 import com.woowa.banchan.ui.orderdetail.OrderDetailFragment
 import com.woowa.banchan.ui.recently.RecentlyFragment
 import com.woowa.banchan.ui.recently.RecentlyViewModel
@@ -27,14 +30,15 @@ import java.security.SecureRandom
 import java.util.*
 
 @AndroidEntryPoint
-class CartFragment : Fragment(), OnRecentlyClickListener, OnDetailClickListener,
-    OnOrderDetailClickListener {
+class CartFragment
+    : Fragment(), OnRecentlyClickListener, OnDetailClickListener, OnOrderDetailClickListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)
 
     private val cartViewModel: CartViewModel by viewModels()
     private val recentlyViewModel: RecentlyViewModel by viewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +51,7 @@ class CartFragment : Fragment(), OnRecentlyClickListener, OnDetailClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val dialog = LoadingFragment()
         binding.composeCart.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
@@ -58,7 +63,15 @@ class CartFragment : Fragment(), OnRecentlyClickListener, OnDetailClickListener,
                         navigateToDetail(it.hash, it.name, it.description)
                         recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
                     },
-                    onOrderClick = { cartViewModel.addOrder() }
+                    onOrderClick = { cartViewModel.addOrder() },
+                    onShowLoading = {
+                        parentFragmentManager.executePendingTransactions()
+                        if (!dialog.isAdded) dialog.show(parentFragmentManager, dialog.tag)
+                    },
+                    onDismissLoading = {
+                        parentFragmentManager.executePendingTransactions()
+                        if (dialog.isAdded) dialog.stay()
+                    }
                 )
             }
         }
