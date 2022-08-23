@@ -1,10 +1,13 @@
 package com.woowa.banchan.ui.customview
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowa.banchan.databinding.FragmentBottomSheetBinding
 import com.woowa.banchan.domain.entity.Cart
@@ -15,7 +18,7 @@ import com.woowa.banchan.ui.screen.cart.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartBottomSheet(private val product: Product) : BottomSheetDialogFragment() {
+class CartBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: FragmentBottomSheetBinding? = null
     private val binding: FragmentBottomSheetBinding get() = requireNotNull(_binding)
@@ -35,14 +38,24 @@ class CartBottomSheet(private val product: Product) : BottomSheetDialogFragment(
         initView()
     }
 
-    private fun initView() {
-        binding.fragment = this@CartBottomSheet
-        binding.product = product
-        binding.quantity = 1
-        setOnClickListener()
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        return dialog
     }
 
-    private fun setOnClickListener() {
+    private fun initView() {
+        binding.fragment = this@CartBottomSheet
+        binding.quantity = 1
+        arguments?.let { bundle ->
+            bundle.getParcelable<Product>(PRODUCT)?.let {
+                binding.product = it
+                setOnClickListener(it)
+            }
+        }
+    }
+
+    private fun setOnClickListener(product: Product) {
         with(binding) {
             btnMinus.setOnClickListener {
                 if (quantity > 1)
@@ -51,20 +64,20 @@ class CartBottomSheet(private val product: Product) : BottomSheetDialogFragment(
                     it.isEnabled = false
                 tvQuantity.text = quantity.toString()
                 btnOrdering.text = "${quantity}개 담기"
-                tvTotalPrice.text = (product!!.sPrice.toMoneyInt() * quantity).toMoneyString()
+                tvTotalPrice.text = (product.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
             btnPlus.setOnClickListener {
                 quantity++
                 btnMinus.isEnabled = true
                 tvQuantity.text = quantity.toString()
                 btnOrdering.text = "${quantity}개 담기"
-                tvTotalPrice.text = (product!!.sPrice.toMoneyInt() * quantity).toMoneyString()
+                tvTotalPrice.text = (product.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
         }
-        binding.btnOrdering.setOnClickListener { navigateToCart() }
+        binding.btnOrdering.setOnClickListener { navigateToCart(product) }
     }
 
-    fun navigateToCart() {
+    fun navigateToCart(product: Product) {
         cartViewModel.addCart(
             Cart(
                 hash = product.detailHash,
@@ -87,5 +100,18 @@ class CartBottomSheet(private val product: Product) : BottomSheetDialogFragment(
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        private const val PRODUCT = "PRODUCT"
+
+        fun newInstance(product: Product): CartBottomSheet {
+            val fragment = CartBottomSheet()
+
+            val args = Bundle()
+            args.putParcelable(PRODUCT, product)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
