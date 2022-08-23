@@ -15,22 +15,28 @@ import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.ui.OnCartClickListener
+import com.woowa.banchan.ui.OnOrderClickListener
 import com.woowa.banchan.ui.cart.CartFragment
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.customview.CartDialog
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toPx
+import com.woowa.banchan.ui.order.OrderFragment
+import com.woowa.banchan.ui.order.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DetailFragment : Fragment(), OnCartClickListener {
+class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding: FragmentDetailBinding get() = requireNotNull(_binding)
 
     private val detailViewModel: DetailViewModel by activityViewModels()
     private val cartViewModel: CartViewModel by activityViewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +57,7 @@ class DetailFragment : Fragment(), OnCartClickListener {
 
     private fun initListener() {
         binding.cartClickListener = this
+        binding.orderClickListener = this
     }
 
     private fun initData() {
@@ -61,33 +68,52 @@ class DetailFragment : Fragment(), OnCartClickListener {
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            detailViewModel.state.collectLatest { state ->
-                initBinding(state.product)
-                initIndicators(state.product.thumbs)
-                initViewPager()
+            launch {
+                detailViewModel.state.collectLatest { state ->
+                    initBinding(state.product)
+                    initIndicators(state.product.thumbs)
+                    initViewPager()
 
-                binding.vpDetailThumb.adapter = DetailThumbAdapter(state.product.thumbs)
-                binding.rvDetailSection.adapter =
-                    DetailSectionAdapter(state.product.section)
+                    binding.vpDetailThumb.adapter = DetailThumbAdapter(state.product.thumbs)
+                    binding.rvDetailSection.adapter =
+                        DetailSectionAdapter(state.product.section)
+                }
             }
-        }
 
-        viewLifecycleOwner.repeatOnLifecycle {
-            detailViewModel.cartEvent.collectLatest { product ->
-                val bundle = arguments
-                val name = bundle?.getString(NAME) ?: ""
-                cartViewModel.addCart(
-                    Cart(
-                        hash = product.hash,
-                        name = name,
-                        imageUrl = product.thumbs[0],
-                        quantity = detailViewModel.quantity.value!!,
-                        price = product.sPrice,
-                        checked = true
+            launch {
+                detailViewModel.cartEvent.collectLatest { product ->
+                    val bundle = arguments
+                    val name = bundle?.getString(NAME) ?: ""
+                    cartViewModel.addCart(
+                        Cart(
+                            hash = product.hash,
+                            name = name,
+                            imageUrl = product.thumbs[0],
+                            quantity = detailViewModel.quantity.value!!,
+                            price = product.sPrice,
+                            checked = true
+                        )
                     )
-                )
-                val dialog = CartDialog()
-                dialog.show(parentFragmentManager, dialog.tag)
+                    val dialog = CartDialog()
+                    dialog.show(parentFragmentManager, dialog.tag)
+                }
+            }
+
+            launch {
+                cartViewModel.state.collect {
+                    cartViewModel.state.collect { state ->
+                        if (state.cart.isNotEmpty()) {
+                            binding.cartCount = state.cart.size
+                        }
+                    }
+                }
+            }
+
+            launch {
+                orderViewModel.state.collect { state ->
+                    val activeCount = state.orderInfoList.count { it.status == "START" }
+                    binding.active = activeCount > 0
+                }
             }
         }
     }
@@ -115,7 +141,6 @@ class DetailFragment : Fragment(), OnCartClickListener {
 
     private fun initViewPager() {
         with(binding) {
-            //TODO: ViewModel.position 정의 후 양방향 바인딩
             vpDetailThumb.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     llDetailThumb.children.iterator().forEach { view ->
@@ -147,6 +172,15 @@ class DetailFragment : Fragment(), OnCartClickListener {
             .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
             .addToBackStack("Detail")
             .add(R.id.fcv_main, CartFragment())
+            .commit()
+    }
+
+    override fun navigateToOrder() {
+        parentFragmentManager.popBackStack("Detail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+            .addToBackStack("Detail")
+            .add(R.id.fcv_main, OrderFragment())
             .commit()
     }
 
