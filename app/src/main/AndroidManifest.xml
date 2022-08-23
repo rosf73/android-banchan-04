@@ -35,7 +35,7 @@
             android:exported="false"
             android:launchMode="singleTask"/>
 
-        <receiver android:name=".ui.AlarmBroadcastReceiver"/>
+        <receiver android:name=".ui.receiver.AlarmBroadcastReceiver"/>
 
         <provider
             android:name="androidx.startup.InitializationProvider"

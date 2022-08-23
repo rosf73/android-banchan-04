@@ -7,11 +7,11 @@
 
         <variable
             name="listener"
-            type="com.woowa.banchan.ui.OnBackClickListener" />
+            type="com.woowa.banchan.ui.navigator.OnBackClickListener" />
 
         <variable
             name="viewModel"
-            type="com.woowa.banchan.ui.orderdetail.OrderDetailViewModel" />
+            type="com.woowa.banchan.ui.screen.orderdetail.OrderDetailViewModel" />
 
         <variable
             name="orderId"
