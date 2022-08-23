@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.OnDetailClickListener
 import com.woowa.banchan.ui.OnOrderClickListener
@@ -76,7 +77,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
 
             launch {
                 orderViewModel.state.collect { state ->
-                    val activeCount = state.orderInfoList.count { it.status == "START" }
+                    val activeCount = state.orderInfoList.count { it.status == DeliveryStatus.START }
                     binding.active = activeCount > 0
                 }
             }

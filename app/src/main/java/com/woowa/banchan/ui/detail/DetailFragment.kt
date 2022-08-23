@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.domain.entity.Cart
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.ui.OnCartClickListener
 import com.woowa.banchan.ui.OnOrderClickListener
@@ -111,7 +112,7 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
 
             launch {
                 orderViewModel.state.collect { state ->
-                    val activeCount = state.orderInfoList.count { it.status == "START" }
+                    val activeCount = state.orderInfoList.count { it.status == DeliveryStatus.START }
                     binding.active = activeCount > 0
                 }
             }

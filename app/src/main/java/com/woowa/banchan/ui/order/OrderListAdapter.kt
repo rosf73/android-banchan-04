@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderBinding
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.OrderInfo
 
 class OrderListAdapter(
@@ -36,7 +37,7 @@ class OrderListAdapter(
         fun bind(item: OrderInfo) {
             binding.clItemView.setOnClickListener { onClick(item.id) }
             binding.count = item.count
-            binding.deliveryState = item.status == "START"
+            binding.deliveryState = item.status == DeliveryStatus.START
             binding.name = item.name
             binding.imageUrl = item.imageUrl
             binding.totalPrice = item.price
