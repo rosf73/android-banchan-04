@@ -6,11 +6,11 @@
 
         <variable
             name="cartClickListener"
-            type="com.woowa.banchan.ui.OnCartClickListener" />
+            type="com.woowa.banchan.ui.navigator.OnCartClickListener" />
 
         <variable
             name="orderClickListener"
-            type="com.woowa.banchan.ui.OnOrderClickListener" />
+            type="com.woowa.banchan.ui.navigator.OnOrderClickListener" />
 
         <variable
             name="active"

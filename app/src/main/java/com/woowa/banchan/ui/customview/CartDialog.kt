@@ -8,9 +8,9 @@ import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDialogBinding
-import com.woowa.banchan.ui.OnCartClickListener
-import com.woowa.banchan.ui.cart.CartFragment
+import com.woowa.banchan.ui.navigator.OnCartClickListener
 import com.woowa.banchan.ui.extensions.currentWindowMetricsPointCompat
+import com.woowa.banchan.ui.screen.cart.CartFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

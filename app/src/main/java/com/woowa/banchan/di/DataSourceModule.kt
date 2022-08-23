@@ -29,12 +29,12 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideOrderDataSource(orderDao: OrderDao): OrderDataSource {
-        return OrderDataSourceImpl(orderDao)
+        return OrderLocalDataSource(orderDao)
     }
 
     @Provides
     @Singleton
     fun provideRecentlyViewedDataSource(recentlyViewedDao: RecentlyViewedDao): RecentlyViewedDataSource {
-        return RecentlyViewedDataSourceImpl(recentlyViewedDao)
+        return RecentlyViewedLocalDataSource(recentlyViewedDao)
     }
 }

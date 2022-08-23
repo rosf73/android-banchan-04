@@ -7,7 +7,7 @@
 
         <variable
             name="detailViewModel"
-            type="com.woowa.banchan.ui.detail.DetailViewModel" />
+            type="com.woowa.banchan.ui.screen.detail.DetailViewModel" />
 
         <variable
             name="product"
@@ -23,11 +23,11 @@
 
         <variable
             name="cartClickListener"
-            type="com.woowa.banchan.ui.OnCartClickListener" />
+            type="com.woowa.banchan.ui.navigator.OnCartClickListener" />
 
         <variable
             name="orderClickListener"
-            type="com.woowa.banchan.ui.OnOrderClickListener" />
+            type="com.woowa.banchan.ui.navigator.OnOrderClickListener" />
 
         <variable
             name="active"

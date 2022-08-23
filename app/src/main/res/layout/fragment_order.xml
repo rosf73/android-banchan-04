@@ -6,7 +6,7 @@
 
         <variable
             name="listener"
-            type="com.woowa.banchan.ui.OnBackClickListener" />
+            type="com.woowa.banchan.ui.navigator.OnBackClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
