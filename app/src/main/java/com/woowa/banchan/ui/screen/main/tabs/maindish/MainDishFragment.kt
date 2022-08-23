@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -12,12 +13,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMaindishBinding
+import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.ProductViewType
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
+import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.screen.main.MainFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
+import com.woowa.banchan.ui.screen.main.tabs.UiEvent
 import com.woowa.banchan.ui.screen.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.screen.main.tabs.adapter.ProductAdapter
 import com.woowa.banchan.ui.screen.main.tabs.adapter.TypeFilterAdapter
@@ -26,38 +30,21 @@ import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
-class MainDishFragment : Fragment() {
+class MainDishFragment : Fragment(), OnDetailClickListener {
 
     private var _binding: FragmentMaindishBinding? = null
     private val binding: FragmentMaindishBinding get() = requireNotNull(_binding)
 
     private val productsViewModel: ProductsViewModel by viewModels()
-    private val recentlyViewModel: RecentlyViewModel by activityViewModels()
 
     private val gridItemDecoration by lazy { ItemDecoration(0) }
     private val verticalItemDecoration by lazy { ItemDecoration(1) }
     private val productAdapter by lazy {
         ProductAdapter(
-            onClick = { product ->
-                (parentFragment as MainFragment).navigateToDetail(
-                    product.detailHash,
-                    product.title,
-                    product.description
-                )
-                recentlyViewModel.modifyRecently(
-                    hash = product.detailHash,
-                    name = product.title,
-                    description = product.description,
-                    imageUrl = product.image,
-                    nPrice = product.nPrice,
-                    sPrice = product.sPrice,
-                    viewedAt = Calendar.getInstance().time.time
-                )
-            },
-            onClickCart = { CartBottomSheet.newInstance(it).show(childFragmentManager, "cart") }
+            onClick = { product -> productsViewModel.navigateToDetail(product) },
+            onClickCart = { productsViewModel.navigateToCart(it) }
         )
     }
 
@@ -122,6 +109,20 @@ class MainDishFragment : Fragment() {
                     typeFilterAdapter.setSortType(sortType)
                 }
             }
+
+            launch {
+                productsViewModel.eventFlow.collectLatest {
+                    when (it) {
+                        is UiEvent.ShowToast -> showToastMessage(it.message)
+                        is UiEvent.NavigateToDetail -> navigateToDetail(
+                            it.product.detailHash,
+                            it.product.title,
+                            it.product.description
+                        )
+                        is UiEvent.NavigateToCart -> navigateToCart(it.product)
+                    }
+                }
+            }
         }
     }
 
@@ -149,5 +150,17 @@ class MainDishFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun showToastMessage(message: String?) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun navigateToDetail(hash: String, name: String, description: String) {
+        (parentFragment as MainFragment).navigateToDetail(hash, name, description)
+    }
+
+    fun navigateToCart(product: Product) {
+        CartBottomSheet.newInstance(product).show(childFragmentManager, "cart")
     }
 }
