@@ -51,7 +51,6 @@ class RecentlyFragment : Fragment(), OnDetailClickListener, OnItemCartClickListe
                 binding.rvRecently.visibility = isNotEmpty.toVisibility()
                 binding.llEmpty.visibility = (!isNotEmpty).toVisibility()
                 binding.ivLockandlock.visibility = (!isNotEmpty).toVisibility()
-                binding.ivLockandlock.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.translate_infinity))
 
                 if (isNotEmpty)
                     binding.rvRecently.adapter = RecentlyAdapter(
@@ -64,6 +63,8 @@ class RecentlyFragment : Fragment(), OnDetailClickListener, OnItemCartClickListe
                             navigateToCart(it.toProduct())
                         }
                     )
+                else
+                    binding.ivLockandlock.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.translate_infinity))
             }
         }
     }
@@ -87,6 +88,6 @@ class RecentlyFragment : Fragment(), OnDetailClickListener, OnItemCartClickListe
     }
 
     override fun navigateToCart(product: Product) {
-        CartBottomSheet(product).show(childFragmentManager, "cart")
+        CartBottomSheet.newInstance(product).show(childFragmentManager, "cart")
     }
 }

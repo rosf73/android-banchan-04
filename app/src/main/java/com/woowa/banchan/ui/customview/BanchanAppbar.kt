@@ -51,11 +51,15 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         if (title != null) this.title.text = title
     }
 
-    fun setOverflowText(title: String?) {
+    fun showOverflowText(title: String?) {
         if (title != null) {
             this.actionOverflowText.isVisible = true
             this.actionOverflowText.text = title
         }
+    }
+
+    fun removeOverflowText() {
+        this.actionOverflowText.isVisible = false
     }
 
     fun setSecondActive(isActive: Boolean) {

@@ -68,9 +68,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
         viewLifecycleOwner.repeatOnLifecycle {
             launch {
                 cartViewModel.state.collect { state ->
-                    if (state.cart.isNotEmpty()) {
-                        binding.cartCount = state.cart.size
-                    }
+                    binding.cartCount = state.cart.size
                 }
             }
 
