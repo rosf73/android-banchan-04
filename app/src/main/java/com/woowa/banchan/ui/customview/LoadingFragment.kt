@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.customview
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -15,6 +16,14 @@ class LoadingFragment : DialogFragment() {
 
     private var _binding: FragmentLoadingBinding? = null
     private val binding: FragmentLoadingBinding get() = requireNotNull(_binding)
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : Dialog(requireActivity(), theme) {
+            override fun onBackPressed() {
+                requireActivity().finishAffinity()
+            }
+        }
+    }
 
     override fun onResume() {
         super.onResume()
