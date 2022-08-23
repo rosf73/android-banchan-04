@@ -9,7 +9,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.woowa.banchan.R
+import com.woowa.banchan.domain.entity.SortType
 import com.woowa.banchan.ui.customview.LoadingFragment
+import com.woowa.banchan.ui.main.tabs.ProductsViewModel
 import com.woowa.banchan.ui.main.tabs.home.PlanViewModel
 import com.woowa.banchan.ui.network.ConnectivityObserver
 import com.woowa.banchan.ui.network.NetworkConnectivityObserver
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), OnBackClickListener {
 
-    private val viewModel: PlanViewModel by viewModels()
+    private val planViewModel: PlanViewModel by viewModels()
+    private val productViewModel: ProductsViewModel by viewModels()
 
     private lateinit var connectivityObserver: ConnectivityObserver
     private val dialog = LoadingFragment()
@@ -50,7 +53,10 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         supportFragmentManager.executePendingTransactions()
 
         if (isActiveNetwork) {
-            viewModel.getPlan()
+            planViewModel.getPlan()
+            productViewModel.getProduct(type = "main", sortType = SortType.Default)
+            productViewModel.getProduct(type = "soup", sortType = SortType.Default)
+            productViewModel.getProduct(type = "side", sortType = SortType.Default)
             if (dialog.isAdded) dialog.stay()
         } else {
             if (!dialog.isAdded) dialog.show(supportFragmentManager, dialog.tag)
