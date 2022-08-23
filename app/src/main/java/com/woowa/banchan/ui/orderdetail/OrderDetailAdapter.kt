@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderDetailBinding
 import com.woowa.banchan.databinding.ItemOrderDetailFooterBinding
 import com.woowa.banchan.databinding.ItemOrderDetailHeaderBinding
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.OrderDetailSection
 import com.woowa.banchan.domain.entity.OrderDetailSection.*
 import com.woowa.banchan.extensions.getDiffTime
 import com.woowa.banchan.extensions.toMoneyInt
-import com.woowa.banchan.extensions.toMoneyString
 import com.woowa.banchan.ui.cart.components.CartPriceColumn
 
 const val ORDER_HEADER = 0
@@ -92,12 +92,11 @@ class OrderDetailAdapter(
 
         fun bind(order: Order) {
             binding.count = order.count
-            binding.deliveryState = order.status == "Start"
-
-            if (order.status == "Start") {
+            binding.deliveryState = order.status == DeliveryStatus.START
+            if (order.status == DeliveryStatus.START) {
                 binding.tvDeliveryTimeTitle.isVisible = true
-                val minutes = (order.orderedAt + 1000 * 60 * 2).getDiffTime()
-                if (minutes > 0) binding.tvDeliveryTime.text = "${minutes}분"
+                val minutes = (order.orderedAt + 1000 * 8).getDiffTime()
+                if (minutes > 0) binding.tvDeliveryTime.text = "${minutes}초"
                 else onComplete()
             } else {
                 binding.tvDeliveryTimeTitle.isGone = true

@@ -50,11 +50,17 @@
 
     <string name="order_start">배송 준비중</string>
     <string name="order_done">배송 완료</string>
+    <string name="order_id">id</string>
+    <string name="order_food_name">food_name</string>
+    <string name="order_at">order_at</string>
+    <string name="order_food_count">food_count</string>
 
     <string name="product_total_count">총 %d개 상품</string>
     <string name="product_format">%d개</string>
     <string name="product_order_start">주문이 접수되었습니다.</string>
     <string name="product_order_done">배송이 완료되었습니다.</string>
+    <string name="notification_products">주문하신 %s 외의 %d개 배달되었어요.</string>
+    <string name="notification_product">주문하신 %s이(가) 배달되었어요.</string>
 
     <string name="message_network">네트워크 연결 상태를 확인해주세요</string>
 </resources>
