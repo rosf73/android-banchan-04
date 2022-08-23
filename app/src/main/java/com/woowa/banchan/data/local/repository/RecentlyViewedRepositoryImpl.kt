@@ -6,11 +6,9 @@ import com.woowa.banchan.data.local.entity.toRecentlyViewed
 import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RecentlyViewedRepositoryImpl @Inject constructor(
@@ -27,19 +25,15 @@ class RecentlyViewedRepositoryImpl @Inject constructor(
     }
 
     override suspend fun modifyRecentlyViewed(recentlyViewed: RecentlyViewed) {
-        coroutineScope {
-            launch {
-                val newRecentlyViewed = RecentlyViewedEntity(
-                    hash = recentlyViewed.hash,
-                    name = recentlyViewed.name,
-                    description = recentlyViewed.description,
-                    imageUrl = recentlyViewed.imageUrl,
-                    nPrice = recentlyViewed.nPrice,
-                    sPrice = recentlyViewed.sPrice,
-                    viewedAt = recentlyViewed.viewedAt
-                )
-                recentlyViewedDataSource.modifyRecentlyViewed(newRecentlyViewed)
-            }
-        }
+        val newRecentlyViewed = RecentlyViewedEntity(
+            hash = recentlyViewed.hash,
+            name = recentlyViewed.name,
+            description = recentlyViewed.description,
+            imageUrl = recentlyViewed.imageUrl,
+            nPrice = recentlyViewed.nPrice,
+            sPrice = recentlyViewed.sPrice,
+            viewedAt = recentlyViewed.viewedAt
+        )
+        recentlyViewedDataSource.modifyRecentlyViewed(newRecentlyViewed)
     }
 }
