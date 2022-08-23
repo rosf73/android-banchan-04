@@ -3,6 +3,9 @@ package com.woowa.banchan.ui
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.woowa.banchan.R
 
 class AlarmBroadcastReceiver : BroadcastReceiver(), Notifications {
@@ -16,6 +19,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver(), Notifications {
             if (count > 0) context.getString(R.string.notification_products, food, count)
             else context.getString(R.string.notification_product, food)
 
+        onWork(context, id, orderAt)
         showDeliveryCompleteNotification(
             context,
             context.getString(R.string.order_done),
@@ -27,6 +31,20 @@ class AlarmBroadcastReceiver : BroadcastReceiver(), Notifications {
             "${context.packageName}-${context.getString(R.string.app_name)}",
             context.getString(R.string.detail_ordering)
         )
+    }
+
+    private fun onWork(context: Context, id: Long, orderAt: Long) {
+        val data = Data.Builder()
+            .putLong(context.getString(R.string.order_id), id)
+            .putLong(context.getString(R.string.order_at), orderAt)
+            .build()
+        val deliveryWorkRequest = OneTimeWorkRequestBuilder<DeliveryWorker>()
+            .setInputData(data)
+            .addTag("${id}_${orderAt}")
+            .build()
+        WorkManager
+            .getInstance(context.applicationContext)
+            .enqueue(deliveryWorkRequest)
     }
 
     companion object {
