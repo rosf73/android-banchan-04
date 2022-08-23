@@ -11,7 +11,7 @@ sealed class OrderDetailSection {
     data class Order(
         val id: Long = 0,
         val orderedAt: Long,
-        val status: String,
+        val status: DeliveryStatus,
         val count: Int = 0
     ) : OrderDetailSection()
 
