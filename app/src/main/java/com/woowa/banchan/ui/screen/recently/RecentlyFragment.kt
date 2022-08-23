@@ -88,6 +88,6 @@ class RecentlyFragment : Fragment(), OnDetailClickListener, OnItemCartClickListe
     }
 
     override fun navigateToCart(product: Product) {
-        CartBottomSheet(product).show(childFragmentManager, "cart")
+        CartBottomSheet.newInstance(product).show(childFragmentManager, "cart")
     }
 }

@@ -55,7 +55,7 @@ class SoupFragment : Fragment() {
                     viewedAt = Calendar.getInstance().time.time
                 )
             },
-            onClickCart = { CartBottomSheet(it).show(childFragmentManager, "cart") }
+            onClickCart = { CartBottomSheet.newInstance(it).show(childFragmentManager, "cart") }
         )
     }
 
