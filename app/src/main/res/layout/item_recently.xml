@@ -21,12 +21,12 @@
             android:id="@+id/iv_banchan"
             android:layout_width="160dp"
             android:layout_height="160dp"
+            android:contentDescription="@string/label_thumb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:src="@{recentlyItem.imageUrl}"
-            tools:src="@drawable/ic_launcher_background"
-            android:contentDescription="@string/label_thumb"/>
+            tools:src="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -81,7 +81,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_circle_cart"
+            android:background="@{recentlyItem.hasCart == true?@drawable/ic_circle_in_cart:@drawable/ic_circle_cart}"
             app:layout_constraintBottom_toBottomOf="@id/iv_banchan"
             app:layout_constraintEnd_toEndOf="@id/iv_banchan"
             android:contentDescription="@string/label_cart"/>
