@@ -37,12 +37,10 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
 
     private fun setActionSecond(resourceId: Int) {
         if (resourceId != 0) this.actionSecond.setImageResource(resourceId)
-        else actionSecond.isVisible = isGone
     }
 
     private fun setActionFirst(resourceId: Int) {
         if (resourceId != 0) this.actionFirst.setImageResource(resourceId)
-        else actionFirst.isVisible = isGone
     }
 
     private fun setNavigationIcon(resourceId: Int) {

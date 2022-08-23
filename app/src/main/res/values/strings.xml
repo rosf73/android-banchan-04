@@ -24,6 +24,7 @@
     <string name="label_close">Close</string>
     <string name="label_cart">Shopping Cart</string>
     <string name="label_right">Right</string>
+    <string name="label_active">Active</string>
 
     <string name="delivery_fee">배송비</string>
     <string name="total_price">총 주문금액</string>

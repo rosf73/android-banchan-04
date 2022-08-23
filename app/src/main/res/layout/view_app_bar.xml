@@ -32,21 +32,19 @@
             android:background="@null"
             android:paddingVertical="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_action_first"
             app:layout_constraintStart_toEndOf="@id/iv_navigation_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="" />
 
         <ImageButton
             android:id="@+id/iv_action_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:background="@null"
             android:contentDescription="@string/label_action_first"
-            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_action_second"
-            app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_cart" />
 
@@ -60,7 +58,6 @@
             android:gravity="center"
             android:paddingHorizontal="1dp"
             android:paddingVertical="1dp"
-            android:text="3"
             android:textColor="@color/white"
             android:textSize="6sp"
             android:visibility="gone"
@@ -69,15 +66,12 @@
 
         <ImageButton
             android:id="@+id/iv_action_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:background="@null"
             android:contentDescription="@string/label_action_second"
-            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_action_first"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_user" />
 
@@ -94,6 +88,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/iv_action_second"
             app:layout_constraintTop_toTopOf="@id/iv_action_second"
+            android:contentDescription="@string/label_active"
             tools:text="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
