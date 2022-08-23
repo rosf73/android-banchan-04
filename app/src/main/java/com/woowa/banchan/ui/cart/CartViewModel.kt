@@ -3,16 +3,16 @@ package com.woowa.banchan.ui.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.entity.Cart
+import com.woowa.banchan.domain.entity.DeliveryStatus
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 import com.woowa.banchan.domain.usecase.cart.AddCartUseCase
 import com.woowa.banchan.domain.usecase.cart.GetCartUseCase
 import com.woowa.banchan.domain.usecase.cart.ModifyCartUseCase
 import com.woowa.banchan.domain.usecase.cart.RemoveCartUseCase
+import com.woowa.banchan.domain.usecase.order.AddOrderUserCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,11 +21,15 @@ class CartViewModel @Inject constructor(
     private val addCartUseCase: AddCartUseCase,
     private val getCartUseCase: GetCartUseCase,
     private val removeCartUseCase: RemoveCartUseCase,
-    private val modifyCartUseCase: ModifyCartUseCase
+    private val modifyCartUseCase: ModifyCartUseCase,
+    private val addOrderUserCase: AddOrderUserCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CartUiState())
     val state = _state.asStateFlow()
+
+    private val _orderSuccessFlow = MutableSharedFlow<Order>()
+    val orderSuccessFlow = _orderSuccessFlow.asSharedFlow()
 
     init {
         getCart()
@@ -87,7 +91,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun deleteAll() {
+    private fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
             removeCartUseCase(*state.value.cart.toTypedArray())
         }
@@ -128,5 +132,14 @@ class CartViewModel @Inject constructor(
 
     fun uncheckAll() {
         _state.value.cart.map { it.apply { checked = false } }
+    }
+
+    fun addOrder() {
+        viewModelScope.launch {
+            val orderedAt = System.currentTimeMillis()
+            val orderId = addOrderUserCase(state.value.cart, orderedAt)
+            deleteAll()
+            _orderSuccessFlow.emit(Order(orderId, orderedAt, DeliveryStatus.START))
+        }
     }
 }
