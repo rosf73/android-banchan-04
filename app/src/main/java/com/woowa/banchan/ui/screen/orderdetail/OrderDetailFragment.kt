@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.woowa.banchan.databinding.FragmentOrderDetailBinding
-import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
+import com.woowa.banchan.ui.navigator.OnBackClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,9 +20,7 @@ class OrderDetailFragment : Fragment() {
     private var _binding: FragmentOrderDetailBinding? = null
     private val binding: FragmentOrderDetailBinding get() = requireNotNull(_binding)
     private val orderDetailViewModel: OrderDetailViewModel by viewModels()
-    private val orderDetailAdapter by lazy {
-        OrderDetailAdapter(onComplete = this::onCompleteOrder)
-    }
+    private val orderDetailAdapter by lazy { OrderDetailAdapter(onComplete = orderDetailViewModel::completeOrder) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +39,6 @@ class OrderDetailFragment : Fragment() {
 
     private fun initView() {
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.listener = activity as OnBackClickListener
         binding.rvOrder.adapter = orderDetailAdapter
         binding.viewModel = orderDetailViewModel
 
@@ -61,15 +59,19 @@ class OrderDetailFragment : Fragment() {
             }
 
             launch {
-                orderDetailViewModel.refreshEvent.collectLatest {
-                    orderDetailAdapter.notifyItemChanged(0)
+                orderDetailViewModel.eventFlow.collectLatest {
+                    when (it) {
+                        is UiEvent.ShowToast -> showToastMessage(it.message)
+                        is UiEvent.Refresh -> orderDetailAdapter.notifyItemChanged(0)
+                        is UiEvent.NavigateToBack -> (activity as OnBackClickListener).navigateToBack()
+                    }
                 }
             }
         }
     }
 
-    private fun onCompleteOrder() {
-        orderDetailViewModel.modifyOrder()
+    private fun showToastMessage(message: String?) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
