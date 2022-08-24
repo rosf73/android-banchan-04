@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="fragment"
-            type="com.woowa.banchan.ui.customview.CartDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:background="@null"
-            android:onClick="@{()->fragment.navigateToCart()}"
             android:text="장바구니 확인"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_stay" />
@@ -48,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:onClick="@{() -> fragment.stay()}"
             android:text="계속 쇼핑하기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

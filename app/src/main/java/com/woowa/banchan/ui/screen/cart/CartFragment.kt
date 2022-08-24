@@ -9,6 +9,7 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -29,8 +30,8 @@ import com.woowa.banchan.ui.screen.orderdetail.OrderDetailFragment
 import com.woowa.banchan.ui.screen.recently.RecentlyFragment
 import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import java.security.SecureRandom
-import java.util.*
 
 @AndroidEntryPoint
 class CartFragment
@@ -60,11 +61,8 @@ class CartFragment
                 CartScreen(
                     cartViewModel,
                     recentlyViewModel,
-                    navigateToRecently = { navigateToRecently() },
-                    onItemClick = {
-                        navigateToDetail(it.hash, it.name, it.description)
-                        recentlyViewModel.modifyRecently(it.copy(viewedAt = Calendar.getInstance().time.time))
-                    },
+                    navigateToRecently = { cartViewModel.navigateToRecentlyViewed() },
+                    onItemClick = { cartViewModel.navigateToDetail(it) },
                     onOrderClick = { cartViewModel.addOrder() },
                     onShowLoading = {
                         parentFragmentManager.executePendingTransactions()
@@ -78,23 +76,37 @@ class CartFragment
             }
         }
 
-        initListener()
+        initView()
         observeData()
     }
 
-    private fun initListener() {
-        binding.listener = activity as OnBackClickListener
+    private fun initView() {
+        binding.viewModel = cartViewModel
     }
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            cartViewModel.orderSuccessFlow.collect { order ->
-                navigateToOrderDetail(order.id)
-                setAlarm(
-                    cartViewModel.state.value.cart[0].name,
-                    cartViewModel.state.value.cart.size,
-                    order
-                )
+            cartViewModel.eventFlow.collectLatest {
+                when (it) {
+                    is UiEvent.NavigateToRecentlyViewed -> navigateToRecently()
+                    is UiEvent.NavigateToBack -> (activity as OnBackClickListener).navigateToBack()
+                    is UiEvent.NavigateToDetail -> {
+                        navigateToDetail(
+                            it.product.hash,
+                            it.product.name,
+                            it.product.description
+                        )
+                    }
+                    is UiEvent.ShowToast -> showToastMessage(it.message)
+                    is UiEvent.OrderProduct -> {
+                        navigateToOrderDetail(it.order.id)
+                        setAlarm(
+                            cartViewModel.state.value.cart[0].name,
+                            cartViewModel.state.value.cart.size,
+                            it.order
+                        )
+                    }
+                }
             }
         }
     }
@@ -158,6 +170,10 @@ class CartFragment
         )
         val deliveryTime: Long = 8 * 1000 + SystemClock.elapsedRealtime()
         alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, deliveryTime, pendingIntent)
+    }
+
+    private fun showToastMessage(message: String?) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onStop() {
