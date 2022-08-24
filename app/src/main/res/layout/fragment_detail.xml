@@ -22,14 +22,6 @@
             type="String" />
 
         <variable
-            name="cartClickListener"
-            type="com.woowa.banchan.ui.navigator.OnCartClickListener" />
-
-        <variable
-            name="orderClickListener"
-            type="com.woowa.banchan.ui.navigator.OnOrderClickListener" />
-
-        <variable
             name="active"
             type="Boolean" />
 
@@ -55,8 +47,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigation_icon="@drawable/ic_logo"
-            app:onFirstClick="@{cartClickListener.navigateToCart}"
-            app:onSecondClick="@{orderClickListener.navigateToOrder}" />
+            app:onFirstClick="@{detailViewModel.navigateToCart}"
+            app:onSecondClick="@{detailViewModel.navigateToOrder}" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv_detail_container"
@@ -265,7 +257,7 @@
                         android:contentDescription="@string/label_minus"
                         android:elevation="6dp"
                         android:enabled="false"
-                        android:onClick="@{detailViewModel::minusQuantity}"
+                        android:onClick="@{() -> detailViewModel.minusQuantity()}"
                         android:src="@drawable/ic_minus" />
 
                     <TextView
@@ -284,7 +276,7 @@
                         android:background="@drawable/btn_circle"
                         android:contentDescription="@string/label_plus"
                         android:elevation="6dp"
-                        android:onClick="@{detailViewModel::plusQuantity}"
+                        android:onClick="@{() -> detailViewModel.plusQuantity()}"
                         android:src="@drawable/ic_plus" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -330,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="24dp"
-                    android:onClick="@{()->detailViewModel.onOrderEvent()}"
+                    android:onClick="@{()->detailViewModel.onOrderEvent(name)}"
                     android:padding="16dp"
                     android:text="@string/detail_ordering"
                     android:textColor="@color/white"
