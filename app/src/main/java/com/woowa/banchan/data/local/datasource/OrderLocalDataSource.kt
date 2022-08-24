@@ -4,6 +4,7 @@ import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.entity.OrderEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemView
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -13,6 +14,10 @@ class OrderLocalDataSource @Inject constructor(
 
     override fun getAllWithPage(): OrderPagingSource {
         return OrderPagingSource(orderDao)
+    }
+
+    override fun getStartOrderCount(): Flow<Int> {
+        return orderDao.findOrderCountByStatus(DeliveryStatus.START.status)
     }
 
     override fun getOrderLineItem(orderId: Long): Flow<List<OrderLineItemView>> {

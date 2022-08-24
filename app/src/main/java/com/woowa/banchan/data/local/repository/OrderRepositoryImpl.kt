@@ -10,6 +10,7 @@ import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -19,6 +20,14 @@ class OrderRepositoryImpl @Inject constructor(
 
     override fun getAllOrderWithPaging(): PagingSource<Int, OrderInfo> {
         return orderDataSource.getAllWithPage()
+    }
+
+    override fun getStartOrderCount(): Flow<Result<Int>> = flow {
+        orderDataSource.getStartOrderCount().collect {
+            emit(Result.success(it))
+        }
+    }.catch {
+        emit(Result.failure(NotFoundProductsException()))
     }
 
     override fun getOrderLineItem(orderId: Long): Flow<Result<Map<Order, List<OrderLineItem>>>> =

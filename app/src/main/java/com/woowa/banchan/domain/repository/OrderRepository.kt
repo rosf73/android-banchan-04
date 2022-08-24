@@ -10,6 +10,8 @@ interface OrderRepository {
 
     fun getAllOrderWithPaging(): PagingSource<Int, OrderInfo>
 
+    fun getStartOrderCount(): Flow<Result<Int>>
+
     fun getOrderLineItem(orderId: Long): Flow<Result<Map<Order, List<OrderLineItem>>>>
 
     suspend fun addOrder(order: Order, vararg orderLineItem: OrderLineItem): Long
