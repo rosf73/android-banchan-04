@@ -1,9 +1,7 @@
 package com.woowa.banchan.ui.screen.order
 
-import com.woowa.banchan.domain.entity.OrderInfo
-
 data class OrderUiState(
-    val orderInfoList: List<OrderInfo> = emptyList(),
+    val active: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessage: String = ""
 )

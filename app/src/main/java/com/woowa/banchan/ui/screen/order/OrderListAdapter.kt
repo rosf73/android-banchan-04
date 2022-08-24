@@ -2,8 +2,8 @@ package com.woowa.banchan.ui.screen.order
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderBinding
 import com.woowa.banchan.domain.entity.DeliveryStatus
@@ -11,7 +11,7 @@ import com.woowa.banchan.domain.entity.OrderInfo
 
 class OrderListAdapter(
     private val onClickItem: (Long) -> Unit
-) : ListAdapter<OrderInfo, OrderListAdapter.ViewHolder>(orderListDiffUtil) {
+) : PagingDataAdapter<OrderInfo, OrderListAdapter.ViewHolder>(orderListDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,7 +26,7 @@ class OrderListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
     }
 
     inner class ViewHolder(
