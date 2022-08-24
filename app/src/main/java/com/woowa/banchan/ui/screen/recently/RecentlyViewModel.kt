@@ -6,6 +6,8 @@ import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.recentlyviewed.GetAllRecentlyViewedUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
+import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
+import com.woowa.banchan.ui.screen.orderdetail.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,10 +17,13 @@ import javax.inject.Inject
 class RecentlyViewModel @Inject constructor(
     private val getAllRecentlyViewedUseCase: GetAllRecentlyViewedUseCase,
     private val modifyRecentlyViewedUseCase: ModifyRecentlyViewedUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(RecentlyUiState())
     val state = _state.asStateFlow()
+
+    private val _eventFlow = MutableSharedFlow<ProductUiEvent<RecentlyViewed>>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         getRecently()
@@ -33,40 +38,36 @@ class RecentlyViewModel @Inject constructor(
             }.onFailure { exception ->
                 when (exception) {
                     is NotFoundProductsException -> {
-                        _state.value = state.value.copy(
-                            recentlyList = emptyList(),
-                            isLoading = false,
-                            errorMessage = "상품을 찾을 수 없습니다."
-                        )
+                        _eventFlow.emit(ProductUiEvent.ShowToast(exception.message))
                     }
                     else -> {
-                        _state.value = state.value.copy(
-                            recentlyList = emptyList(),
-                            isLoading = false,
-                            errorMessage = "에러가 발생했습니다."
-                        )
+                        _eventFlow.emit(ProductUiEvent.ShowToast(exception.message))
                     }
                 }
             }
         }.launchIn(this)
     }
 
-    fun modifyRecently(
-        hash: String,
-        name: String,
-        description: String,
-        imageUrl: String,
-        nPrice: String? = null,
-        sPrice: String,
-        viewedAt: Long
-    ) = viewModelScope.launch {
-        val newRecently = RecentlyViewed(
-            hash, name, description, imageUrl, nPrice, sPrice, viewedAt
-        )
-        modifyRecentlyViewedUseCase(newRecently)
-    }
-
     fun modifyRecently(recentlyViewed: RecentlyViewed) = viewModelScope.launch {
         modifyRecentlyViewedUseCase(recentlyViewed)
+    }
+
+    fun navigateToDetail(recentlyViewed: RecentlyViewed) {
+        viewModelScope.launch {
+            modifyRecently(recentlyViewed)
+            _eventFlow.emit(ProductUiEvent.NavigateToDetail(recentlyViewed))
+        }
+    }
+
+    fun navigateToCart(recentlyViewed: RecentlyViewed) {
+        viewModelScope.launch {
+            _eventFlow.emit(ProductUiEvent.NavigateToCart(recentlyViewed))
+        }
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _eventFlow.emit(ProductUiEvent.NavigateToBack)
+        }
     }
 }
