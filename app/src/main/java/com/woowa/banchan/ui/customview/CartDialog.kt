@@ -47,7 +47,8 @@ class CartDialog : DialogFragment(), OnCartClickListener {
     }
 
     private fun initView() {
-        binding.fragment = this@CartDialog
+        binding.btnCart.setOnClickListener { navigateToCart() }
+        binding.btnStay.setOnClickListener { stay() }
     }
 
     fun stay() {
