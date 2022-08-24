@@ -2,6 +2,5 @@ package com.woowa.banchan.ui.screen.order
 
 data class OrderUiState(
     val active: Boolean = false,
-    val isLoading: Boolean = false,
-    val errorMessage: String = ""
+    val isLoading: Boolean = false
 )

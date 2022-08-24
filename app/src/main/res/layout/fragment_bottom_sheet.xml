@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="fragment"
-            type="com.woowa.banchan.ui.customview.CartBottomSheet" />
-
-        <variable
             name="product"
             type="com.woowa.banchan.domain.entity.Product" />
 
@@ -42,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:onClick="@{() -> fragment.cancelClickButton()}"
             android:paddingVertical="10dp"
             android:text="취소"
             app:layout_constraintBottom_toBottomOf="@id/tv_cart"

@@ -21,6 +21,9 @@ class OrderViewModel @Inject constructor(
     private val _state = MutableStateFlow(OrderUiState())
     val state = _state.asStateFlow()
 
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     val data =
         Pager(PagingConfig(pageSize = 10)) { getOrderInfoUseCase() }.flow
             .catch {
@@ -37,13 +40,31 @@ class OrderViewModel @Inject constructor(
             getStartOrderCountUseCase().onEach { result ->
                 result.onSuccess {
                     if (it > 0)
-                        _state.value = _state.value.copy(active = true)
+                        _state.value = _state.value.copy(
+                            active = true,
+                            isLoading = false
+                        )
                     else
-                        _state.value = _state.value.copy(active = false)
+                        _state.value = _state.value.copy(
+                            active = false,
+                            isLoading = false
+                        )
                 }.onFailure {
-
+                    _eventFlow.emit(UiEvent.ShowToast(it.message))
                 }
             }.launchIn(this)
+        }
+    }
+
+    fun navigateToDetail(id: Long) {
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.NavigateToOrderDetail(id))
+        }
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.NavigateToBack)
         }
     }
 }

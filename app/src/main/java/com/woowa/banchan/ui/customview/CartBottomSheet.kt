@@ -45,7 +45,6 @@ class CartBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun initView() {
-        binding.fragment = this@CartBottomSheet
         binding.quantity = 1
         arguments?.let { bundle ->
             bundle.getParcelable<Product>(PRODUCT)?.let {
@@ -73,8 +72,10 @@ class CartBottomSheet : BottomSheetDialogFragment() {
                 btnOrdering.text = "${quantity}개 담기"
                 tvTotalPrice.text = (product.sPrice.toMoneyInt() * quantity).toMoneyString()
             }
+            btnOrdering.setOnClickListener { navigateToCart(product) }
+            tvCancel.setOnClickListener { cancelClickButton() }
+
         }
-        binding.btnOrdering.setOnClickListener { navigateToCart(product) }
     }
 
     fun navigateToCart(product: Product) {

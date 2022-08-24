@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,11 +17,11 @@ import com.woowa.banchan.databinding.FragmentDetailBinding
 import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.DetailProduct
-import com.woowa.banchan.ui.navigator.OnCartClickListener
-import com.woowa.banchan.ui.navigator.OnOrderClickListener
 import com.woowa.banchan.ui.customview.CartDialog
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toPx
+import com.woowa.banchan.ui.navigator.OnCartClickListener
+import com.woowa.banchan.ui.navigator.OnOrderClickListener
 import com.woowa.banchan.ui.screen.cart.CartFragment
 import com.woowa.banchan.ui.screen.cart.CartViewModel
 import com.woowa.banchan.ui.screen.order.OrderFragment
@@ -51,14 +52,8 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initListener()
         initData()
         observeData()
-    }
-
-    private fun initListener() {
-        binding.cartClickListener = this
-        binding.orderClickListener = this
     }
 
     private fun initData() {
@@ -82,21 +77,16 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
             }
 
             launch {
-                detailViewModel.cartEvent.collectLatest { product ->
-                    val bundle = arguments
-                    val name = bundle?.getString(NAME) ?: ""
-                    cartViewModel.addCart(
-                        Cart(
-                            hash = product.hash,
-                            name = name,
-                            imageUrl = product.thumbs[0],
-                            quantity = detailViewModel.quantity.value!!,
-                            price = product.sPrice,
-                            checked = true
-                        )
-                    )
-                    val dialog = CartDialog()
-                    dialog.show(parentFragmentManager, dialog.tag)
+                detailViewModel.eventFlow.collectLatest {
+                    when (it) {
+                        is UiEvent.ShowToast -> showToastMessage(it.message)
+                        is UiEvent.AddToCart -> {
+                            val dialog = CartDialog()
+                            dialog.show(parentFragmentManager, dialog.tag)
+                        }
+                        is UiEvent.NavigateToCart -> navigateToCart()
+                        is UiEvent.NavigateToOrder -> navigateToOrder()
+                    }
                 }
             }
 
@@ -182,6 +172,10 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
             .addToBackStack("Detail")
             .add(R.id.fcv_main, OrderFragment())
             .commit()
+    }
+
+    private fun showToastMessage(message: String?) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

@@ -20,8 +20,8 @@ class OrderDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(OrderLineItemUiState())
     val state = _state.asStateFlow()
 
-    private val _refreshEvent = MutableSharedFlow<Unit>()
-    val refreshEvent = _refreshEvent.asSharedFlow()
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     fun getOrderLineItem(orderId: Long) {
         viewModelScope.launch {
@@ -29,33 +29,24 @@ class OrderDetailViewModel @Inject constructor(
                 result.onSuccess {
                     _state.value = _state.value.copy(
                         orderLineItemList = it,
-                        isLoading = false,
-                        errorMessage = ""
+                        isLoading = false
                     )
                 }
                     .onFailure {
-                        _state.value = _state.value.copy(
-                            orderLineItemList = mapOf(),
-                            isLoading = false,
-                            errorMessage = "주문된 상품 불러오기가 실패했습니다."
-                        )
+                        _eventFlow.emit(UiEvent.ShowToast(it.message))
                     }
             }.launchIn(this)
         }
     }
 
-    fun modifyOrder() {
-        val orderMap = _state.value.orderLineItemList
+    fun completeOrder() {
         viewModelScope.launch {
+            val orderMap = _state.value.orderLineItemList
             orderMap.entries.forEach {
                 modifyOrderUseCase(it.key.copy(status = DeliveryStatus.DONE)).collect { result ->
                     result
-                        .onFailure {
-                            _state.value = _state.value.copy(
-                                orderLineItemList = mapOf(),
-                                isLoading = false,
-                                errorMessage = "배달 상태에 오류가 발생했습니다."
-                            )
+                        .onFailure { exception ->
+                            _eventFlow.emit(UiEvent.ShowToast(exception.message))
                         }
                 }
             }
@@ -64,7 +55,13 @@ class OrderDetailViewModel @Inject constructor(
 
     fun refreshOrder() {
         viewModelScope.launch {
-            _refreshEvent.emit(Unit)
+            _eventFlow.emit(UiEvent.Refresh)
+        }
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.NavigateToBack)
         }
     }
 }

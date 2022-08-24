@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentOrderBinding
-import com.woowa.banchan.ui.extensions.repeatOnLifecycle
-import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.navigator.OnOrderDetailClickListener
+import com.woowa.banchan.ui.extensions.repeatOnLifecycle
+import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.screen.orderdetail.OrderDetailFragment
+import kotlinx.coroutines.launch
 
 class OrderFragment : Fragment(), OnOrderDetailClickListener {
 
@@ -26,9 +28,7 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
 
     private val orderListAdapter by lazy {
         OrderListAdapter(
-            onClickItem = {
-                navigateToOrderDetail(it)
-            }
+            onClickItem = { orderViewModel.navigateToDetail(it) }
         )
     }
 
@@ -44,13 +44,8 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initListener()
         initView()
         observeData()
-    }
-
-    private fun initListener() {
-        binding.listener = activity as OnBackClickListener
     }
 
     private fun initView() {
@@ -70,12 +65,26 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
                 )
         }
         binding.rvOrderList.adapter = orderListAdapter
+        binding.viewModel = orderViewModel
     }
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            orderViewModel.data.collect {
-                orderListAdapter.submitData(it)
+
+            launch {
+                orderViewModel.data.collect {
+                    orderListAdapter.submitData(it)
+                }
+            }
+
+            launch {
+                orderViewModel.eventFlow.collect {
+                    when (it) {
+                        is UiEvent.ShowToast -> showToastMessage(it.message)
+                        is UiEvent.NavigateToOrderDetail -> navigateToOrderDetail(it.id)
+                        is UiEvent.NavigateToBack -> (activity as OnBackClickListener).navigateToBack()
+                    }
+                }
             }
         }
     }
@@ -92,6 +101,10 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
             .addToBackStack("Order")
             .add(R.id.fcv_main, OrderDetailFragment.newInstance(id))
             .commit()
+    }
+
+    private fun showToastMessage(message: String?) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

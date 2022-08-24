@@ -2,23 +2,29 @@ package com.woowa.banchan.ui.screen.main.tabs.plan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.product.GetPlanUseCase
+import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
+import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class PlanViewModel @Inject constructor(
-    private val getPlanUseCase: GetPlanUseCase
+    private val getPlanUseCase: GetPlanUseCase,
+    private val modifyRecentlyViewedUseCase: ModifyRecentlyViewedUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PlanUiState())
     val state = _state.asStateFlow()
+
+    private val _eventFLow = MutableSharedFlow<ProductUiEvent<Product>>()
+    val eventFlow = _eventFLow.asSharedFlow()
 
     init {
         getPlan()
@@ -38,22 +44,36 @@ class PlanViewModel @Inject constructor(
                         .onFailure { exception ->
                             when (exception) {
                                 is NotFoundProductsException -> {
-                                    _state.value = state.value.copy(
-                                        plans = emptyList(),
-                                        isLoading = false,
-                                        errorMessage = "기획전 상품을 찾을 수 없습니다."
-                                    )
+                                    _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
                                 }
                                 else -> {
-                                    _state.value = state.value.copy(
-                                        plans = emptyList(),
-                                        isLoading = false,
-                                        errorMessage = "에러가 발생했습니다."
-                                    )
+                                    _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
                                 }
                             }
                         }
                 }.launchIn(this)
+        }
+    }
+
+    fun navigateToDetail(product: Product) {
+        viewModelScope.launch {
+            val newRecently = RecentlyViewed(
+                product.detailHash,
+                product.title,
+                product.description,
+                product.image,
+                product.nPrice,
+                product.sPrice,
+                Calendar.getInstance().time.time
+            )
+            modifyRecentlyViewedUseCase(newRecently)
+            _eventFLow.emit(ProductUiEvent.NavigateToDetail(product))
+        }
+    }
+
+    fun navigateToCart(product: Product) {
+        viewModelScope.launch {
+            _eventFLow.emit(ProductUiEvent.NavigateToCart(product))
         }
     }
 }
