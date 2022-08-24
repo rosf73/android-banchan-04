@@ -13,7 +13,10 @@ interface OrderDataSource {
 
     fun getOrderLineItem(orderId: Long): Flow<List<OrderLineItemView>>
 
-    suspend fun addOrder(orderEntity: OrderEntity, vararg orderLineItemEntity: OrderLineItemEntity): Long
+    suspend fun addOrder(
+        orderEntity: OrderEntity,
+        vararg orderLineItemEntity: OrderLineItemEntity
+    ): Long
 
     suspend fun modifyOrder(orderEntity: OrderEntity): Int
 }

@@ -26,7 +26,7 @@ class NestedScrollListener : RecyclerView.OnItemTouchListener {
                             .requestDisallowInterceptTouchEvent(false)
                     else
                         rv.parent
-                        .requestDisallowInterceptTouchEvent(true)
+                            .requestDisallowInterceptTouchEvent(true)
                 }
                 MotionEvent.ACTION_UP ->
                     rv.parent

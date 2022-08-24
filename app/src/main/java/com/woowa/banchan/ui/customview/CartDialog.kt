@@ -4,12 +4,16 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDialogBinding
-import com.woowa.banchan.ui.navigator.OnCartClickListener
 import com.woowa.banchan.ui.extensions.currentWindowMetricsPointCompat
+import com.woowa.banchan.ui.navigator.OnCartClickListener
 import com.woowa.banchan.ui.screen.cart.CartFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -63,7 +67,12 @@ class CartDialog : DialogFragment(), OnCartClickListener {
     override fun navigateToCart() {
         dismiss()
         requireActivity().supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.slide_out,
+                R.anim.slide_in,
+                R.anim.slide_out
+            )
             .addToBackStack("main")
             .add(R.id.fcv_main, CartFragment())
             .commit()

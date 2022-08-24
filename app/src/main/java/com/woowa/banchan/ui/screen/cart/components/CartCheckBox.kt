@@ -37,7 +37,8 @@ fun CartCheckBox(
                 .padding(20.dp),
             painter = if (state == CheckState.CHECKED) painterResource(R.drawable.ic_checkbox)
             else painterResource(R.drawable.ic_checkbox_empty),
-            contentDescription = stringResource(R.string.label_checkbox))
+            contentDescription = stringResource(R.string.label_checkbox)
+        )
 
         Text(
             modifier = Modifier

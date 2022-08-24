@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 
 class FakeRecentlyViewedDataSource(
     private val recentlyViewedList: List<RecentlyViewedEntity>
-): RecentlyViewedDataSource {
+) : RecentlyViewedDataSource {
 
     override fun getAllRecentlyViewed(): Flow<List<RecentlyViewedEntity>> {
         return flow { emit(recentlyViewedList) }

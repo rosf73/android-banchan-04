@@ -27,7 +27,6 @@ class OrderViewModel @Inject constructor(
     val data =
         Pager(PagingConfig(pageSize = 10)) { getOrderInfoUseCase() }.flow
             .catch {
-
             }
             .cachedIn(viewModelScope)
 

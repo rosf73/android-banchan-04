@@ -60,9 +60,11 @@ private fun PriceRow(
     price: String,
     color: Color
 ) {
-    Row(modifier = Modifier
-        .padding(0.dp, 8.dp)
-        .width(240.dp)) {
+    Row(
+        modifier = Modifier
+            .padding(0.dp, 8.dp)
+            .width(240.dp)
+    ) {
         Text(modifier = Modifier.weight(1f), text = label, color = color)
         Text(modifier = Modifier.weight(1f), text = price, color = color, textAlign = TextAlign.End)
     }

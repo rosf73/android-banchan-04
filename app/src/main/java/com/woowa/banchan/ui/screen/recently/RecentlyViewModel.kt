@@ -7,7 +7,6 @@ import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.recentlyviewed.GetAllRecentlyViewedUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
-import com.woowa.banchan.ui.screen.orderdetail.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

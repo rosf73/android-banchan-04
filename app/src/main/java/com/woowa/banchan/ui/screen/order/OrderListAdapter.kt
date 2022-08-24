@@ -32,7 +32,7 @@ class OrderListAdapter(
     inner class ViewHolder(
         private val binding: ItemOrderBinding,
         private val onClick: (Long) -> Unit
-    ): RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: OrderInfo) {
             binding.clItemView.setOnClickListener { onClick(item.id) }
@@ -59,5 +59,4 @@ val orderListDiffUtil = object : DiffUtil.ItemCallback<OrderInfo>() {
     ): Boolean {
         return oldItem == newItem
     }
-
 }

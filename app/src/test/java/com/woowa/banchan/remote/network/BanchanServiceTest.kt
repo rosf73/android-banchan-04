@@ -15,7 +15,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.io.File
 
-
 class BanchanServiceTest {
 
     private lateinit var mockWebServer: MockWebServer
@@ -177,7 +176,6 @@ class BanchanServiceTest {
         val actualResult = actual.body()
         Truth.assertThat(actualResult).isEqualTo(expected)
     }
-
 
     @Test
     fun `정갈한 밑반찬의 상품 메뉴를 가져올 수 있다`() = runBlocking {

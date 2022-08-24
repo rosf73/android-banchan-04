@@ -12,10 +12,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.paging.LoadState
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentOrderBinding
-import com.woowa.banchan.ui.navigator.OnBackClickListener
-import com.woowa.banchan.ui.navigator.OnOrderDetailClickListener
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
+import com.woowa.banchan.ui.navigator.OnBackClickListener
+import com.woowa.banchan.ui.navigator.OnOrderDetailClickListener
 import com.woowa.banchan.ui.screen.orderdetail.OrderDetailFragment
 import kotlinx.coroutines.launch
 
@@ -50,9 +50,9 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
 
     private fun initView() {
         orderListAdapter.addLoadStateListener { loadState ->
-            val condition = loadState.source.refresh is LoadState.NotLoading
-                    && loadState.append.endOfPaginationReached
-                    && orderListAdapter.itemCount < 1
+            val condition = loadState.source.refresh is LoadState.NotLoading &&
+                    loadState.append.endOfPaginationReached &&
+                    orderListAdapter.itemCount < 1
             binding.rvOrderList.visibility = (!condition).toVisibility()
             binding.llEmpty.visibility = condition.toVisibility()
             binding.ivLockandlock.visibility = condition.toVisibility()

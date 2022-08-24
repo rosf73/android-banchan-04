@@ -33,6 +33,8 @@ object Version {
 
     const val room = "2.4.3"
     const val paging = "3.1.1"
+
+    const val ktLint = "10.3.0"
 }
 
 object Lib {
@@ -112,5 +114,9 @@ object Lib {
         const val roomKtx = "androidx.room:room-ktx:${Version.room}"
         const val test = "androidx.room:room-testing:${Version.room}"
         const val paging = "androidx.paging:paging-runtime:${Version.paging}"
+    }
+
+    object KtLint {
+        const val ktLintGradle = "org.jlleitschuh.gradle:ktlint-gradle:${Version.ktLint}"
     }
 }

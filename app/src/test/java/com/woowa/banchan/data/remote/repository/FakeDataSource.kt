@@ -10,7 +10,7 @@ class FakeDataSource(
     private val plan: PlanResponse? = null,
     private val products: ProductsResponse? = null,
     private val details: DetailResponse? = null
-): BanchanDataSource {
+) : BanchanDataSource {
 
     override suspend fun getPlan(): Result<PlanResponse> {
         if (plan != null) {

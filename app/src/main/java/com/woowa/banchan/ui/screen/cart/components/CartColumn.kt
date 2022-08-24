@@ -2,11 +2,19 @@ package com.woowa.banchan.ui.screen.cart.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -34,10 +42,11 @@ fun CartColumn(
 
     Column(modifier = modifier) {
         if (cart.isEmpty())
-            CartItemEmpty(modifier = Modifier
-                .background(color = colorResource(id = R.color.white))
-                .fillMaxWidth())
-
+            CartItemEmpty(
+                modifier = Modifier
+                    .background(color = colorResource(id = R.color.white))
+                    .fillMaxWidth()
+            )
         else {
             cart.forEach { item ->
                 CartItemRow(
@@ -54,15 +63,16 @@ fun CartColumn(
                             totalPrice += item.price.toMoneyInt()
                         else
                             totalPrice -= item.price.toMoneyInt()
-                    })
+                    }
+                )
             }
 
             CartPriceColumn(
                 modifier = Modifier.align(Alignment.End),
                 totalPrice = totalPrice,
                 deliveryFee =
-                    if (totalPrice >= 40000) 0
-                    else 2500
+                if (totalPrice >= 40000) 0
+                else 2500
             )
 
             Button(
@@ -80,13 +90,17 @@ fun CartColumn(
                 val orderPrice =
                     if (totalPrice >= 40000) totalPrice
                     else totalPrice + 2500
-                Text(text = "${orderPrice.toMoneyString()} 주문하기", color = colorResource(R.color.white))
+                Text(
+                    text = "${orderPrice.toMoneyString()} 주문하기",
+                    color = colorResource(R.color.white)
+                )
             }
 
             if (totalPrice < 40000)
                 Text(
                     modifier = Modifier.align(CenterHorizontally),
-                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 배송비가 무료!")
+                    text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 배송비가 무료!"
+                )
         }
     }
 }

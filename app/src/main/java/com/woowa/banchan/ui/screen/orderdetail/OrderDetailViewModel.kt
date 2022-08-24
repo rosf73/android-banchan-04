@@ -3,7 +3,6 @@ package com.woowa.banchan.ui.screen.orderdetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.entity.DeliveryStatus
-import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
 import com.woowa.banchan.domain.usecase.order.GetOrderLineItemUseCase
 import com.woowa.banchan.domain.usecase.order.ModifyOrderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
