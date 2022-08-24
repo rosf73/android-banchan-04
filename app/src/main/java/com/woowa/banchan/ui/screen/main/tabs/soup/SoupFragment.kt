@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,12 +19,11 @@ import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.screen.main.MainFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
-import com.woowa.banchan.ui.screen.main.tabs.UiEvent
+import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import com.woowa.banchan.ui.screen.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.screen.main.tabs.adapter.CountFilterAdapter
 import com.woowa.banchan.ui.screen.main.tabs.adapter.ProductAdapter
 import com.woowa.banchan.ui.screen.main.tabs.decoration.ItemDecoration
-import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -103,13 +101,13 @@ class SoupFragment : Fragment(), OnDetailClickListener {
             launch {
                 productsViewModel.eventFlow.collectLatest {
                     when (it) {
-                        is UiEvent.ShowToast -> showToastMessage(it.message)
-                        is UiEvent.NavigateToDetail -> navigateToDetail(
-                            it.product.detailHash,
-                            it.product.title,
-                            it.product.description
+                        is ProductUiEvent.ShowToast -> showToastMessage(it.message)
+                        is ProductUiEvent.NavigateToDetail -> navigateToDetail(
+                            it.data.detailHash,
+                            it.data.title,
+                            it.data.description
                         )
-                        is UiEvent.NavigateToCart -> navigateToCart(it.product)
+                        is ProductUiEvent.NavigateToCart -> navigateToCart(it.data)
                     }
                 }
             }

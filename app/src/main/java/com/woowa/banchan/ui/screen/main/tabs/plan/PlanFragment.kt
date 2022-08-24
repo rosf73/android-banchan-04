@@ -16,7 +16,7 @@ import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.screen.main.MainFragment
-import com.woowa.banchan.ui.screen.main.tabs.UiEvent
+import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import com.woowa.banchan.ui.screen.main.tabs.adapter.BannerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -76,13 +76,11 @@ class PlanFragment : Fragment(), OnDetailClickListener {
             launch {
                 planViewModel.eventFlow.collectLatest {
                     when (it) {
-                        is UiEvent.ShowToast -> showToastMessage(it.message)
-                        is UiEvent.NavigateToDetail -> navigateToDetail(
-                            it.product.detailHash,
-                            it.product.title,
-                            it.product.description
-                        )
-                        is UiEvent.NavigateToCart -> navigateToCart(it.product)
+                        is ProductUiEvent.ShowToast -> showToastMessage(it.message)
+                        is ProductUiEvent.NavigateToDetail -> {
+                            navigateToDetail(it.data.detailHash, it.data.title, it.data.description)
+                        }
+                        is ProductUiEvent.NavigateToCart -> navigateToCart(it.data)
                     }
                 }
             }

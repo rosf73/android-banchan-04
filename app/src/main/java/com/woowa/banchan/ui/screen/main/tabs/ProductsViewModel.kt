@@ -24,7 +24,7 @@ class ProductsViewModel @Inject constructor(
     private val _state = MutableStateFlow(ProductsUiState())
     val state = _state.asStateFlow()
 
-    private val _eventFLow = MutableSharedFlow<UiEvent>()
+    private val _eventFLow = MutableSharedFlow<ProductUiEvent<Product>>()
     val eventFlow = _eventFLow.asSharedFlow()
 
     private val _viewMode = MutableStateFlow(ProductViewType.Grid)
@@ -47,10 +47,10 @@ class ProductsViewModel @Inject constructor(
                     .onFailure { exception ->
                         when (exception) {
                             is NotFoundProductsException -> {
-                                _eventFLow.emit(UiEvent.ShowToast(exception.message))
+                                _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
                             }
                             else -> {
-                                _eventFLow.emit(UiEvent.ShowToast(exception.message))
+                                _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
                             }
                         }
                     }
@@ -69,13 +69,13 @@ class ProductsViewModel @Inject constructor(
                 Calendar.getInstance().time.time
             )
             modifyRecentlyViewedUseCase(newRecently)
-            _eventFLow.emit(UiEvent.NavigateToDetail(product))
+            _eventFLow.emit(ProductUiEvent.NavigateToDetail(product))
         }
     }
 
     fun navigateToCart(product: Product) {
         viewModelScope.launch {
-            _eventFLow.emit(UiEvent.NavigateToCart(product))
+            _eventFLow.emit(ProductUiEvent.NavigateToCart(product))
         }
     }
 

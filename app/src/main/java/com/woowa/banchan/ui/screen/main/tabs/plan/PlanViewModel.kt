@@ -7,7 +7,7 @@ import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.product.GetPlanUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
-import com.woowa.banchan.ui.screen.main.tabs.UiEvent
+import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class PlanViewModel @Inject constructor(
     private val _state = MutableStateFlow(PlanUiState())
     val state = _state.asStateFlow()
 
-    private val _eventFLow = MutableSharedFlow<UiEvent>()
+    private val _eventFLow = MutableSharedFlow<ProductUiEvent<Product>>()
     val eventFlow = _eventFLow.asSharedFlow()
 
     init {
@@ -44,10 +44,10 @@ class PlanViewModel @Inject constructor(
                         .onFailure { exception ->
                             when (exception) {
                                 is NotFoundProductsException -> {
-                                    _eventFLow.emit(UiEvent.ShowToast(exception.message))
+                                    _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
                                 }
                                 else -> {
-                                    _eventFLow.emit(UiEvent.ShowToast(exception.message))
+                                    _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
                                 }
                             }
                         }
@@ -67,13 +67,13 @@ class PlanViewModel @Inject constructor(
                 Calendar.getInstance().time.time
             )
             modifyRecentlyViewedUseCase(newRecently)
-            _eventFLow.emit(UiEvent.NavigateToDetail(product))
+            _eventFLow.emit(ProductUiEvent.NavigateToDetail(product))
         }
     }
 
     fun navigateToCart(product: Product) {
         viewModelScope.launch {
-            _eventFLow.emit(UiEvent.NavigateToCart(product))
+            _eventFLow.emit(ProductUiEvent.NavigateToCart(product))
         }
     }
 }
