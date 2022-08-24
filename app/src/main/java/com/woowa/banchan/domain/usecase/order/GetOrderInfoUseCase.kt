@@ -7,5 +7,5 @@ class GetOrderInfoUseCase @Inject constructor(
     private val orderRepository: OrderRepository
 ) {
 
-    operator fun invoke() = orderRepository.getAllOrder()
+    operator fun invoke() = orderRepository.getAllOrderWithPaging()
 }

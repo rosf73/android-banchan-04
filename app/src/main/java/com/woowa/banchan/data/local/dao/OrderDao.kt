@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface OrderDao {
 
-    @Query("SELECT * FROM OrderInfoView")
-    fun findAllGroupByOrderId(): Flow<List<OrderInfoView>>
+    @Query("SELECT * FROM OrderInfoView LIMIT :loadSize OFFSET :index * :loadSize")
+    suspend fun findAllWithPage(index: Int, loadSize: Int): List<OrderInfoView>
 
     @Query("SELECT * FROM order_line_item, `order` WHERE order_id = :orderId AND `order`.id = order_line_item.order_id")
     fun findByOrderId(orderId: Long): Flow<List<OrderLineItemView>>

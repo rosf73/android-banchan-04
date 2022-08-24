@@ -1,5 +1,6 @@
 package com.woowa.banchan.data.local.repository
 
+import androidx.paging.PagingSource
 import com.woowa.banchan.data.local.datasource.OrderDataSource
 import com.woowa.banchan.data.local.entity.*
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
@@ -7,25 +8,18 @@ import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import com.woowa.banchan.domain.entity.OrderInfo
 import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.repository.OrderRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
     private val orderDataSource: OrderDataSource
 ) : OrderRepository {
 
-    override fun getAllOrder(): Flow<Result<List<OrderInfo>>> = flow {
-        orderDataSource.getAllOrderInfo()
-            .collect { list ->
-                emit(Result.success(list.map { it.toOrderInfo() }))
-            }
-    }.catch {
-        emit(Result.failure(NotFoundProductsException()))
-    }.flowOn(Dispatchers.IO)
+    override fun getAllOrderWithPaging(): PagingSource<Int, OrderInfo> {
+        return orderDataSource.getAllWithPage()
+    }
 
     override fun getOrderLineItem(orderId: Long): Flow<Result<Map<Order, List<OrderLineItem>>>> =
         flow {
