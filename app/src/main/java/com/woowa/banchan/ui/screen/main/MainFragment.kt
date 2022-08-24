@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import androidx.paging.map
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
@@ -74,9 +75,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
 
             launch {
                 orderViewModel.state.collect { state ->
-                    val activeCount =
-                        state.orderInfoList.count { it.status == DeliveryStatus.START }
-                    binding.active = activeCount > 0
+                    binding.active = state.active
                 }
             }
         }
