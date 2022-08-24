@@ -1,6 +1,11 @@
 package com.woowa.banchan.data.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.woowa.banchan.data.local.entity.RecentlyViewedEntity
 import kotlinx.coroutines.flow.Flow
 

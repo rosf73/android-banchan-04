@@ -9,9 +9,14 @@ import com.woowa.banchan.domain.usecase.product.GetPlanUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
