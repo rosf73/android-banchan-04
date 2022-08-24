@@ -73,9 +73,7 @@ class TypeFilterAdapter(
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-
                 }
         }
-
     }
 }

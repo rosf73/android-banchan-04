@@ -42,7 +42,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver(), Notifications {
             .build()
         val deliveryWorkRequest = OneTimeWorkRequestBuilder<DeliveryWorker>()
             .setInputData(data)
-            .addTag("${id}_${orderAt}")
+            .addTag("${id}_$orderAt")
             .build()
         WorkManager
             .getInstance(context.applicationContext)

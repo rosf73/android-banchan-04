@@ -12,7 +12,9 @@ import com.woowa.banchan.databinding.ItemOrderDetailFooterBinding
 import com.woowa.banchan.databinding.ItemOrderDetailHeaderBinding
 import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.OrderDetailSection
-import com.woowa.banchan.domain.entity.OrderDetailSection.*
+import com.woowa.banchan.domain.entity.OrderDetailSection.Order
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderFooter
+import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import com.woowa.banchan.extensions.getDiffTime
 import com.woowa.banchan.extensions.toMoneyInt
 import com.woowa.banchan.ui.screen.cart.components.CartPriceColumn
@@ -84,7 +86,6 @@ class OrderDetailAdapter(
         submitList(orderItem)
     }
 
-
     inner class OrderDetailHeaderViewHolder(
         private val binding: ItemOrderDetailHeaderBinding,
         private val onComplete: () -> Unit
@@ -129,7 +130,6 @@ class OrderDetailAdapter(
         }
     }
 }
-
 
 val orderDetailDiffUtil = object : DiffUtil.ItemCallback<OrderDetailSection>() {
     override fun areItemsTheSame(

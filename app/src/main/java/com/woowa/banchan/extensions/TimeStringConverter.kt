@@ -1,6 +1,6 @@
 package com.woowa.banchan.extensions
 
-import java.util.*
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
 fun Long.toTimeString(): String {

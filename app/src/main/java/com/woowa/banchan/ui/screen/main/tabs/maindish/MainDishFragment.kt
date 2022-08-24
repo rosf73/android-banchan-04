@@ -19,8 +19,8 @@ import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.screen.main.MainFragment
-import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
+import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
 import com.woowa.banchan.ui.screen.main.tabs.adapter.BannerAdapter
 import com.woowa.banchan.ui.screen.main.tabs.adapter.ProductAdapter
 import com.woowa.banchan.ui.screen.main.tabs.adapter.TypeFilterAdapter

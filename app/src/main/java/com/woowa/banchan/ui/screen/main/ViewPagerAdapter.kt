@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.woowa.banchan.ui.screen.main.tabs.plan.PlanFragment
 import com.woowa.banchan.ui.screen.main.tabs.maindish.MainDishFragment
+import com.woowa.banchan.ui.screen.main.tabs.plan.PlanFragment
 import com.woowa.banchan.ui.screen.main.tabs.side.SideFragment
 import com.woowa.banchan.ui.screen.main.tabs.soup.SoupFragment
 

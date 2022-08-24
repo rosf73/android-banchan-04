@@ -22,7 +22,7 @@ import com.woowa.banchan.ui.navigator.OnItemCartClickListener
 import com.woowa.banchan.ui.screen.detail.DetailFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Calendar
 
 class RecentlyFragment : Fragment(), OnDetailClickListener, OnItemCartClickListener {
 

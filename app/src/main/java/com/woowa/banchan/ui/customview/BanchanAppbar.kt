@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.woowa.banchan.R
@@ -85,5 +84,4 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
             onClick()
         }
     }
-
 }

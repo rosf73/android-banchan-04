@@ -2,7 +2,12 @@ package com.woowa.banchan.ui.screen.cart.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,7 +15,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -41,17 +50,18 @@ fun CartItemRow(
     isChecked = item.checked
 
     Column(modifier = modifier) {
-        Row(modifier = Modifier
-            .clickable {
-                isChecked = if (isChecked) {
-                    onUncheck()
-                    false
-                } else {
-                    onCheck()
-                    true
+        Row(
+            modifier = Modifier
+                .clickable {
+                    isChecked = if (isChecked) {
+                        onUncheck()
+                        false
+                    } else {
+                        onCheck()
+                        true
+                    }
                 }
-            }
-            .padding(20.dp, 20.dp, 20.dp, 0.dp)
+                .padding(20.dp, 20.dp, 20.dp, 0.dp)
         ) {
             Image(
                 modifier = Modifier.align(Alignment.CenterVertically),
@@ -77,7 +87,8 @@ fun CartItemRow(
                     onQuantityChanged = { q, type ->
                         onQuantityChanged(q, type)
                         quantity = q
-                    })
+                    }
+                )
             }
 
             Image(
@@ -113,11 +124,11 @@ private fun CartItemQuantityRow(
                     .clickable {
                         val quantityInt = quantity.text.toInt()
                         if (quantityInt > 1) {
-                            onQuantityChanged(quantityInt-1, false)
+                            onQuantityChanged(quantityInt - 1, false)
                             setQuantity(
                                 TextFieldValue(
-                                    text = (quantityInt-1).toString(),
-                                    selection = TextRange((quantityInt-1).toString().length)
+                                    text = (quantityInt - 1).toString(),
+                                    selection = TextRange((quantityInt - 1).toString().length)
                                 )
                             )
                         }
@@ -146,11 +157,11 @@ private fun CartItemQuantityRow(
                 modifier = Modifier
                     .clickable {
                         val quantityInt = quantity.text.toInt()
-                        onQuantityChanged(quantityInt+1, true)
+                        onQuantityChanged(quantityInt + 1, true)
                         setQuantity(
                             TextFieldValue(
-                                text = (quantityInt+1).toString(),
-                                selection = TextRange((quantityInt+1).toString().length)
+                                text = (quantityInt + 1).toString(),
+                                selection = TextRange((quantityInt + 1).toString().length)
                             )
                         )
                     }
@@ -178,7 +189,12 @@ private fun CartItemQuantityTextField(
                 onTextChanged(TextFieldValue("1", selection = TextRange(1)))
             else if (it.text.length < 12) {
                 val newQuantity = it.text
-                onTextChanged(TextFieldValue(newQuantity, selection = TextRange(newQuantity.length)))
+                onTextChanged(
+                    TextFieldValue(
+                        newQuantity,
+                        selection = TextRange(newQuantity.length)
+                    )
+                )
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

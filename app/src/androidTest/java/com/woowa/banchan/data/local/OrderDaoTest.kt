@@ -10,7 +10,6 @@ import com.woowa.banchan.data.local.database.AppDatabase
 import com.woowa.banchan.data.local.entity.OrderEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemView
-import com.woowa.banchan.data.local.entity.toOrderLineItem
 import com.woowa.banchan.domain.entity.DeliveryStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.paging.map
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
-import com.woowa.banchan.domain.entity.DeliveryStatus
+import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.navigator.OnCartClickListener
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.navigator.OnOrderClickListener
-import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.screen.cart.CartFragment
 import com.woowa.banchan.ui.screen.cart.CartViewModel
 import com.woowa.banchan.ui.screen.detail.DetailFragment
