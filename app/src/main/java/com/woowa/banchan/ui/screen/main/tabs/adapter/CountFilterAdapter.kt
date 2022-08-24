@@ -67,6 +67,5 @@ class CountFilterAdapter(
                     override fun onNothingSelected(parent: AdapterView<*>?) = Unit
                 }
         }
-
     }
 }

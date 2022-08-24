@@ -74,7 +74,6 @@ class CartBottomSheet : BottomSheetDialogFragment() {
             }
             btnOrdering.setOnClickListener { navigateToCart(product) }
             tvCancel.setOnClickListener { cancelClickButton() }
-
         }
     }
 

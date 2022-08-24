@@ -34,5 +34,6 @@ fun GlideImage(
         },
         failure = {
             Text(modifier = Modifier.align(Alignment.Center), text = "이미지를 로드할 수 없습니다.")
-        })
+        }
+    )
 }

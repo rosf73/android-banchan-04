@@ -33,8 +33,8 @@ import kotlinx.coroutines.flow.collectLatest
 import java.security.SecureRandom
 
 @AndroidEntryPoint
-class CartFragment
-    : Fragment(), OnRecentlyClickListener, OnDetailClickListener, OnOrderDetailClickListener {
+class CartFragment :
+    Fragment(), OnRecentlyClickListener, OnDetailClickListener, OnOrderDetailClickListener {
 
     private var _binding: FragmentCartBinding? = null
     private val binding: FragmentCartBinding get() = requireNotNull(_binding)

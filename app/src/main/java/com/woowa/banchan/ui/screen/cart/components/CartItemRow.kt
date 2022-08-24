@@ -2,7 +2,12 @@ package com.woowa.banchan.ui.screen.cart.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -43,15 +48,16 @@ fun CartItemRow(
     }
 
     Column(modifier = modifier) {
-        Row(modifier = Modifier
-            .clickable {
-                if (item.checked) {
-                    onUncheck()
-                } else {
-                    onCheck()
+        Row(
+            modifier = Modifier
+                .clickable {
+                    if (item.checked) {
+                        onUncheck()
+                    } else {
+                        onCheck()
+                    }
                 }
-            }
-            .padding(20.dp, 20.dp, 20.dp, 0.dp)
+                .padding(20.dp, 20.dp, 20.dp, 0.dp)
         ) {
             Image(
                 modifier = Modifier.align(Alignment.CenterVertically),
@@ -170,7 +176,12 @@ private fun CartItemQuantityTextField(
                 onTextChanged(TextFieldValue("1", selection = TextRange(1)))
             else if (it.text.length < 12) {
                 val newQuantity = it.text
-                onTextChanged(TextFieldValue(newQuantity, selection = TextRange(newQuantity.length)))
+                onTextChanged(
+                    TextFieldValue(
+                        newQuantity,
+                        selection = TextRange(newQuantity.length)
+                    )
+                )
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

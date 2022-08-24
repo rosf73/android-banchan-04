@@ -3,7 +3,12 @@ package com.woowa.banchan.remote.network
 import com.google.common.truth.Truth
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.woowa.banchan.data.remote.dto.*
+import com.woowa.banchan.data.remote.dto.CategoryDto
+import com.woowa.banchan.data.remote.dto.DetailProductDto
+import com.woowa.banchan.data.remote.dto.DetailResponse
+import com.woowa.banchan.data.remote.dto.PlanResponse
+import com.woowa.banchan.data.remote.dto.ProductDto
+import com.woowa.banchan.data.remote.dto.ProductsResponse
 import com.woowa.banchan.data.remote.network.BanchanService
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -14,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.io.File
-
 
 class BanchanServiceTest {
 
@@ -177,7 +181,6 @@ class BanchanServiceTest {
         val actualResult = actual.body()
         Truth.assertThat(actualResult).isEqualTo(expected)
     }
-
 
     @Test
     fun `정갈한 밑반찬의 상품 메뉴를 가져올 수 있다`() = runBlocking {

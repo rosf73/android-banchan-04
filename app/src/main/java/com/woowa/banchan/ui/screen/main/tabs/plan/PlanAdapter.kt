@@ -53,7 +53,8 @@ class PlanAdapter(
         private val productAdapter by lazy {
             ProductAdapter(
                 onClick,
-                onClickCart = { onClickCart(it) })
+                onClickCart = { onClickCart(it) }
+            )
         }
 
         fun bind(item: Category) {

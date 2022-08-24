@@ -4,6 +4,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -96,5 +97,6 @@ dependencies {
     implementation(Lib.Room.runtime)
     kapt(Lib.Room.compiler)
     implementation(Lib.Room.roomKtx)
+    implementation(Lib.Room.paging)
     testImplementation(Lib.Room.test)
 }

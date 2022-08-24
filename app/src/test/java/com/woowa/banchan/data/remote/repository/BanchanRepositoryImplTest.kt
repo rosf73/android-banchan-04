@@ -2,7 +2,12 @@ package com.woowa.banchan.data.remote.repository
 
 import com.google.common.truth.Truth.assertThat
 import com.woowa.banchan.data.remote.datasource.BanchanDataSource
-import com.woowa.banchan.data.remote.dto.*
+import com.woowa.banchan.data.remote.dto.CategoryDto
+import com.woowa.banchan.data.remote.dto.PlanResponse
+import com.woowa.banchan.data.remote.dto.ProductDto
+import com.woowa.banchan.data.remote.dto.ProductsResponse
+import com.woowa.banchan.data.remote.dto.toCategory
+import com.woowa.banchan.data.remote.dto.toProduct
 import com.woowa.banchan.data.remote.network.BanchanService
 import com.woowa.banchan.domain.repository.BanchanRepository
 import io.mockk.coEvery

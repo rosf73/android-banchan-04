@@ -13,8 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentDetailBinding
-import com.woowa.banchan.domain.entity.Cart
-import com.woowa.banchan.domain.entity.DeliveryStatus
 import com.woowa.banchan.domain.entity.DetailProduct
 import com.woowa.banchan.ui.customview.CartDialog
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
@@ -101,8 +99,7 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
 
             launch {
                 orderViewModel.state.collect { state ->
-                    val activeCount = state.orderInfoList.count { it.status == DeliveryStatus.START }
-                    binding.active = activeCount > 0
+                    binding.active = state.active
                 }
             }
         }
@@ -136,8 +133,10 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
                     llDetailThumb.children.iterator().forEach { view ->
                         (view as ImageView).setImageResource(R.drawable.indicator_round_unselected)
                     }
-                    (llDetailThumb
-                        .getChildAt(position) as ImageView)
+                    (
+                        llDetailThumb
+                            .getChildAt(position) as ImageView
+                        )
                         .setImageResource(R.drawable.indicator_round_selected)
                     super.onPageSelected(position)
                 }
@@ -159,7 +158,12 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
     override fun navigateToCart() {
         parentFragmentManager.popBackStack("Detail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.slide_out,
+                R.anim.slide_in,
+                R.anim.slide_out
+            )
             .addToBackStack("Detail")
             .add(R.id.fcv_main, CartFragment())
             .commit()
@@ -168,7 +172,12 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
     override fun navigateToOrder() {
         parentFragmentManager.popBackStack("Detail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+            .setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.slide_out,
+                R.anim.slide_in,
+                R.anim.slide_out
+            )
             .addToBackStack("Detail")
             .add(R.id.fcv_main, OrderFragment())
             .commit()

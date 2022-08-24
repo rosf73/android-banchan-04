@@ -6,11 +6,8 @@ import com.google.common.truth.Truth
 import com.woowa.banchan.data.local.entity.RecentlyViewedEntity
 import com.woowa.banchan.data.local.entity.toRecentlyViewed
 import com.woowa.banchan.data.local.repository.RecentlyViewedRepositoryImpl
-import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.repository.RecentlyViewedRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import androidx.paging.LoadState
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentOrderBinding
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
@@ -48,6 +49,21 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
     }
 
     private fun initView() {
+        orderListAdapter.addLoadStateListener { loadState ->
+            val condition = loadState.source.refresh is LoadState.NotLoading &&
+                loadState.append.endOfPaginationReached &&
+                orderListAdapter.itemCount < 1
+            binding.rvOrderList.visibility = (!condition).toVisibility()
+            binding.llEmpty.visibility = condition.toVisibility()
+            binding.ivLockandlock.visibility = condition.toVisibility()
+            if (condition)
+                binding.ivLockandlock.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        requireContext(),
+                        R.anim.translate_infinity
+                    )
+                )
+        }
         binding.rvOrderList.adapter = orderListAdapter
         binding.viewModel = orderViewModel
     }
@@ -56,21 +72,8 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
         viewLifecycleOwner.repeatOnLifecycle {
 
             launch {
-                orderViewModel.state.collect {
-                    val isNotEmpty = it.orderInfoList.isNotEmpty()
-                    binding.rvOrderList.visibility = isNotEmpty.toVisibility()
-                    binding.llEmpty.visibility = (!isNotEmpty).toVisibility()
-                    binding.ivLockandlock.visibility = (!isNotEmpty).toVisibility()
-
-                    if (isNotEmpty)
-                        orderListAdapter.submitList(it.orderInfoList)
-                    else
-                        binding.ivLockandlock.startAnimation(
-                            AnimationUtils.loadAnimation(
-                                requireContext(),
-                                R.anim.translate_infinity
-                            )
-                        )
+                orderViewModel.data.collect {
+                    orderListAdapter.submitData(it)
                 }
             }
 

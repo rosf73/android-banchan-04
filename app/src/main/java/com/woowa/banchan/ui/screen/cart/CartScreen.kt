@@ -2,7 +2,12 @@ package com.woowa.banchan.ui.screen.cart
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.ui.screen.cart.components.CartCheckBox
@@ -45,7 +50,8 @@ fun CartScreen(
                 state = checkState,
                 onCheck = { cartViewModel.checkAll(); setCheckState(CheckState.CHECKED) },
                 onUncheck = { cartViewModel.uncheckAll(); setCheckState(CheckState.UNCHECKED) },
-                onDeleteClick = { cartViewModel.deleteCartMany() })
+                onDeleteClick = { cartViewModel.deleteCartMany() }
+            )
             CartColumn(
                 modifier = Modifier.fillMaxWidth(),
                 cart = cartState.cart,
@@ -73,8 +79,8 @@ fun CartScreen(
             )
             RecentlyViewedColumn(
                 recentlyList =
-                    if (recentlyState.recentlyList.size < 7) recentlyState.recentlyList
-                    else recentlyState.recentlyList.subList(0, 7),
+                if (recentlyState.recentlyList.size < 7) recentlyState.recentlyList
+                else recentlyState.recentlyList.subList(0, 7),
                 navigateToRecently = navigateToRecently,
                 onItemClick = onItemClick
             )

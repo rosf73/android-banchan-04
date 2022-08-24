@@ -52,7 +52,8 @@ class CartDaoTest {
     @Test
     fun `장바구니에_상품을_여러개_넣을_수_있다`() = runTest {
         var insertList = arrayOf(
-            cart, CartEntity(
+            cart,
+            CartEntity(
                 2L,
                 "HD124",
                 "무진장 매운 오이무침",
@@ -80,7 +81,8 @@ class CartDaoTest {
     @Test
     fun `장바구니에서_데이터를_여러개_삭제할_수_있다`() = runTest {
         var insertList = arrayOf(
-            cart, CartEntity(
+            cart,
+            CartEntity(
                 2L,
                 "HD125",
                 "무진장 매운 오이무침",
