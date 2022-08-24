@@ -1,4 +1,4 @@
-package com.woowa.banchan.domain
+package com.woowa.banchan.data.local.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
