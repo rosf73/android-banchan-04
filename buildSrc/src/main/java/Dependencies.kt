@@ -32,7 +32,7 @@ object Version {
     const val composeViewModel = "2.4.1"
 
     const val room = "2.4.3"
-    const val paging = "2.5.0-alpha02"
+    const val paging = "3.1.1"
 }
 
 object Lib {
@@ -111,5 +111,6 @@ object Lib {
         const val compiler = "androidx.room:room-compiler:${Version.room}"
         const val roomKtx = "androidx.room:room-ktx:${Version.room}"
         const val test = "androidx.room:room-testing:${Version.room}"
+        const val paging = "androidx.paging:paging-runtime:${Version.paging}"
     }
 }
