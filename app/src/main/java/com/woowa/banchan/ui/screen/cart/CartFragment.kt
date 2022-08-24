@@ -18,7 +18,6 @@ import androidx.fragment.app.viewModels
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
-import com.woowa.banchan.ui.customview.LoadingFragment
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
@@ -54,7 +53,6 @@ class CartFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val dialog = LoadingFragment()
         binding.composeCart.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
@@ -64,14 +62,6 @@ class CartFragment
                     navigateToRecently = { cartViewModel.navigateToRecentlyViewed() },
                     onItemClick = { cartViewModel.navigateToDetail(it) },
                     onOrderClick = { cartViewModel.addOrder() },
-                    onShowLoading = {
-                        parentFragmentManager.executePendingTransactions()
-                        if (!dialog.isAdded) dialog.show(parentFragmentManager, dialog.tag)
-                    },
-                    onDismissLoading = {
-                        parentFragmentManager.executePendingTransactions()
-                        if (dialog.isAdded) dialog.stay()
-                    }
                 )
             }
         }
