@@ -1,19 +1,25 @@
 package com.woowa.banchan.ui.screen.cart
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import com.woowa.banchan.R
+import com.woowa.banchan.domain.entity.Cart
 import com.woowa.banchan.domain.entity.RecentlyViewed
-import com.woowa.banchan.ui.screen.cart.components.CartCheckBox
-import com.woowa.banchan.ui.screen.cart.components.CartColumn
-import com.woowa.banchan.ui.screen.cart.components.CheckState
-import com.woowa.banchan.ui.screen.cart.components.RecentlyViewedColumn
+import com.woowa.banchan.extensions.toMoneyInt
+import com.woowa.banchan.ui.screen.cart.components.*
 import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
 
 @Composable
@@ -26,6 +32,14 @@ fun CartScreen(
 ) {
     val cartState by cartViewModel.state.collectAsState()
     val recentlyState by recentlyViewModel.state.collectAsState()
+
+    var totalPrice by remember {
+        mutableStateOf(
+            cartState.cart.sumOf { item ->
+                item.price.toMoneyInt() * item.quantity
+            }
+        )
+    }
 
     val (checkState, setCheckState) = remember {
         mutableStateOf(
@@ -52,31 +66,73 @@ fun CartScreen(
                 onUncheck = { cartViewModel.uncheckAll(); setCheckState(CheckState.UNCHECKED) },
                 onDeleteClick = { cartViewModel.deleteCartMany() }
             )
-            CartColumn(
-                modifier = Modifier.fillMaxWidth(),
-                cart = cartState.cart,
-                onItemCheck = { id ->
-                    cartViewModel.check(id)
-                    setCheckState(
-                        if (cartViewModel.isAllChecked()) CheckState.CHECKED
-                        else CheckState.UNCHECKED_NOT_ALL
-                    )
-                },
-                onItemUnCheck = { id ->
-                    cartViewModel.uncheck(id)
-                    setCheckState(
-                        if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-                        else CheckState.UNCHECKED_NOT_ALL
-                    )
-                },
-                onItemDeleteClick = { id ->
-                    cartViewModel.deleteCart(id)
-                },
-                onItemQuantityChanged = { id, quantity ->
-                    cartViewModel.updateCart(id, quantity)
-                },
-                onOrderClick = onOrderClick
-            )
+        }
+
+        if (cartState.cart.isEmpty())
+            item {
+                CartItemEmpty(
+                    modifier = Modifier
+                        .background(color = colorResource(id = R.color.white))
+                        .fillMaxWidth()
+                )
+            }
+        else {
+            itemsIndexed(
+                items = cartState.cart,
+                key = { index: Int, cart: Cart ->
+                    cart.id
+                }
+            ) { index: Int, item: Cart ->
+                CartItemRow(
+                    modifier = Modifier
+                        .background(colorResource(R.color.white))
+                        .fillMaxWidth(),
+                    item = item,
+                    onCheck = {
+                        cartViewModel.check(item.id)
+                        setCheckState(
+                            if (cartViewModel.isAllChecked()) CheckState.CHECKED
+                            else CheckState.UNCHECKED_NOT_ALL
+                        )
+                    },
+                    onUncheck = {
+                        cartViewModel.uncheck(item.id)
+                        setCheckState(
+                            if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
+                            else CheckState.UNCHECKED_NOT_ALL
+                        )
+                    },
+                    onDeleteClick = {
+                        cartViewModel.deleteCart(item.id)
+                    },
+                    onQuantityChanged = { quantity, isPlus ->
+                        cartViewModel.updateCart(item.id, quantity)
+                        if (isPlus)
+                            totalPrice += item.price.toMoneyInt()
+                        else
+                            totalPrice -= item.price.toMoneyInt()
+                    }
+                )
+            }
+
+            item {
+                CartPriceColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(align = Alignment.End),
+                    totalPrice = totalPrice,
+                    deliveryFee =
+                    if (totalPrice >= 40000) 0
+                    else 2500
+                )
+            }
+
+            item {
+                CartOrderButton(totalPrice, onOrderClick)
+            }
+        }
+
+        item {
             RecentlyViewedColumn(
                 recentlyList =
                 if (recentlyState.recentlyList.size < 7) recentlyState.recentlyList
