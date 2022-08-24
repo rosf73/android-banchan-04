@@ -51,8 +51,8 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
     private fun initView() {
         orderListAdapter.addLoadStateListener { loadState ->
             val condition = loadState.source.refresh is LoadState.NotLoading &&
-                    loadState.append.endOfPaginationReached &&
-                    orderListAdapter.itemCount < 1
+                loadState.append.endOfPaginationReached &&
+                orderListAdapter.itemCount < 1
             binding.rvOrderList.visibility = (!condition).toVisibility()
             binding.llEmpty.visibility = condition.toVisibility()
             binding.ivLockandlock.visibility = condition.toVisibility()
@@ -112,4 +112,3 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
         super.onDestroyView()
     }
 }
-

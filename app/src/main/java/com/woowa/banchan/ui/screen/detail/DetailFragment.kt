@@ -134,9 +134,9 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
                         (view as ImageView).setImageResource(R.drawable.indicator_round_unselected)
                     }
                     (
-                            llDetailThumb
-                                .getChildAt(position) as ImageView
-                            )
+                        llDetailThumb
+                            .getChildAt(position) as ImageView
+                        )
                         .setImageResource(R.drawable.indicator_round_selected)
                     super.onPageSelected(position)
                 }
@@ -209,4 +209,3 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
         }
     }
 }
-
