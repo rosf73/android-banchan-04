@@ -112,3 +112,4 @@ class OrderFragment : Fragment(), OnOrderDetailClickListener {
         super.onDestroyView()
     }
 }
+
