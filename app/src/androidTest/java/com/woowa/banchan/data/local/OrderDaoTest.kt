@@ -10,6 +10,8 @@ import com.woowa.banchan.data.local.database.AppDatabase
 import com.woowa.banchan.data.local.entity.OrderEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemEntity
 import com.woowa.banchan.data.local.entity.OrderLineItemView
+import com.woowa.banchan.data.local.entity.toOrderLineItem
+import com.woowa.banchan.domain.entity.DeliveryStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -25,6 +27,8 @@ class OrderDaoTest {
     private lateinit var database: AppDatabase
     private lateinit var dao: OrderDao
 
+    private lateinit var orderLineItemList: Array<OrderLineItemEntity>
+
     @Before
     fun setup() {
         database = Room.inMemoryDatabaseBuilder(
@@ -33,19 +37,14 @@ class OrderDaoTest {
         ).allowMainThreadQueries().build()
 
         dao = database.orderDao()
-    }
-
-    @Test
-    fun `주문을_할_수_있다`() = runTest {
-        val order = OrderEntity(1L, System.currentTimeMillis(), "Delivered")
-        val orderLineItemList = arrayOf(
+        orderLineItemList = arrayOf(
             OrderLineItemEntity(
                 1L,
                 1L,
                 "새콤달콤 오징어무침",
                 "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
                 3,
-                "18,000원"
+                18000
             ),
             OrderLineItemEntity(
                 2L,
@@ -53,7 +52,7 @@ class OrderDaoTest {
                 "새콤달콤 문어무침",
                 "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
                 1,
-                "6,000원"
+                6000
             ),
             OrderLineItemEntity(
                 3L,
@@ -61,13 +60,18 @@ class OrderDaoTest {
                 "엄청매운 오이무침",
                 "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
                 2,
-                "9,000원"
-            ),
+                9000
+            )
         )
+    }
+
+    @Test
+    fun `주문을_할_수_있다`() = runTest {
+        val order = OrderEntity(1L, System.currentTimeMillis(), DeliveryStatus.DONE.status)
         dao.insertOrder(order)
         dao.insertOrderLineItem(*orderLineItemList)
         val expected = mutableListOf<OrderLineItemView>()
-        (1..3).forEach { idx ->
+        (0..2).forEach { idx ->
             expected.add(
                 OrderLineItemView(
                     order.id, order.orderedAt, order.status,
@@ -76,38 +80,13 @@ class OrderDaoTest {
                 )
             )
         }
-        val orderInformation = dao.findAll().first()
+
+        val orderInformation = dao.findByOrderId(order.id).first()
         assertThat(orderInformation).isEqualTo(expected)
     }
 
     @Test
     fun `주문과_관계_없는_주문항목_넣는_경우_에러발생`() = runTest {
-        val orderLineItemList = arrayOf(
-            OrderLineItemEntity(
-                1L,
-                1L,
-                "새콤달콤 오징어무침",
-                "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
-                3,
-                "18,000원"
-            ),
-            OrderLineItemEntity(
-                2L,
-                1L,
-                "새콤달콤 문어무침",
-                "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
-                1,
-                "6,000원"
-            ),
-            OrderLineItemEntity(
-                3L,
-                1L,
-                "엄청매운 오이무침",
-                "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
-                2,
-                "9,000원"
-            ),
-        )
         try {
             dao.insertOrderLineItem(*orderLineItemList)
         } catch (e: SQLiteConstraintException) {
