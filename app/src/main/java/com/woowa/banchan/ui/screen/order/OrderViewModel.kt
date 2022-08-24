@@ -2,25 +2,27 @@ package com.woowa.banchan.ui.screen.order
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.domain.entity.Cart
+import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.domain.entity.RecentlyViewed
 import com.woowa.banchan.domain.usecase.order.AddOrderUserCase
 import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
+import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class OrderViewModel @Inject constructor(
-    private val getOrderInfoUseCase: GetOrderInfoUseCase,
-    private val addOrderUserCase: AddOrderUserCase
+    private val getOrderInfoUseCase: GetOrderInfoUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(OrderUiState())
     val state = _state.asStateFlow()
+
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         getAllOrder()
@@ -32,18 +34,25 @@ class OrderViewModel @Inject constructor(
                 result.onSuccess {
                     _state.value = _state.value.copy(
                         orderInfoList = it,
-                        isLoading = false,
-                        errorMessage = ""
+                        isLoading = false
                     )
                 }
                     .onFailure {
-                        _state.value = _state.value.copy(
-                            orderInfoList = emptyList(),
-                            isLoading = false,
-                            errorMessage = "주문 내역 불러오기가 실패했습니다."
-                        )
+                        _eventFlow.emit(UiEvent.ShowToast(it.message))
                     }
             }.launchIn(this)
+        }
+    }
+
+    fun navigateToDetail(id: Long) {
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.NavigateToOrderDetail(id))
+        }
+    }
+
+    fun navigateToBack() {
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.NavigateToBack)
         }
     }
 }
