@@ -17,7 +17,6 @@ import com.woowa.banchan.ui.customview.LoadingFragment
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.network.ConnectivityObserver
 import com.woowa.banchan.ui.network.NetworkConnectivityObserver
-import com.woowa.banchan.ui.screen.main.MainFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
 import com.woowa.banchan.ui.screen.main.tabs.plan.PlanViewModel
 import com.woowa.banchan.ui.screen.orderdetail.OrderDetailFragment
@@ -51,17 +50,19 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
                 }
             }
         }
+        checkState(intent)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        checkState(intent)
+    }
+
+    private fun checkState(intent: Intent?) {
         this.intent = intent
         val orderId = intent?.getLongExtra(getString(R.string.order_id), 0) ?: 0
+        if (orderId == 0L) return
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fcv_main, MainFragment())
-            .commit()
-
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.slide_in,
@@ -79,7 +80,6 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
     }
 
     private fun checkNetwork(isActiveNetwork: Boolean) {
-        // FragmentTransactions are committed asynchronously
         supportFragmentManager.executePendingTransactions()
 
         if (isActiveNetwork) {
