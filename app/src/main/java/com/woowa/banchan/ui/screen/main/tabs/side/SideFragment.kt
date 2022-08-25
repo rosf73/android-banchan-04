@@ -46,7 +46,12 @@ class SideFragment : Fragment(), OnDetailClickListener {
 
     private val countFilterAdapter by lazy {
         CountFilterAdapter(
-            onClickItem = { type -> productsViewModel.getProduct("side", type) },
+            onClickItem = { type ->
+                productsViewModel.getProduct(
+                    getString(R.string.side_tag),
+                    type
+                )
+            },
         )
     }
 
@@ -75,7 +80,6 @@ class SideFragment : Fragment(), OnDetailClickListener {
 
     private fun initView() {
         binding.lifecycleOwner = viewLifecycleOwner
-        productsViewModel.getProduct("side")
         setGridLayoutManager()
         binding.rvSide.adapter = concatAdapter
     }
@@ -94,6 +98,7 @@ class SideFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.sortType.collectLatest { sortType ->
+                    productsViewModel.getProduct(getString(R.string.side_tag), sortType)
                     countFilterAdapter.setSortType(sortType)
                 }
             }
