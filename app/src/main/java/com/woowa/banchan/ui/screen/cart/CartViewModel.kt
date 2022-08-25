@@ -81,19 +81,13 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun deleteCartMany() {
+    fun deleteCheckedCarts() {
         if (isAllUnChecked()) return
         viewModelScope.launch(Dispatchers.IO) {
             updateCartAll()
             _state.value.cart.filter { it.checked }.let {
                 removeCartUseCase(*it.toTypedArray())
             }
-        }
-    }
-
-    private fun deleteAll() {
-        viewModelScope.launch(Dispatchers.IO) {
-            removeCartUseCase(*state.value.cart.toTypedArray())
         }
     }
 
@@ -146,9 +140,10 @@ class CartViewModel @Inject constructor(
     fun addOrder() {
         viewModelScope.launch {
             val orderedAt = System.currentTimeMillis()
-            val orderId = addOrderUserCase(state.value.cart, orderedAt)
+            val orderProducts = state.value.cart.filter { it.checked }
+            val orderId = addOrderUserCase(orderProducts, orderedAt)
+            deleteCheckedCarts()
             _eventFlow.emit(UiEvent.OrderProduct(Order(orderId, orderedAt, DeliveryStatus.START)))
-            deleteAll()
         }
     }
 

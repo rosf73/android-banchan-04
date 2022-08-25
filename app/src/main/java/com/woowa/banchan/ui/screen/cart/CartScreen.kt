@@ -42,7 +42,9 @@ fun CartScreen(
     var totalPrice by remember {
         mutableStateOf(
             cartState.cart.sumOf { item ->
-                item.price.toMoneyInt() * item.quantity
+                if (item.checked)
+                    item.price.toMoneyInt() * item.quantity
+                else 0
             }
         )
     }
@@ -56,6 +58,15 @@ fun CartScreen(
     }
 
     LaunchedEffect(cartState.cart) {
+        totalPrice =
+            cartState.cart.sumOf { item ->
+                if (item.checked)
+                    item.price.toMoneyInt() * item.quantity
+                else 0
+            }
+    }
+
+    LaunchedEffect(totalPrice) {
         setCheckState(
             if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
             else if (cartViewModel.isAllChecked()) CheckState.CHECKED
@@ -70,7 +81,7 @@ fun CartScreen(
                 state = checkState,
                 onCheck = { cartViewModel.checkAll(); setCheckState(CheckState.CHECKED) },
                 onUncheck = { cartViewModel.uncheckAll(); setCheckState(CheckState.UNCHECKED) },
-                onDeleteClick = { cartViewModel.deleteCartMany() }
+                onDeleteClick = { cartViewModel.deleteCheckedCarts() }
             )
         }
 
@@ -95,28 +106,25 @@ fun CartScreen(
                         .fillMaxWidth(),
                     item = item,
                     onCheck = {
+                        totalPrice += item.quantity * item.price.toMoneyInt()
                         cartViewModel.check(item.id)
-                        setCheckState(
-                            if (cartViewModel.isAllChecked()) CheckState.CHECKED
-                            else CheckState.UNCHECKED_NOT_ALL
-                        )
                     },
                     onUncheck = {
+                        totalPrice -= item.quantity * item.price.toMoneyInt()
                         cartViewModel.uncheck(item.id)
-                        setCheckState(
-                            if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-                            else CheckState.UNCHECKED_NOT_ALL
-                        )
                     },
                     onDeleteClick = {
+                        if (item.checked)
+                            totalPrice -= item.quantity * item.price.toMoneyInt()
                         cartViewModel.deleteCart(item.id)
                     },
                     onQuantityChanged = { quantity, isPlus ->
                         cartViewModel.updateCart(item.id, quantity)
-                        if (isPlus)
-                            totalPrice += item.price.toMoneyInt()
-                        else
-                            totalPrice -= item.price.toMoneyInt()
+                        if (item.checked)
+                            if (isPlus)
+                                totalPrice += item.price.toMoneyInt()
+                            else
+                                totalPrice -= item.price.toMoneyInt()
                     }
                 )
             }
