@@ -66,8 +66,11 @@ fun CartItemRow(
         ) {
             Image(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                painter = if (item.checked) painterResource(R.drawable.ic_checkbox)
-                else painterResource(R.drawable.ic_checkbox_empty),
+                painter = if (item.checked) {
+                    painterResource(R.drawable.ic_checkbox)
+                } else {
+                    painterResource(R.drawable.ic_checkbox_empty)
+                },
                 contentDescription = stringResource(R.string.label_checkbox)
             )
 
@@ -177,9 +180,9 @@ private fun CartItemQuantityTextField(
         modifier = Modifier.width(32.dp),
         value = text,
         onValueChange = {
-            if (it.text.isEmpty())
+            if (it.text.isEmpty()) {
                 onTextChanged(TextFieldValue("1", selection = TextRange(1)))
-            else if (it.text.length < 12) {
+            } else if (it.text.length < 12) {
                 val newQuantity = it.text
                 onTextChanged(
                     TextFieldValue(

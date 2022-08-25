@@ -42,35 +42,47 @@ fun CartScreen(
     var totalPrice by remember {
         mutableStateOf(
             cartState.cart.sumOf { item ->
-                if (item.checked)
+                if (item.checked) {
                     item.price.toMoneyInt() * item.quantity
-                else 0
+                } else {
+                    0
+                }
             }
         )
     }
 
     val (checkState, setCheckState) = remember {
         mutableStateOf(
-            if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-            else if (cartViewModel.isAllChecked()) CheckState.CHECKED
-            else CheckState.UNCHECKED_NOT_ALL
+            if (cartViewModel.isAllUnChecked()) {
+                CheckState.UNCHECKED
+            } else if (cartViewModel.isAllChecked()) {
+                CheckState.CHECKED
+            } else {
+                CheckState.UNCHECKED_NOT_ALL
+            }
         )
     }
 
     LaunchedEffect(cartState.cart) {
         totalPrice =
             cartState.cart.sumOf { item ->
-                if (item.checked)
+                if (item.checked) {
                     item.price.toMoneyInt() * item.quantity
-                else 0
+                } else {
+                    0
+                }
             }
     }
 
     LaunchedEffect(totalPrice) {
         setCheckState(
-            if (cartViewModel.isAllUnChecked()) CheckState.UNCHECKED
-            else if (cartViewModel.isAllChecked()) CheckState.CHECKED
-            else CheckState.UNCHECKED_NOT_ALL
+            if (cartViewModel.isAllUnChecked()) {
+                CheckState.UNCHECKED
+            } else if (cartViewModel.isAllChecked()) {
+                CheckState.CHECKED
+            } else {
+                CheckState.UNCHECKED_NOT_ALL
+            }
         )
     }
 
@@ -114,17 +126,20 @@ fun CartScreen(
                         cartViewModel.uncheck(item.id)
                     },
                     onDeleteClick = {
-                        if (item.checked)
+                        if (item.checked) {
                             totalPrice -= item.quantity * item.price.toMoneyInt()
+                        }
                         cartViewModel.deleteCart(item.id)
                     },
                     onQuantityChanged = { quantity, isPlus ->
                         cartViewModel.updateCart(item.id, quantity)
-                        if (item.checked)
-                            if (isPlus)
+                        if (item.checked) {
+                            if (isPlus) {
                                 totalPrice += item.price.toMoneyInt()
-                            else
+                            } else {
                                 totalPrice -= item.price.toMoneyInt()
+                            }
+                        }
                     }
                 )
             }
@@ -135,9 +150,7 @@ fun CartScreen(
                         .fillMaxWidth()
                         .wrapContentWidth(align = Alignment.End),
                     totalPrice = totalPrice,
-                    deliveryFee =
-                    if (totalPrice >= 40000) 0
-                    else 2500
+                    deliveryFee = if (totalPrice >= 40000) 0 else 2500
                 )
             }
 
@@ -148,9 +161,11 @@ fun CartScreen(
 
         item {
             RecentlyViewedColumn(
-                recentlyList =
-                if (recentlyState.recentlyList.size < 7) recentlyState.recentlyList
-                else recentlyState.recentlyList.subList(0, 7),
+                recentlyList = if (recentlyState.recentlyList.size < 7) {
+                    recentlyState.recentlyList
+                } else {
+                    recentlyState.recentlyList.subList(0, 7)
+                },
                 navigateToRecently = navigateToRecently,
                 onItemClick = onItemClick
             )
