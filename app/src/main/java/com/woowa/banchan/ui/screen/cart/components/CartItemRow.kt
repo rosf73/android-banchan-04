@@ -119,10 +119,10 @@ private fun CartItemQuantityRow(
     Row {
         CartItemQuantityButton(
             painter = painterResource(R.drawable.ic_minus_mini),
-            contentDescription =  stringResource(R.string.label_minus),
+            contentDescription = stringResource(R.string.label_minus),
             onQuantityChanged = {
                 if (quantity > 1) {
-                    onQuantityChanged(quantity-1, false)
+                    onQuantityChanged(quantity - 1, false)
                 }
             }
         )
@@ -142,7 +142,7 @@ private fun CartItemQuantityRow(
             painter = painterResource(R.drawable.ic_plus_mini),
             contentDescription = stringResource(R.string.label_plus),
             onQuantityChanged = {
-                onQuantityChanged(quantity+1, true)
+                onQuantityChanged(quantity + 1, true)
             }
         )
     }
