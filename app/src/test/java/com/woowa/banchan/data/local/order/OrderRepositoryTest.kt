@@ -139,6 +139,5 @@ class OrderRepositoryTest {
         assertThat(actualId).isEqualTo(expectId)
         assertThat(actualResult).isEqualTo(result)
         assertThat(actualResultView).isEqualTo(expectResult)
-
     }
 }
