@@ -35,7 +35,7 @@ class CartBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+        initView(savedInstanceState)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -44,8 +44,8 @@ class CartBottomSheet : BottomSheetDialogFragment() {
         return dialog
     }
 
-    private fun initView() {
-        binding.quantity = 1
+    private fun initView(savedInstanceState: Bundle?) {
+        binding.quantity = savedInstanceState?.getInt("quantity") ?: 1
         arguments?.let { bundle ->
             bundle.getParcelable<Product>(PRODUCT)?.let {
                 binding.product = it
@@ -95,6 +95,11 @@ class CartBottomSheet : BottomSheetDialogFragment() {
 
     fun cancelClickButton() {
         dismiss()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("quantity", binding.quantity)
     }
 
     override fun onDestroyView() {
