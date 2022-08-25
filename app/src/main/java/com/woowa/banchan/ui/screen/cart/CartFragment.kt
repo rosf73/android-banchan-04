@@ -91,8 +91,8 @@ class CartFragment :
                     is UiEvent.OrderProduct -> {
                         navigateToOrderDetail(it.order.id)
                         setAlarm(
-                            cartViewModel.state.value.cart[0].name,
-                            cartViewModel.state.value.cart.size,
+                            cartViewModel.state.value.cart.filter { cart -> cart.checked }[0].name,
+                            cartViewModel.state.value.cart.count { cart -> cart.checked },
                             it.order
                         )
                     }
