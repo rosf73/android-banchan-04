@@ -2,8 +2,11 @@
     <string name="app_name">banchan</string>
     <string name="home">기획전</string>
     <string name="main_dish">든든한 메인요리</string>
+    <string name="main_dish_tag">main</string>
     <string name="soup">뜨끈한 국물요리</string>
+    <string name="soup_tag">soup</string>
     <string name="side">정갈한 밑반찬</string>
+    <string name="side_tag">side</string>
 
     <string name="cart_appbar_title">Cart</string>
     <string name="order_appbar_title">Order List</string>
