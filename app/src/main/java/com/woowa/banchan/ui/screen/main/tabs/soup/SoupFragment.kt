@@ -46,7 +46,12 @@ class SoupFragment : Fragment(), OnDetailClickListener {
 
     private val countFilterAdapter by lazy {
         CountFilterAdapter(
-            onClickItem = { type -> productsViewModel.getProduct("soup", type) },
+            onClickItem = { type ->
+                productsViewModel.getProduct(
+                    getString(R.string.soup_tag),
+                    type
+                )
+            },
         )
     }
 
@@ -75,7 +80,6 @@ class SoupFragment : Fragment(), OnDetailClickListener {
 
     private fun initView() {
         binding.lifecycleOwner = viewLifecycleOwner
-        productsViewModel.getProduct("soup")
         setGridLayoutManager()
         binding.rvSoup.adapter = concatAdapter
     }
@@ -94,6 +98,7 @@ class SoupFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.sortType.collectLatest { sortType ->
+                    productsViewModel.getProduct(getString(R.string.soup_tag), sortType)
                     countFilterAdapter.setSortType(sortType)
                 }
             }

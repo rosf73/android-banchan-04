@@ -56,7 +56,12 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
 
     private val typeFilterAdapter by lazy {
         TypeFilterAdapter(
-            onClickItem = { type -> productsViewModel.getProduct("main", type) },
+            onClickItem = { type ->
+                productsViewModel.getProduct(
+                    getString(R.string.main_dish_tag),
+                    type
+                )
+            },
             onChangeType = { productsViewModel.setViewMode(it) }
         )
     }
