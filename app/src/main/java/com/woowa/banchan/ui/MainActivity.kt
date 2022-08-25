@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
     private fun checkState(intent: Intent?) {
         this.intent = intent
         val orderId = intent?.getLongExtra(getString(R.string.order_id), 0) ?: 0
-        if(orderId == 0L) return
+        if (orderId == 0L) return
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
