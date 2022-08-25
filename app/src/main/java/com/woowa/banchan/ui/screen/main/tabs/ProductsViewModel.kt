@@ -10,6 +10,7 @@ import com.woowa.banchan.domain.exception.NotFoundProductsException
 import com.woowa.banchan.domain.usecase.product.GetProductsUseCase
 import com.woowa.banchan.domain.usecase.recentlyviewed.ModifyRecentlyViewedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -38,28 +39,33 @@ class ProductsViewModel @Inject constructor(
     private val _sortType = MutableStateFlow(SortType.Default)
     val sortType = _sortType.asStateFlow()
 
-    fun getProduct(type: String, sortType: SortType = SortType.Default) = viewModelScope.launch {
-        setSortType(sortType)
-        _state.value = state.value.copy(products = emptyList(), isLoading = true)
-        getProductsUseCase(type, sortType)
-            .onEach { result ->
-                result.onSuccess {
-                    _state.value = state.value.copy(
-                        products = it,
-                        isLoading = false
-                    )
-                }
-                    .onFailure { exception ->
-                        when (exception) {
-                            is NotFoundProductsException -> {
-                                _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
-                            }
-                            else -> {
-                                _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
+    private lateinit var job: Job
+
+    fun getProduct(type: String) {
+        if (this::job.isInitialized) job.cancel()
+
+        job = viewModelScope.launch {
+            _state.value = state.value.copy(products = emptyList(), isLoading = true)
+            getProductsUseCase(type, sortType.value)
+                .onEach { result ->
+                    result.onSuccess {
+                        _state.value = state.value.copy(
+                            products = it,
+                            isLoading = false
+                        )
+                    }
+                        .onFailure { exception ->
+                            when (exception) {
+                                is NotFoundProductsException -> {
+                                    _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
+                                }
+                                else -> {
+                                    _eventFLow.emit(ProductUiEvent.ShowToast(exception.message))
+                                }
                             }
                         }
-                    }
-            }.launchIn(this)
+                }.launchIn(this)
+        }
     }
 
     fun navigateToDetail(product: Product) {
@@ -84,7 +90,7 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    private fun setSortType(sortType: SortType) {
+    fun setSortType(sortType: SortType) {
         _sortType.value = sortType
     }
 

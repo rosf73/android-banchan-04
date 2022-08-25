@@ -12,7 +12,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.woowa.banchan.R
-import com.woowa.banchan.domain.entity.SortType
 import com.woowa.banchan.ui.customview.LoadingFragment
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.network.ConnectivityObserver
@@ -84,9 +83,9 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
 
         if (isActiveNetwork) {
             planViewModel.getPlan()
-            productViewModel.getProduct(type = "main", sortType = SortType.Default)
-            productViewModel.getProduct(type = "soup", sortType = SortType.Default)
-            productViewModel.getProduct(type = "side", sortType = SortType.Default)
+            productViewModel.getProduct(type = "main")
+            productViewModel.getProduct(type = "soup")
+            productViewModel.getProduct(type = "side")
             if (dialog.isAdded) dialog.stay()
         } else {
             if (!dialog.isAdded) dialog.show(supportFragmentManager, dialog.tag)
