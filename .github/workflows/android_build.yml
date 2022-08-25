@@ -32,7 +32,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run ktlint
-        run: ./gradlew ktlintCheck
+        run: ./gradlew ktlintCheck --stacktrace
 
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest

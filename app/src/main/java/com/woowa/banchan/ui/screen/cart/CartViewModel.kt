@@ -55,13 +55,11 @@ class CartViewModel @Inject constructor(
     }
 
     private fun getCart() {
-        _state.value = state.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             getCartUseCase().onEach { result ->
                 result.onSuccess {
-                    val cartList = it.map { cartMap -> cartMap.value }
                     _state.value = state.value.copy(
-                        cart = cartList.toMutableList(),
+                        cart = it.values.toMutableList(),
                         isLoading = false
                     )
                 }.onFailure {
@@ -83,7 +81,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun deleteCartMany() {
+    fun deleteCheckedCarts() {
         if (isAllUnChecked()) return
         viewModelScope.launch(Dispatchers.IO) {
             updateCartAll()
@@ -93,17 +91,12 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun deleteAll() {
-        viewModelScope.launch(Dispatchers.IO) {
-            removeCartUseCase(*state.value.cart.toTypedArray())
-        }
-    }
-
     fun updateCart(id: Long, quantity: Int) {
-        _state.value.cart.map {
+        val mapCart = _state.value.cart.map {
             if (it.id == id) it.apply { this.quantity = quantity }
             else it
-        }
+        }.toMutableList()
+        _state.value = _state.value.copy(cart = mapCart)
     }
 
     fun updateCartAll() {
@@ -113,34 +106,43 @@ class CartViewModel @Inject constructor(
     }
 
     fun check(id: Long): Boolean {
-        _state.value.cart.map {
+        val mapCart = _state.value.cart.map {
             if (it.id == id) it.apply { checked = true }
             else it
-        }
+        }.toMutableList()
+        _state.value = _state.value.copy(cart = mapCart)
         return isAllChecked()
     }
 
     fun checkAll() {
-        _state.value.cart.map { it.apply { checked = true } }
+        val mapCart = _state.value.cart.map {
+            it.apply { checked = true }
+        }.toMutableList()
+        _state.value = _state.value.copy(cart = mapCart)
     }
 
     fun uncheck(id: Long): Boolean {
-        _state.value.cart.map {
+        val mapCart = _state.value.cart.map {
             if (it.id == id) it.apply { checked = false }
             else it
-        }
+        }.toMutableList()
+        _state.value = _state.value.copy(cart = mapCart)
         return isAllUnChecked()
     }
 
     fun uncheckAll() {
-        _state.value.cart.map { it.apply { checked = false } }
+        val mapCart = _state.value.cart.map {
+            it.apply { checked = false }
+        }.toMutableList()
+        _state.value = _state.value.copy(cart = mapCart)
     }
 
     fun addOrder() {
         viewModelScope.launch {
             val orderedAt = System.currentTimeMillis()
-            val orderId = addOrderUserCase(state.value.cart, orderedAt)
-            deleteAll()
+            val orderProducts = state.value.cart.filter { it.checked }
+            val orderId = addOrderUserCase(orderProducts, orderedAt)
+            deleteCheckedCarts()
             _eventFlow.emit(UiEvent.OrderProduct(Order(orderId, orderedAt, DeliveryStatus.START)))
         }
     }

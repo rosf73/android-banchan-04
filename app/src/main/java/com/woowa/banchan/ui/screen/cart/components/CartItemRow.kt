@@ -16,12 +16,14 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,29 +46,31 @@ fun CartItemRow(
     onDeleteClick: () -> Unit,
     onQuantityChanged: (Int, Boolean) -> Unit
 ) {
-    var isChecked by remember { mutableStateOf(item.checked) }
     var quantity by remember { mutableStateOf(item.quantity) }
-    quantity = item.quantity
-    isChecked = item.checked
+
+    LaunchedEffect(item.id, item.quantity) {
+        quantity = item.quantity
+    }
 
     Column(modifier = modifier) {
         Row(
             modifier = Modifier
                 .clickable {
-                    isChecked = if (isChecked) {
+                    if (item.checked) {
                         onUncheck()
-                        false
                     } else {
                         onCheck()
-                        true
                     }
                 }
                 .padding(20.dp, 20.dp, 20.dp, 0.dp)
         ) {
             Image(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                painter = if (isChecked) painterResource(R.drawable.ic_checkbox)
-                else painterResource(R.drawable.ic_checkbox_empty),
+                painter = if (item.checked) {
+                    painterResource(R.drawable.ic_checkbox)
+                } else {
+                    painterResource(R.drawable.ic_checkbox_empty)
+                },
                 contentDescription = stringResource(R.string.label_checkbox)
             )
 
@@ -83,7 +87,7 @@ fun CartItemRow(
                 Text(text = item.name)
                 Text(text = item.price)
                 CartItemQuantityRow(
-                    initQuantity = quantity,
+                    quantity = quantity,
                     onQuantityChanged = { q, type ->
                         onQuantityChanged(q, type)
                         quantity = q
@@ -112,66 +116,57 @@ fun CartItemRow(
 
 @Composable
 private fun CartItemQuantityRow(
-    initQuantity: Int = 1,
+    quantity: Int,
     onQuantityChanged: (Int, Boolean) -> Unit
 ) {
-    val (quantity, setQuantity) = remember { mutableStateOf(TextFieldValue(initQuantity.toString())) }
-
     Row {
-        Surface(modifier = Modifier.size(24.dp), shape = CircleShape, elevation = 6.dp) {
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        val quantityInt = quantity.text.toInt()
-                        if (quantityInt > 1) {
-                            onQuantityChanged(quantityInt - 1, false)
-                            setQuantity(
-                                TextFieldValue(
-                                    text = (quantityInt - 1).toString(),
-                                    selection = TextRange((quantityInt - 1).toString().length)
-                                )
-                            )
-                        }
-                    }
-            ) {
-                Image(
-                    modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource(R.drawable.ic_minus_mini),
-                    contentDescription = stringResource(R.string.label_minus)
-                )
-            }
-        }
-
-        CartItemQuantityTextField(
-            text = quantity,
-            onTextChanged = {
-                val newQuantity = it.text.toInt()
-                val oldQuantity = quantity.text.toInt()
-                onQuantityChanged(newQuantity, newQuantity >= oldQuantity)
-                setQuantity(it)
+        CartItemQuantityButton(
+            painter = painterResource(R.drawable.ic_minus_mini),
+            contentDescription = stringResource(R.string.label_minus),
+            onQuantityChanged = {
+                if (quantity > 1) {
+                    onQuantityChanged(quantity - 1, false)
+                }
             }
         )
 
-        Surface(modifier = Modifier.size(24.dp), shape = CircleShape, elevation = 4.dp) {
-            Box(
-                modifier = Modifier
-                    .clickable {
-                        val quantityInt = quantity.text.toInt()
-                        onQuantityChanged(quantityInt + 1, true)
-                        setQuantity(
-                            TextFieldValue(
-                                text = (quantityInt + 1).toString(),
-                                selection = TextRange((quantityInt + 1).toString().length)
-                            )
-                        )
-                    }
-            ) {
-                Image(
-                    modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource(R.drawable.ic_plus_mini),
-                    contentDescription = stringResource(R.string.label_plus)
-                )
+        CartItemQuantityTextField(
+            text = TextFieldValue(
+                text = quantity.toString(),
+                selection = TextRange(quantity.toString().length)
+            ),
+            onTextChanged = {
+                val newQuantity = it.text.toInt()
+                onQuantityChanged(newQuantity, newQuantity >= quantity)
             }
+        )
+
+        CartItemQuantityButton(
+            painter = painterResource(R.drawable.ic_plus_mini),
+            contentDescription = stringResource(R.string.label_plus),
+            onQuantityChanged = {
+                onQuantityChanged(quantity + 1, true)
+            }
+        )
+    }
+}
+
+@Composable
+private fun CartItemQuantityButton(
+    painter: Painter,
+    contentDescription: String,
+    onQuantityChanged: () -> Unit,
+) {
+    Surface(modifier = Modifier.size(24.dp), shape = CircleShape, elevation = 4.dp) {
+        Box(
+            modifier = Modifier
+                .clickable { onQuantityChanged() }
+        ) {
+            Image(
+                modifier = Modifier.align(Alignment.Center),
+                painter = painter,
+                contentDescription = contentDescription
+            )
         }
     }
 }
@@ -185,9 +180,9 @@ private fun CartItemQuantityTextField(
         modifier = Modifier.width(32.dp),
         value = text,
         onValueChange = {
-            if (it.text.isEmpty())
+            if (it.text.isEmpty()) {
                 onTextChanged(TextFieldValue("1", selection = TextRange(1)))
-            else if (it.text.length < 12) {
+            } else if (it.text.length < 12) {
                 val newQuantity = it.text
                 onTextChanged(
                     TextFieldValue(
