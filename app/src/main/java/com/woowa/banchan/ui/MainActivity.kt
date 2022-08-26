@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +30,16 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
     private val productViewModel: ProductsViewModel by viewModels()
 
     private lateinit var connectivityObserver: ConnectivityObserver
-    private val dialog = LoadingFragment()
+    private var dialog = LoadingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         connectivityObserver = NetworkConnectivityObserver(applicationContext)
         setContentView(R.layout.activity_main)
+
+        supportFragmentManager.findFragmentByTag(DIALOG_TAG)?.let {
+            dialog = it as LoadingFragment
+        }
 
         val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -86,14 +91,20 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
             productViewModel.getProduct(type = "main")
             productViewModel.getProduct(type = "soup")
             productViewModel.getProduct(type = "side")
-            if (dialog.isAdded) dialog.stay()
+            if (dialog.isAdded) dialog.dismiss()
         } else {
-            if (!dialog.isAdded) dialog.show(supportFragmentManager, dialog.tag)
+            if (!dialog.isAdded) {
+                dialog.show(supportFragmentManager, DIALOG_TAG)
+            }
             Toast.makeText(
                 applicationContext,
                 getString(R.string.message_network),
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    companion object {
+        private const val DIALOG_TAG = "LOADING"
     }
 }

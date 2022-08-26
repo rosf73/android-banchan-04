@@ -73,10 +73,6 @@ class LoadingFragment : DialogFragment() {
         )
     }
 
-    fun stay() {
-        dismiss()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         binding.ivLoading.clearAnimation()
