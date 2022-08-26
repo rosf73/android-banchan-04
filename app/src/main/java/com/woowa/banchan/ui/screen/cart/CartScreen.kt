@@ -27,6 +27,7 @@ import com.woowa.banchan.ui.screen.cart.components.CartPriceColumn
 import com.woowa.banchan.ui.screen.cart.components.CheckState
 import com.woowa.banchan.ui.screen.cart.components.RecentlyViewedColumn
 import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
+import kotlin.math.abs
 
 @Composable
 fun CartScreen(
@@ -91,8 +92,14 @@ fun CartScreen(
             CartCheckBox(
                 modifier = Modifier.fillMaxWidth(),
                 state = checkState,
-                onCheck = { cartViewModel.checkAll(); setCheckState(CheckState.CHECKED) },
-                onUncheck = { cartViewModel.uncheckAll(); setCheckState(CheckState.UNCHECKED) },
+                onCheck = {
+                    cartViewModel.checkAll()
+                    totalPrice = cartState.cart.sumOf { it.price.toMoneyInt() * it.quantity }
+                },
+                onUncheck = {
+                    cartViewModel.uncheckAll()
+                    totalPrice = 0
+                },
                 onDeleteClick = { cartViewModel.deleteCheckedCarts() }
             )
         }
@@ -132,12 +139,13 @@ fun CartScreen(
                         cartViewModel.deleteCart(item.id)
                     },
                     onQuantityChanged = { quantity, isPlus ->
+                        val diffCount = abs(item.quantity - quantity)
                         cartViewModel.updateCart(item.id, quantity)
                         if (item.checked) {
                             if (isPlus) {
-                                totalPrice += item.price.toMoneyInt()
+                                totalPrice += item.price.toMoneyInt() * diffCount
                             } else {
-                                totalPrice -= item.price.toMoneyInt()
+                                totalPrice -= item.price.toMoneyInt() * diffCount
                             }
                         }
                     }

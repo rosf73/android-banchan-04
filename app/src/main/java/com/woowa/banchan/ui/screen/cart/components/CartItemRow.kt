@@ -27,9 +27,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
@@ -131,13 +129,12 @@ private fun CartItemQuantityRow(
         )
 
         CartItemQuantityTextField(
-            text = TextFieldValue(
-                text = quantity.toString(),
-                selection = TextRange(quantity.toString().length)
-            ),
+            text = quantity.toString(),
             onTextChanged = {
-                val newQuantity = it.text.toInt()
-                onQuantityChanged(newQuantity, newQuantity >= quantity)
+                if (it.isNotBlank()) {
+                    val newQuantity = it.toInt()
+                    onQuantityChanged(newQuantity, newQuantity >= quantity)
+                }
             }
         )
 
@@ -173,23 +170,19 @@ private fun CartItemQuantityButton(
 
 @Composable
 private fun CartItemQuantityTextField(
-    text: TextFieldValue,
-    onTextChanged: (TextFieldValue) -> Unit
+    text: String,
+    onTextChanged: (String) -> Unit
 ) {
     BasicTextField(
         modifier = Modifier.width(32.dp),
         value = text,
         onValueChange = {
-            if (it.text.isEmpty()) {
-                onTextChanged(TextFieldValue("1", selection = TextRange(1)))
-            } else if (it.text.length < 12) {
-                val newQuantity = it.text
-                onTextChanged(
-                    TextFieldValue(
-                        newQuantity,
-                        selection = TextRange(newQuantity.length)
-                    )
-                )
+            if (it.isBlank() || it.isEmpty()) {
+                onTextChanged("1")
+            } else if (it.length < 4) {
+                onTextChanged(it)
+            } else {
+                onTextChanged("999")
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
