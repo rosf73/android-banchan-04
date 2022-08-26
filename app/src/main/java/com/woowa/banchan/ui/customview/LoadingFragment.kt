@@ -37,8 +37,12 @@ class LoadingFragment : DialogFragment() {
         val size = windowManager.currentWindowMetricsPointCompat()
         val deviceWidth = size.x
         val deviceHeight = size.y
-        params?.width = (deviceWidth * 0.5).toInt()
-        params?.height = (deviceHeight * 0.5).toInt()
+        if (deviceHeight > deviceWidth) {
+            params?.width = (deviceWidth * 0.5).toInt()
+        } else {
+            params?.width = (deviceWidth * 0.2).toInt()
+        }
+        params?.height = deviceHeight
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
 
