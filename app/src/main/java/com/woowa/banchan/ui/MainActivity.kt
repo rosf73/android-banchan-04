@@ -97,6 +97,8 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         }
     }
 
+    fun getNetworkFlow() = connectivityObserver.observe()
+
     override fun navigateToBack() {
         onBackPressed()
     }
