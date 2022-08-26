@@ -61,6 +61,7 @@ class PlanFragment : Fragment(), OnDetailClickListener {
     }
 
     private fun initView() {
+        planViewModel.getPlan()
         binding.rvPlan.adapter = concatAdapter
     }
 
