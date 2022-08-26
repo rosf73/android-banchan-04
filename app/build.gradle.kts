@@ -100,6 +100,7 @@ dependencies {
     kapt(Lib.Room.compiler)
     implementation(Lib.Room.roomKtx)
     implementation(Lib.Room.paging)
+    implementation(Lib.Room.roomPaging)
     testImplementation(Lib.Room.test)
 
     implementation(platform(Lib.Firebase.firebaseBom))

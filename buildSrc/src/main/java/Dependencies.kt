@@ -118,6 +118,7 @@ object Lib {
         const val roomKtx = "androidx.room:room-ktx:${Version.room}"
         const val test = "androidx.room:room-testing:${Version.room}"
         const val paging = "androidx.paging:paging-runtime:${Version.paging}"
+        const val roomPaging = "androidx.room:room-paging:${Version.room}"
     }
 
     object KtLint {

@@ -1,6 +1,6 @@
 package com.woowa.banchan.domain.repository
 
-import androidx.paging.PagingSource
+import androidx.paging.PagingData
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
 import com.woowa.banchan.domain.entity.OrderDetailSection.OrderLineItem
 import com.woowa.banchan.domain.entity.OrderInfo
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
 
-    fun getAllOrderWithPaging(): PagingSource<Int, OrderInfo>
+    fun getAllOrderWithPaging(): Flow<PagingData<OrderInfo>>
 
     fun getStartOrderCount(): Flow<Result<Int>>
 

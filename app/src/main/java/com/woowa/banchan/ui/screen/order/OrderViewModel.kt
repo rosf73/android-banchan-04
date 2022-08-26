@@ -2,9 +2,6 @@ package com.woowa.banchan.ui.screen.order
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
 import com.woowa.banchan.domain.usecase.order.GetOrderInfoUseCase
 import com.woowa.banchan.domain.usecase.order.GetStartOrderCountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +9,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -30,11 +26,12 @@ class OrderViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    val data =
-        Pager(PagingConfig(pageSize = 10)) { getOrderInfoUseCase() }.flow
-            .catch {
-            }
-            .cachedIn(viewModelScope)
+//    val data =
+//        Pager(PagingConfig(pageSize = 10)) { getOrderInfoUseCase() }.flow
+//            .catch {
+//            }
+//            .cachedIn(viewModelScope)
+    val data = getOrderInfoUseCase()
 
     init {
         getStartOrderCount()
