@@ -1,10 +1,12 @@
 package com.woowa.banchan.data.local.repository
 
-import androidx.paging.PagingSource
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.woowa.banchan.data.local.datasource.OrderDataSource
 import com.woowa.banchan.data.local.entity.OrderEntity
 import com.woowa.banchan.data.local.entity.toOrder
 import com.woowa.banchan.data.local.entity.toOrderEntity
+import com.woowa.banchan.data.local.entity.toOrderInfo
 import com.woowa.banchan.data.local.entity.toOrderLineItem
 import com.woowa.banchan.data.local.entity.toOrderLineItemEntity
 import com.woowa.banchan.domain.entity.OrderDetailSection.Order
@@ -15,14 +17,19 @@ import com.woowa.banchan.domain.repository.OrderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
     private val orderDataSource: OrderDataSource
 ) : OrderRepository {
 
-    override fun getAllOrderWithPaging(): PagingSource<Int, OrderInfo> {
-        return orderDataSource.getAllWithPage()
+    override fun getAllOrderWithPaging(): Flow<PagingData<OrderInfo>> {
+        return orderDataSource.getAllWithPage().map {
+            it.map { orderInfoView ->
+                orderInfoView.toOrderInfo()
+            }
+        }
     }
 
     override fun getStartOrderCount(): Flow<Result<Int>> = flow {

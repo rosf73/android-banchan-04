@@ -30,11 +30,12 @@ class OrderViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    val data =
-        Pager(PagingConfig(pageSize = 10)) { getOrderInfoUseCase() }.flow
-            .catch {
-            }
-            .cachedIn(viewModelScope)
+//    val data =
+//        Pager(PagingConfig(pageSize = 10)) { getOrderInfoUseCase() }.flow
+//            .catch {
+//            }
+//            .cachedIn(viewModelScope)
+    val data = getOrderInfoUseCase()
 
     init {
         getStartOrderCount()
