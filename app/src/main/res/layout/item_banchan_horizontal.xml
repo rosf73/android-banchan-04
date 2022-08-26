@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.woowa.banchan.domain.entity.Product" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp">
+
+        <ImageView
+            android:id="@+id/iv_banchan"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src="@{product.image}"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{product.title}"
+            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
+            app:layout_constraintStart_toStartOf="@id/iv_banchan"
+            app:layout_constraintTop_toBottomOf="@id/iv_banchan"
+            tools:text="오리 주물럭_반조리" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/Theme.Banchan.Caption.ItemSecondary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{product.description}"
+            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
+            app:layout_constraintStart_toStartOf="@id/iv_banchan"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:text="감칠맛 나는 매콤한 양념" />
+
+        <TextView
+            android:id="@+id/tv_sale_rate"
+            style="@style/Theme.Banchan.Subtitle2.ItemRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:text="@{product.discountRate}"
+            app:layout_constraintEnd_toStartOf="@id/tv_price_sale"
+            app:layout_constraintStart_toStartOf="@id/iv_banchan"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"
+            app:visibility="@{product.nPrice != null}"
+            tools:text="20%" />
+
+        <TextView
+            android:id="@+id/tv_price_sale"
+            style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{product.sPrice}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_sale_rate"
+            app:layout_constraintTop_toTopOf="@id/tv_sale_rate"
+            tools:text="6,000원" />
+
+        <TextView
+            android:id="@+id/tv_price_original"
+            style="@style/Theme.Banchan.Caption.ItemOriginal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{product.nPrice}"
+            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
+            app:layout_constraintStart_toStartOf="@id/iv_banchan"
+            app:layout_constraintTop_toBottomOf="@id/tv_sale_rate"
+            app:textStrikeThrough="@{true}"
+            app:visibility="@{product.nPrice != null}"
+            tools:text="7,500원" />
+
+        <ImageButton
+            android:id="@+id/iv_cart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@{product.hasCart == true?@drawable/ic_circle_in_cart:@drawable/ic_circle_cart}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_banchan"
+            app:layout_constraintEnd_toEndOf="@id/iv_banchan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,21 @@
+{
+  "statusCode": 200,
+  "body": [
+    {
+      "detail_hash": "HBBCC",
+      "image": "http://public.codesquad.kr/jk/storeapp/data/side/48_ZIP_P_5008_T.jpg",
+      "alt": "새콤달콤 오징어무침",
+      "delivery_type": [
+        "새벽배송",
+        "전국택배"
+      ],
+      "title": "새콤달콤 오징어무침",
+      "description": "국내산 오징어를 새콤달콤하게",
+      "n_price": "7,500원",
+      "s_price": "6,000원",
+      "badge": [
+        "런칭특가"
+      ]
+    }
+  ]
+}

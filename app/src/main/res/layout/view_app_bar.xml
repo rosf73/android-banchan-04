@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_main">
+
+        <ImageButton
+            android:id="@+id/iv_navigation_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="@string/label_logo"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_logo" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/Theme.Banchan.Headline6.Logo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingVertical="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_navigation_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="" />
+
+        <ImageButton
+            android:id="@+id/iv_action_first"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@null"
+            android:contentDescription="@string/label_action_first"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_action_second"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_cart" />
+
+        <TextView
+            android:id="@+id/tv_cart_count"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="13dp"
+            android:background="@drawable/bg_black_circle"
+            android:gravity="center"
+            android:paddingHorizontal="1dp"
+            android:paddingVertical="1dp"
+            android:textColor="@color/white"
+            android:textSize="6sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_action_first"
+            app:layout_constraintTop_toTopOf="@id/iv_action_first" />
+
+        <ImageButton
+            android:id="@+id/iv_action_second"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@null"
+            android:contentDescription="@string/label_action_second"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_user" />
+
+        <ImageView
+            android:id="@+id/iv_profile_active"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_black_circle"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_action_second"
+            app:layout_constraintTop_toTopOf="@id/iv_action_second"
+            android:contentDescription="@string/label_active"
+            tools:text="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
