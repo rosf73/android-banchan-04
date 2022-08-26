@@ -10,6 +10,8 @@ buildscript {
     dependencies {
         classpath(Lib.Hilt.androidGradlePlugin)
         classpath(Lib.KtLint.ktLintGradle)
+        classpath(Lib.Firebase.googleService)
+        classpath(Lib.Firebase.firebaseCrashlyticsGradle)
     }
 }
 tasks.register("clean", Delete::class) {
