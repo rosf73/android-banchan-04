@@ -27,9 +27,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.woowa.banchan.R
@@ -133,8 +131,10 @@ private fun CartItemQuantityRow(
         CartItemQuantityTextField(
             text = quantity.toString(),
             onTextChanged = {
-                val newQuantity = it.toInt()
-                onQuantityChanged(newQuantity, newQuantity >= quantity)
+                if (it.isNotBlank()) {
+                    val newQuantity = it.toInt()
+                    onQuantityChanged(newQuantity, newQuantity >= quantity)
+                }
             }
         )
 
@@ -177,7 +177,7 @@ private fun CartItemQuantityTextField(
         modifier = Modifier.width(32.dp),
         value = text,
         onValueChange = {
-            if (it.isEmpty()) {
+            if (it.isBlank() || it.isEmpty()) {
                 onTextChanged("1")
             } else if (it.length < 4) {
                 onTextChanged(it)
