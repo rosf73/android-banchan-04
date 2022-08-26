@@ -91,8 +91,14 @@ fun CartScreen(
             CartCheckBox(
                 modifier = Modifier.fillMaxWidth(),
                 state = checkState,
-                onCheck = { cartViewModel.checkAll(); setCheckState(CheckState.CHECKED) },
-                onUncheck = { cartViewModel.uncheckAll(); setCheckState(CheckState.UNCHECKED) },
+                onCheck = {
+                    cartViewModel.checkAll()
+                    totalPrice = cartState.cart.sumOf { it.price.toMoneyInt() * it.quantity }
+                },
+                onUncheck = {
+                    cartViewModel.uncheckAll()
+                    totalPrice = 0
+                },
                 onDeleteClick = { cartViewModel.deleteCheckedCarts() }
             )
         }
