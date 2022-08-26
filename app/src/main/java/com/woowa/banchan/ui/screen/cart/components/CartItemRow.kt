@@ -131,12 +131,9 @@ private fun CartItemQuantityRow(
         )
 
         CartItemQuantityTextField(
-            text = TextFieldValue(
-                text = quantity.toString(),
-                selection = TextRange(quantity.toString().length)
-            ),
+            text = quantity.toString(),
             onTextChanged = {
-                val newQuantity = it.text.toInt()
+                val newQuantity = it.toInt()
                 onQuantityChanged(newQuantity, newQuantity >= quantity)
             }
         )
@@ -173,23 +170,19 @@ private fun CartItemQuantityButton(
 
 @Composable
 private fun CartItemQuantityTextField(
-    text: TextFieldValue,
-    onTextChanged: (TextFieldValue) -> Unit
+    text: String,
+    onTextChanged: (String) -> Unit
 ) {
     BasicTextField(
         modifier = Modifier.width(32.dp),
         value = text,
         onValueChange = {
-            if (it.text.isEmpty()) {
-                onTextChanged(TextFieldValue("1", selection = TextRange(1)))
-            } else if (it.text.length < 12) {
-                val newQuantity = it.text
-                onTextChanged(
-                    TextFieldValue(
-                        newQuantity,
-                        selection = TextRange(newQuantity.length)
-                    )
-                )
+            if (it.isEmpty()) {
+                onTextChanged("1")
+            } else if (it.length < 4) {
+                onTextChanged(it)
+            } else {
+                onTextChanged("999")
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
