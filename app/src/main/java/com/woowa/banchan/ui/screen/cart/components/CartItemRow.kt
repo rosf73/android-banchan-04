@@ -117,7 +117,9 @@ private fun CartItemQuantityRow(
     quantity: Int,
     onQuantityChanged: (Int, Boolean) -> Unit
 ) {
-    Row {
+    Row(
+        modifier = Modifier.padding(top = 8.dp)
+    ) {
         CartItemQuantityButton(
             painter = painterResource(R.drawable.ic_minus_mini),
             contentDescription = stringResource(R.string.label_minus),
