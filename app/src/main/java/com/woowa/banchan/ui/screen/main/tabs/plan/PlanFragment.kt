@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -67,7 +69,9 @@ class PlanFragment : Fragment(), OnDetailClickListener {
             launch {
                 planViewModel.state.collectLatest { state ->
                     binding.pbPlan.visibility = state.isLoading.toVisibility()
+                    binding.rvPlan.isGone = true
                     if (state.plans.isNotEmpty()) {
+                        binding.rvPlan.isVisible = true
                         planAdapter.submitList(state.plans)
                     }
                 }

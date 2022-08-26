@@ -57,10 +57,8 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
     private val typeFilterAdapter by lazy {
         TypeFilterAdapter(
             onClickItem = { type ->
-                productsViewModel.getProduct(
-                    getString(R.string.main_dish_tag),
-                    type
-                )
+                productsViewModel.setSortType(type)
+                productsViewModel.getProduct(getString(R.string.main_dish_tag))
             },
             onChangeType = { productsViewModel.setViewMode(it) }
         )
@@ -83,6 +81,7 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
 
     private fun initView() {
         binding.lifecycleOwner = viewLifecycleOwner
+        productsViewModel.getProduct(getString(R.string.main_dish_tag))
         binding.rvMainDish.adapter = concatAdapter
     }
 
@@ -109,6 +108,7 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.sortType.collectLatest { sortType ->
+                    productsViewModel.getProduct(getString(R.string.main_dish_tag))
                     typeFilterAdapter.setSortType(sortType)
                 }
             }
