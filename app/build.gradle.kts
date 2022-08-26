@@ -5,6 +5,8 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -99,4 +101,9 @@ dependencies {
     implementation(Lib.Room.roomKtx)
     implementation(Lib.Room.paging)
     testImplementation(Lib.Room.test)
+
+    implementation(platform(Lib.Firebase.firebaseBom))
+    implementation(Lib.Firebase.firebaseAnalyticsKtx)
+    implementation(Lib.Firebase.firebaseAnalytics)
+    implementation(Lib.Firebase.firebaseCrashlytics)
 }

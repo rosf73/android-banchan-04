@@ -35,6 +35,10 @@ object Version {
     const val paging = "3.1.1"
 
     const val ktLint = "10.3.0"
+
+    const val googleService = "4.3.13"
+    const val firebaseBom = "30.3.2"
+    const val crashlytics = "2.9.1"
 }
 
 object Lib {
@@ -118,5 +122,14 @@ object Lib {
 
     object KtLint {
         const val ktLintGradle = "org.jlleitschuh.gradle:ktlint-gradle:${Version.ktLint}"
+    }
+
+    object Firebase {
+        const val googleService = "com.google.gms:google-services:${Version.googleService}"
+        const val firebaseBom = "com.google.firebase:firebase-bom:${Version.firebaseBom}"
+        const val firebaseAnalyticsKtx = "com.google.firebase:firebase-analytics-ktx"
+        const val firebaseAnalytics = "com.google.firebase:firebase-analytics"
+        const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics:${Version.crashlytics}"
+        const val firebaseCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Version.crashlytics}"
     }
 }
