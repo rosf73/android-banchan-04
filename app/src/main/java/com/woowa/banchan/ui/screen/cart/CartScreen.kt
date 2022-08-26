@@ -140,7 +140,6 @@ fun CartScreen(
                     },
                     onQuantityChanged = { quantity, isPlus ->
                         val diffCount = abs(item.quantity - quantity)
-                        println(diffCount)
                         cartViewModel.updateCart(item.id, quantity)
                         if (item.checked) {
                             if (isPlus) {
