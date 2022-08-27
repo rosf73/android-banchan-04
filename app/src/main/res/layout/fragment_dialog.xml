@@ -22,7 +22,6 @@
             android:layout_marginBottom="32dp"
             android:text="선택한 상품이 장바구니에 담겼습니다."
             app:layout_constraintBottom_toTopOf="@id/btn_stay"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="선택한 상품이 장바구니에 담겼습니다." />

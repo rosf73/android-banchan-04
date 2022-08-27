@@ -44,6 +44,7 @@ fun CartOrderButton(
     if (totalPrice < 40000)
         Text(
             modifier = Modifier
+                .padding(top = 16.dp)
                 .fillMaxWidth()
                 .wrapContentWidth(align = CenterHorizontally),
             text = "${(40000 - totalPrice).toMoneyString()}을 더 담으면 배송비가 무료!"

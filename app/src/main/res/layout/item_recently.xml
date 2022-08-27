@@ -9,7 +9,7 @@
             name="recentlyItem"
             type="com.woowa.banchan.domain.entity.RecentlyViewed" />
 
-        <import type="com.woowa.banchan.extensions.TimeStringConverterKt"/>
+        <import type="com.woowa.banchan.extensions.TimeStringConverterKt" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,9 +19,11 @@
 
         <ImageView
             android:id="@+id/iv_banchan"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:contentDescription="@string/label_thumb"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,11 +47,12 @@
         <TextView
             android:id="@+id/tv_price_sale"
             style="@style/Theme.Banchan.Subtitle2.ItemPrimary"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{recentlyItem.sPrice}"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toStartOf="@id/tv_price_original"
             app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:text="6,000원" />
 
         <TextView
@@ -57,10 +60,11 @@
             style="@style/Theme.Banchan.Caption.ItemOriginal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{recentlyItem.nPrice}"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_price_sale"
+            android:text="@{recentlyItem.nPrice}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_price_sale"
+            app:layout_constraintTop_toTopOf="@id/tv_price_sale"
             app:textStrikeThrough="@{true}"
             app:visibility="@{recentlyItem.nPrice != null}"
             tools:text="7,500원" />
@@ -71,8 +75,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{TimeStringConverterKt.toTimeString(recentlyItem.viewedAt)}"
-            app:layout_constraintTop_toBottomOf="@id/tv_price_sale"
-            app:layout_constraintStart_toStartOf="@id/tv_price_sale"
+            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
+            app:layout_constraintStart_toStartOf="@id/iv_banchan"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_original"
             tools:text="10분 전" />
 
         <ImageButton
@@ -82,9 +87,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@{recentlyItem.hasCart == true?@drawable/ic_circle_in_cart:@drawable/ic_circle_cart}"
+            android:contentDescription="@string/label_cart"
             app:layout_constraintBottom_toBottomOf="@id/iv_banchan"
-            app:layout_constraintEnd_toEndOf="@id/iv_banchan"
-            android:contentDescription="@string/label_cart"/>
+            app:layout_constraintEnd_toEndOf="@id/iv_banchan" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
