@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -99,7 +101,9 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
             launch {
                 productsViewModel.state.collectLatest { state ->
                     binding.pbMainDish.visibility = state.isLoading.toVisibility()
+                    binding.rvMainDish.isGone = true
                     if (state.products.isNotEmpty()) {
+                        binding.rvMainDish.isVisible = true
                         productAdapter.submitList(state.products)
                     }
                 }
