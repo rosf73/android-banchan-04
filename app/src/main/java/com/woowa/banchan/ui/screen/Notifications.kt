@@ -65,9 +65,9 @@ interface Notifications {
                 .setContentText(description)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(description))
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .build()
-        makeNotification(notificationManager, notification)
+        makeNotification(notificationManager, notification, id)
     }
 }
 
@@ -90,7 +90,8 @@ private fun makeChannel(
 
 private fun makeNotification(
     notificationManager: NotificationManager,
-    notification: Notification
+    notification: Notification,
+    orderId: Long
 ) {
-    notificationManager.notify(SecureRandom().nextInt(Int.MAX_VALUE), notification)
+    notificationManager.notify(orderId.toInt(), notification)
 }

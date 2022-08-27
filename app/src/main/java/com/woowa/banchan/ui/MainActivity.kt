@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -32,12 +33,7 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
 
         initDialog()
         observeNetwork()
-        checkState(intent)
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        checkState(intent)
+        onNewIntent(intent)
     }
 
     private fun initDialog() {
@@ -62,21 +58,24 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         }
     }
 
-    private fun checkState(intent: Intent?) {
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         this.intent = intent
         val orderId = intent?.getLongExtra(getString(R.string.order_id), 0) ?: 0
         if (orderId == 0L) return
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.slide_out,
-                R.anim.slide_in,
-                R.anim.slide_out
-            )
-            .addToBackStack(null)
-            .add(R.id.fcv_main, OrderDetailFragment.newInstance(orderId))
-            .commit()
+        else {
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in,
+                    R.anim.slide_out,
+                    R.anim.slide_in,
+                    R.anim.slide_out
+                )
+                .addToBackStack(null)
+                .add(R.id.fcv_main, OrderDetailFragment.newInstance(orderId))
+                .commit()
+        }
     }
 
     private fun checkNetwork(isActiveNetwork: Boolean) {
