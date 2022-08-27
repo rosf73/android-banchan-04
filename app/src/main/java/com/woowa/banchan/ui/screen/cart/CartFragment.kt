@@ -95,6 +95,7 @@ class CartFragment :
                             cartViewModel.state.value.cart.count { cart -> cart.checked },
                             it.order
                         )
+                        cartViewModel.deleteCheckedCarts()
                     }
                 }
             }
@@ -111,7 +112,7 @@ class CartFragment :
                 R.anim.slide_out
             )
             .addToBackStack("Cart")
-            .add(R.id.fcv_main, RecentlyFragment())
+            .replace(R.id.fcv_main, RecentlyFragment())
             .commit()
     }
 
@@ -125,21 +126,16 @@ class CartFragment :
                 R.anim.slide_out
             )
             .addToBackStack("Cart")
-            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
     override fun navigateToOrderDetail(id: Long) {
         parentFragmentManager.popBackStack("Cart", FragmentManager.POP_BACK_STACK_INCLUSIVE)
         parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.slide_out,
-                R.anim.slide_in,
-                R.anim.slide_out
-            )
             .addToBackStack("Cart")
             .add(R.id.fcv_main, OrderDetailFragment.newInstance(id))
+            .detach(this@CartFragment)
             .commit()
     }
 

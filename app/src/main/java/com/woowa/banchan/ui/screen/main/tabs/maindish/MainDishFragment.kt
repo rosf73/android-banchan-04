@@ -14,12 +14,10 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMaindishBinding
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.ProductViewType
-import com.woowa.banchan.ui.MainActivity
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
-import com.woowa.banchan.ui.network.ConnectivityObserver
 import com.woowa.banchan.ui.screen.main.MainFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
@@ -89,14 +87,6 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
 
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
-            launch {
-                (requireActivity() as MainActivity).getNetworkFlow().collect {
-                    if (it == ConnectivityObserver.Status.Available) {
-                        productsViewModel.getProduct(getString(R.string.main_dish_tag))
-                    }
-                }
-            }
-
             launch {
                 productsViewModel.state.collectLatest { state ->
                     binding.pbMainDish.visibility = state.isLoading.toVisibility()
