@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         if (dialog.isAdded) {
             dialog.dismiss()
             dialog.show(supportFragmentManager, DIALOG_TAG)
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.message_network),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -95,12 +100,12 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         } else {
             if (!dialog.isAdded) {
                 dialog.show(supportFragmentManager, DIALOG_TAG)
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.message_network),
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.message_network),
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
 
