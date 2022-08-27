@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -77,6 +78,11 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        observeNetwork()
+    }
+
     private fun checkNetwork(isActiveNetwork: Boolean) {
         supportFragmentManager.executePendingTransactions()
 
@@ -93,6 +99,8 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
             ).show()
         }
     }
+
+    fun getNetworkFlow() = connectivityObserver.observe()
 
     override fun navigateToBack() {
         onBackPressed()
