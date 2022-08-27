@@ -36,9 +36,18 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         onNewIntent(intent)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        initDialog()
+        observeNetwork()
+    }
+
     private fun initDialog() {
-        supportFragmentManager.findFragmentByTag(DIALOG_TAG)?.let {
-            dialog = it as LoadingFragment
+        supportFragmentManager.executePendingTransactions()
+
+        if (dialog.isAdded) {
+            dialog.dismiss()
+            dialog.show(supportFragmentManager, DIALOG_TAG)
         }
     }
 
@@ -76,11 +85,6 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
                 .add(R.id.fcv_main, OrderDetailFragment.newInstance(orderId))
                 .commit()
         }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        observeNetwork()
     }
 
     private fun checkNetwork(isActiveNetwork: Boolean) {
