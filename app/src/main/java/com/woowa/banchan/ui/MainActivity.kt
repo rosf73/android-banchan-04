@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -42,6 +43,45 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         } else {
             checkNetwork(connectivityManager.isDefaultNetworkActive)
         }
+        observeData()
+        onNewIntent(intent)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkNetwork(connectivityManager.activeNetwork != null)
+        } else {
+            checkNetwork(connectivityManager.isDefaultNetworkActive)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        this.intent = intent
+        val orderId = intent?.getLongExtra(getString(R.string.order_id), 0) ?: 0
+        if (orderId == 0L) return
+        else {
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_in,
+                    R.anim.slide_out,
+                    R.anim.slide_in,
+                    R.anim.slide_out
+                )
+                .addToBackStack(null)
+                .add(R.id.fcv_main, OrderDetailFragment.newInstance(orderId))
+                .commit()
+        }
+    }
+
+    override fun navigateToBack() {
+        onBackPressed()
+    }
+
+    private fun observeData() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 connectivityObserver.observe().collect {
@@ -49,33 +89,6 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
                 }
             }
         }
-        checkState(intent)
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        checkState(intent)
-    }
-
-    private fun checkState(intent: Intent?) {
-        this.intent = intent
-        val orderId = intent?.getLongExtra(getString(R.string.order_id), 0) ?: 0
-        if (orderId == 0L) return
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in,
-                R.anim.slide_out,
-                R.anim.slide_in,
-                R.anim.slide_out
-            )
-            .addToBackStack(null)
-            .add(R.id.fcv_main, OrderDetailFragment.newInstance(orderId))
-            .commit()
-    }
-
-    override fun navigateToBack() {
-        onBackPressed()
     }
 
     private fun checkNetwork(isActiveNetwork: Boolean) {
