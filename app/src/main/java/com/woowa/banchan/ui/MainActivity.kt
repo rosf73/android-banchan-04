@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
