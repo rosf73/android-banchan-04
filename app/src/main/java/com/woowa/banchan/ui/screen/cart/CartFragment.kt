@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -24,6 +26,8 @@ import com.woowa.banchan.ui.navigator.OnDetailClickListener
 import com.woowa.banchan.ui.navigator.OnOrderDetailClickListener
 import com.woowa.banchan.ui.navigator.OnRecentlyClickListener
 import com.woowa.banchan.ui.receiver.AlarmBroadcastReceiver
+import com.woowa.banchan.ui.screen.cart.components.Keyboard
+import com.woowa.banchan.ui.screen.cart.components.keyboardAsState
 import com.woowa.banchan.ui.screen.detail.DetailFragment
 import com.woowa.banchan.ui.screen.orderdetail.OrderDetailFragment
 import com.woowa.banchan.ui.screen.recently.RecentlyFragment
@@ -53,9 +57,23 @@ class CartFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initView()
+        observeData()
+    }
+
+    private fun initView() {
+        binding.viewModel = cartViewModel
         binding.composeCart.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
+                val focusManager = LocalFocusManager.current
+                val isKeyboardOpen by keyboardAsState()
+                when (isKeyboardOpen) {
+                    Keyboard.Closed -> focusManager.clearFocus()
+                    else -> {}
+                }
+
                 CartScreen(
                     cartViewModel,
                     recentlyViewModel,
@@ -65,13 +83,6 @@ class CartFragment :
                 )
             }
         }
-
-        initView()
-        observeData()
-    }
-
-    private fun initView() {
-        binding.viewModel = cartViewModel
     }
 
     private fun observeData() {
