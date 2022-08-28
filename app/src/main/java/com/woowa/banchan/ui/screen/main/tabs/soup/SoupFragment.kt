@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -13,10 +15,12 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSoupBinding
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.ProductViewType
+import com.woowa.banchan.ui.MainActivity
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
+import com.woowa.banchan.ui.network.ConnectivityObserver
 import com.woowa.banchan.ui.screen.main.MainFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
@@ -78,7 +82,6 @@ class SoupFragment : Fragment(), OnDetailClickListener {
 
     private fun initView() {
         binding.lifecycleOwner = viewLifecycleOwner
-        productsViewModel.getProduct(getString(R.string.soup_tag))
         setGridLayoutManager()
         binding.rvSoup.adapter = concatAdapter
     }
@@ -86,9 +89,19 @@ class SoupFragment : Fragment(), OnDetailClickListener {
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
             launch {
+                (requireActivity() as MainActivity).getNetworkFlow().collect {
+                    if (it == ConnectivityObserver.Status.Available) {
+                        productsViewModel.getProduct(getString(R.string.soup_tag))
+                    }
+                }
+            }
+
+            launch {
                 productsViewModel.state.collectLatest { state ->
                     binding.pbSoup.visibility = state.isLoading.toVisibility()
+                    binding.rvSoup.isGone = true
                     if (state.products.isNotEmpty()) {
+                        binding.rvSoup.isVisible = true
                         productAdapter.submitList(state.products)
                         countFilterAdapter.submitTotalCount(state.products.size)
                     }

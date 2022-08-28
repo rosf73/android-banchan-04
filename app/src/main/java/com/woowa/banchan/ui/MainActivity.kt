@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -35,9 +36,23 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         onNewIntent(intent)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        initDialog()
+        observeNetwork()
+    }
+
     private fun initDialog() {
-        supportFragmentManager.findFragmentByTag(DIALOG_TAG)?.let {
-            dialog = it as LoadingFragment
+        supportFragmentManager.executePendingTransactions()
+
+        if (dialog.isAdded) {
+            dialog.dismiss()
+            dialog.show(supportFragmentManager, DIALOG_TAG)
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.message_network),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -85,14 +100,16 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         } else {
             if (!dialog.isAdded) {
                 dialog.show(supportFragmentManager, DIALOG_TAG)
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.message_network),
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.message_network),
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
+
+    fun getNetworkFlow() = connectivityObserver.observe()
 
     override fun navigateToBack() {
         onBackPressed()
