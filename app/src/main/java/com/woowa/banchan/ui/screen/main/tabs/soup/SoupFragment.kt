@@ -51,8 +51,7 @@ class SoupFragment : Fragment(), OnDetailClickListener {
     private val countFilterAdapter by lazy {
         CountFilterAdapter(
             onClickItem = { type ->
-                productsViewModel.setSortType(type)
-                productsViewModel.getProduct(getString(R.string.soup_tag))
+                productsViewModel.setSortType(type, getString(R.string.soup_tag))
             },
         )
     }
@@ -98,10 +97,9 @@ class SoupFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.state.collectLatest { state ->
+                    binding.pbSoup.bringToFront()
                     binding.pbSoup.visibility = state.isLoading.toVisibility()
-                    binding.rvSoup.isGone = true
                     if (state.products.isNotEmpty()) {
-                        binding.rvSoup.isVisible = true
                         productAdapter.submitList(state.products)
                         countFilterAdapter.submitTotalCount(state.products.size)
                     }
@@ -111,7 +109,6 @@ class SoupFragment : Fragment(), OnDetailClickListener {
             launch {
                 productsViewModel.sortType.collectLatest { sortType ->
                     countFilterAdapter.setSortType(sortType)
-                    productsViewModel.getProduct(getString(R.string.soup_tag))
                 }
             }
 

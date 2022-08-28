@@ -51,8 +51,7 @@ class SideFragment : Fragment(), OnDetailClickListener {
     private val countFilterAdapter by lazy {
         CountFilterAdapter(
             onClickItem = { type ->
-                productsViewModel.setSortType(type)
-                productsViewModel.getProduct(getString(R.string.side_tag))
+                productsViewModel.setSortType(type, getString(R.string.side_tag))
             },
         )
     }
@@ -98,10 +97,9 @@ class SideFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.state.collectLatest { state ->
+                    binding.pbSide.bringToFront()
                     binding.pbSide.visibility = state.isLoading.toVisibility()
-                    binding.rvSide.isGone = true
                     if (state.products.isNotEmpty()) {
-                        binding.rvSide.isVisible = true
                         productAdapter.submitList(state.products)
                         countFilterAdapter.submitTotalCount(state.products.size)
                     }
@@ -110,7 +108,6 @@ class SideFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.sortType.collectLatest { sortType ->
-                    productsViewModel.getProduct(getString(R.string.side_tag))
                     countFilterAdapter.setSortType(sortType)
                 }
             }
