@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import com.woowa.banchan.R
 import com.woowa.banchan.domain.entity.Cart
@@ -25,7 +26,9 @@ import com.woowa.banchan.ui.screen.cart.components.CartItemRow
 import com.woowa.banchan.ui.screen.cart.components.CartOrderButton
 import com.woowa.banchan.ui.screen.cart.components.CartPriceColumn
 import com.woowa.banchan.ui.screen.cart.components.CheckState
+import com.woowa.banchan.ui.screen.cart.components.Keyboard
 import com.woowa.banchan.ui.screen.cart.components.RecentlyViewedColumn
+import com.woowa.banchan.ui.screen.cart.components.keyboardAsState
 import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
 import kotlin.math.abs
 
@@ -85,6 +88,13 @@ fun CartScreen(
                 CheckState.UNCHECKED_NOT_ALL
             }
         )
+    }
+
+    val focusManager = LocalFocusManager.current
+    val isKeyboardOpen by keyboardAsState()
+    when (isKeyboardOpen) {
+        Keyboard.Closed -> focusManager.clearFocus()
+        else -> {}
     }
 
     LazyColumn {
@@ -163,7 +173,10 @@ fun CartScreen(
             }
 
             item {
-                CartOrderButton(totalPrice, onOrderClick)
+                CartOrderButton(totalPrice) {
+                    focusManager.clearFocus()
+                    onOrderClick()
+                }
             }
         }
 
@@ -174,7 +187,10 @@ fun CartScreen(
                 } else {
                     recentlyState.recentlyList.subList(0, 7)
                 },
-                navigateToRecently = navigateToRecently,
+                navigateToRecently = {
+                    focusManager.clearFocus()
+                    navigateToRecently()
+                },
                 onItemClick = onItemClick
             )
         }

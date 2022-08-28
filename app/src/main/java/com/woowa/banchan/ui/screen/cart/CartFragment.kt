@@ -67,13 +67,6 @@ class CartFragment :
         binding.composeCart.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                val focusManager = LocalFocusManager.current
-                val isKeyboardOpen by keyboardAsState()
-                when (isKeyboardOpen) {
-                    Keyboard.Closed -> focusManager.clearFocus()
-                    else -> {}
-                }
-
                 CartScreen(
                     cartViewModel,
                     recentlyViewModel,
@@ -146,7 +139,6 @@ class CartFragment :
         parentFragmentManager.beginTransaction()
             .addToBackStack("Cart")
             .add(R.id.fcv_main, OrderDetailFragment.newInstance(id))
-            .detach(this@CartFragment)
             .commit()
     }
 
