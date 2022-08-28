@@ -144,7 +144,9 @@ private fun CartItemQuantityRow(
             painter = painterResource(R.drawable.ic_plus_mini),
             contentDescription = stringResource(R.string.label_plus),
             onQuantityChanged = {
-                onQuantityChanged(quantity + 1, true)
+                if (quantity < 999) {
+                    onQuantityChanged(quantity + 1, true)
+                }
             }
         )
     }
@@ -181,10 +183,12 @@ private fun CartItemQuantityTextField(
         onValueChange = {
             if (it.isBlank() || it.isEmpty()) {
                 onTextChanged("1")
-            } else if (it.length < 4) {
-                onTextChanged(it)
-            } else {
-                onTextChanged("999")
+            } else if (it.toIntOrNull() != null && it.toInt() > 0) {
+                if (it.length < 4) {
+                    onTextChanged(it)
+                } else {
+                    onTextChanged("999")
+                }
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
