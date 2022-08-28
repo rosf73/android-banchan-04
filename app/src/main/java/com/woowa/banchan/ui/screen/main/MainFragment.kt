@@ -89,7 +89,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
                 R.anim.slide_out
             )
             .addToBackStack("Main")
-            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
@@ -103,7 +103,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
                 R.anim.slide_out
             )
             .addToBackStack("Main")
-            .replace(R.id.fcv_main, CartFragment())
+            .add(R.id.fcv_main, CartFragment())
             .commit()
     }
 
@@ -117,7 +117,7 @@ class MainFragment : Fragment(), OnDetailClickListener, OnCartClickListener, OnO
                 R.anim.slide_out
             )
             .addToBackStack("Main")
-            .replace(R.id.fcv_main, OrderFragment())
+            .add(R.id.fcv_main, OrderFragment())
             .commit()
     }
 

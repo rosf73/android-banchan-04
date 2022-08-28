@@ -112,7 +112,7 @@ class CartFragment :
                 R.anim.slide_out
             )
             .addToBackStack("Cart")
-            .replace(R.id.fcv_main, RecentlyFragment())
+            .add(R.id.fcv_main, RecentlyFragment())
             .commit()
     }
 
@@ -126,7 +126,7 @@ class CartFragment :
                 R.anim.slide_out
             )
             .addToBackStack("Cart")
-            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
