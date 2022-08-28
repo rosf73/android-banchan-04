@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.screen.cart
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import com.woowa.banchan.R
 import com.woowa.banchan.domain.entity.Cart
@@ -87,7 +90,16 @@ fun CartScreen(
         )
     }
 
-    LazyColumn {
+    val focusManager = LocalFocusManager.current
+
+    LazyColumn(
+        modifier = Modifier
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
+    ) {
         item {
             CartCheckBox(
                 modifier = Modifier.fillMaxWidth(),
