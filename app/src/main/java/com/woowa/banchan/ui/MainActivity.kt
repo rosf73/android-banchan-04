@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -17,8 +16,6 @@ import com.woowa.banchan.ui.customview.LoadingFragment
 import com.woowa.banchan.ui.navigator.OnBackClickListener
 import com.woowa.banchan.ui.network.ConnectivityObserver
 import com.woowa.banchan.ui.network.NetworkConnectivityObserver
-import com.woowa.banchan.ui.screen.main.tabs.ProductsViewModel
-import com.woowa.banchan.ui.screen.main.tabs.plan.PlanViewModel
 import com.woowa.banchan.ui.screen.orderdetail.OrderDetailFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,34 +23,52 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), OnBackClickListener {
 
-    private val planViewModel: PlanViewModel by viewModels()
-    private val productViewModel: ProductsViewModel by viewModels()
-
     private lateinit var connectivityObserver: ConnectivityObserver
-    private val dialog = LoadingFragment()
+    private var dialog = LoadingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         connectivityObserver = NetworkConnectivityObserver(applicationContext)
         setContentView(R.layout.activity_main)
 
+        initDialog()
+        observeNetwork()
+        onNewIntent(intent)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        initDialog()
+        observeNetwork()
+    }
+
+    private fun initDialog() {
+        supportFragmentManager.executePendingTransactions()
+
+        if (dialog.isAdded) {
+            dialog.dismiss()
+            dialog.show(supportFragmentManager, DIALOG_TAG)
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.message_network),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun observeNetwork() {
         val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkNetwork(connectivityManager.activeNetwork != null)
         } else {
             checkNetwork(connectivityManager.isDefaultNetworkActive)
         }
-        observeData()
-        onNewIntent(intent)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkNetwork(connectivityManager.activeNetwork != null)
-        } else {
-            checkNetwork(connectivityManager.isDefaultNetworkActive)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                connectivityObserver.observe().collect {
+                    checkNetwork(it == ConnectivityObserver.Status.Available)
+                }
+            }
         }
     }
 
@@ -77,36 +92,30 @@ class MainActivity : AppCompatActivity(), OnBackClickListener {
         }
     }
 
-    override fun navigateToBack() {
-        onBackPressed()
-    }
-
-    private fun observeData() {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                connectivityObserver.observe().collect {
-                    checkNetwork(it == ConnectivityObserver.Status.Available)
-                }
-            }
-        }
-    }
-
     private fun checkNetwork(isActiveNetwork: Boolean) {
         supportFragmentManager.executePendingTransactions()
 
         if (isActiveNetwork) {
-            planViewModel.getPlan()
-            productViewModel.getProduct(type = "main")
-            productViewModel.getProduct(type = "soup")
-            productViewModel.getProduct(type = "side")
-            if (dialog.isAdded) dialog.stay()
+            if (dialog.isAdded) dialog.dismiss()
         } else {
-            if (!dialog.isAdded) dialog.show(supportFragmentManager, dialog.tag)
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.message_network),
-                Toast.LENGTH_LONG
-            ).show()
+            if (!dialog.isAdded) {
+                dialog.show(supportFragmentManager, DIALOG_TAG)
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.message_network),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
+    }
+
+    fun getNetworkFlow() = connectivityObserver.observe()
+
+    override fun navigateToBack() {
+        onBackPressed()
+    }
+
+    companion object {
+        private const val DIALOG_TAG = "LOADING"
     }
 }

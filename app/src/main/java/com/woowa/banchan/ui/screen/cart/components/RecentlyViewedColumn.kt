@@ -95,6 +95,7 @@ private fun RecentlyViewedItem(
         )
 
         Text(
+            modifier = Modifier.padding(top = 8.dp),
             text = item.name,
             overflow = TextOverflow.Ellipsis, maxLines = 1,
             fontWeight = FontWeight(500), color = colorResource(R.color.black)

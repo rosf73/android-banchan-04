@@ -31,13 +31,9 @@ class PlanViewModel @Inject constructor(
     private val _eventFLow = MutableSharedFlow<ProductUiEvent<Product>>()
     val eventFlow = _eventFLow.asSharedFlow()
 
-    init {
-        getPlan()
-    }
-
     fun getPlan() {
         viewModelScope.launch {
-            _state.value = state.value.copy(isLoading = true)
+            _state.value = state.value.copy(plans = emptyList(), isLoading = true)
             getPlanUseCase()
                 .onEach { result ->
                     result.onSuccess {

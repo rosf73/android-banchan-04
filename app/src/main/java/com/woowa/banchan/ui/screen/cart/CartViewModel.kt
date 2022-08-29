@@ -142,7 +142,6 @@ class CartViewModel @Inject constructor(
             val orderedAt = System.currentTimeMillis()
             val orderProducts = state.value.cart.filter { it.checked }
             val orderId = addOrderUserCase(orderProducts, orderedAt)
-            deleteCheckedCarts()
             _eventFlow.emit(UiEvent.OrderProduct(Order(orderId, orderedAt, DeliveryStatus.START)))
         }
     }

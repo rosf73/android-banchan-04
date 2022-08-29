@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentPlanBinding
 import com.woowa.banchan.domain.entity.Product
+import com.woowa.banchan.ui.MainActivity
 import com.woowa.banchan.ui.customview.CartBottomSheet
 import com.woowa.banchan.ui.extensions.repeatOnLifecycle
 import com.woowa.banchan.ui.extensions.toVisibility
 import com.woowa.banchan.ui.navigator.OnDetailClickListener
+import com.woowa.banchan.ui.network.ConnectivityObserver
 import com.woowa.banchan.ui.screen.main.MainFragment
 import com.woowa.banchan.ui.screen.main.tabs.ProductUiEvent
 import com.woowa.banchan.ui.screen.main.tabs.adapter.BannerAdapter
@@ -67,6 +69,14 @@ class PlanFragment : Fragment(), OnDetailClickListener {
     private fun observeData() {
         viewLifecycleOwner.repeatOnLifecycle {
             launch {
+                (requireActivity() as MainActivity).getNetworkFlow().collect {
+                    if (it == ConnectivityObserver.Status.Available) {
+                        planViewModel.getPlan()
+                    }
+                }
+            }
+
+            launch {
                 planViewModel.state.collectLatest { state ->
                     binding.pbPlan.visibility = state.isLoading.toVisibility()
                     binding.rvPlan.isGone = true
@@ -85,6 +95,7 @@ class PlanFragment : Fragment(), OnDetailClickListener {
                             navigateToDetail(it.data.detailHash, it.data.title, it.data.description)
                         }
                         is ProductUiEvent.NavigateToCart -> navigateToCart(it.data)
+                        is ProductUiEvent.NavigateToBack -> Unit
                     }
                 }
             }

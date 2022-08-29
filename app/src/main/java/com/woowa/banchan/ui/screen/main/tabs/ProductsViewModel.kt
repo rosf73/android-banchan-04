@@ -90,8 +90,9 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    fun setSortType(sortType: SortType) {
+    fun setSortType(sortType: SortType, type: String) {
         _sortType.value = sortType
+        getProduct(type)
     }
 
     fun setViewMode(viewMode: ProductViewType) {

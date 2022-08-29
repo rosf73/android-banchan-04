@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import com.woowa.banchan.R
 import com.woowa.banchan.domain.entity.Cart
@@ -25,7 +26,9 @@ import com.woowa.banchan.ui.screen.cart.components.CartItemRow
 import com.woowa.banchan.ui.screen.cart.components.CartOrderButton
 import com.woowa.banchan.ui.screen.cart.components.CartPriceColumn
 import com.woowa.banchan.ui.screen.cart.components.CheckState
+import com.woowa.banchan.ui.screen.cart.components.Keyboard
 import com.woowa.banchan.ui.screen.cart.components.RecentlyViewedColumn
+import com.woowa.banchan.ui.screen.cart.components.keyboardAsState
 import com.woowa.banchan.ui.screen.recently.RecentlyViewModel
 import kotlin.math.abs
 
@@ -87,6 +90,13 @@ fun CartScreen(
         )
     }
 
+    val focusManager = LocalFocusManager.current
+    val isKeyboardOpen by keyboardAsState()
+    when (isKeyboardOpen) {
+        Keyboard.Closed -> focusManager.clearFocus()
+        else -> {}
+    }
+
     LazyColumn {
         item {
             CartCheckBox(
@@ -115,10 +125,10 @@ fun CartScreen(
         else {
             itemsIndexed(
                 items = cartState.cart,
-                key = { index: Int, cart: Cart ->
+                key = { _: Int, cart: Cart ->
                     cart.id
                 }
-            ) { index: Int, item: Cart ->
+            ) { _: Int, item: Cart ->
                 CartItemRow(
                     modifier = Modifier
                         .background(colorResource(R.color.white))
@@ -163,7 +173,10 @@ fun CartScreen(
             }
 
             item {
-                CartOrderButton(totalPrice, onOrderClick)
+                CartOrderButton(totalPrice) {
+                    focusManager.clearFocus()
+                    onOrderClick()
+                }
             }
         }
 
@@ -174,8 +187,14 @@ fun CartScreen(
                 } else {
                     recentlyState.recentlyList.subList(0, 7)
                 },
-                navigateToRecently = navigateToRecently,
-                onItemClick = onItemClick
+                navigateToRecently = {
+                    focusManager.clearFocus()
+                    navigateToRecently()
+                },
+                onItemClick = {
+                    focusManager.clearFocus()
+                    onItemClick(it)
+                }
             )
         }
     }

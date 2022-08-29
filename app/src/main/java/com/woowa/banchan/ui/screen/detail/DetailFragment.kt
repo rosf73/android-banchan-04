@@ -88,12 +88,8 @@ class DetailFragment : Fragment(), OnCartClickListener, OnOrderClickListener {
             }
 
             launch {
-                cartViewModel.state.collect {
-                    cartViewModel.state.collect { state ->
-                        if (state.cart.isNotEmpty()) {
-                            binding.cartCount = state.cart.size
-                        }
-                    }
+                cartViewModel.state.collect { state ->
+                    binding.cartCount = state.cart.size
                 }
             }
 

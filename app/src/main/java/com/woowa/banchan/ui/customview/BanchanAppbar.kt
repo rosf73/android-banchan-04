@@ -62,9 +62,7 @@ class BanchanAppbar(context: Context, attrs: AttributeSet) : ConstraintLayout(co
     }
 
     fun setSecondActive(isActive: Boolean) {
-        if (title != null) {
-            this.actionSecondActive.isVisible = isActive
-        }
+        this.actionSecondActive.isVisible = isActive
     }
 
     fun onNavigationIconClick(onClick: () -> Unit) {

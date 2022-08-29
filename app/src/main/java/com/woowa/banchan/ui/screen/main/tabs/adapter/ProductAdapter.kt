@@ -9,6 +9,7 @@ import com.woowa.banchan.databinding.ItemBanchanHorizontalBinding
 import com.woowa.banchan.databinding.ItemBanchanVerticalBinding
 import com.woowa.banchan.domain.entity.Product
 import com.woowa.banchan.domain.entity.ProductViewType
+import com.woowa.banchan.ui.extensions.onThrottleClick
 
 class ProductAdapter(
     private val onClick: (Product) -> Unit,
@@ -88,7 +89,7 @@ class ProductAdapter(
 
         fun bind(product: Product) {
             itemView.setOnClickListener { onClick(product) }
-            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.ivCart.onThrottleClick { onClickCart(product) }
             binding.product = product
             binding.executePendingBindings()
         }
@@ -106,7 +107,7 @@ class ProductAdapter(
 
         fun bind(product: Product) {
             itemView.setOnClickListener { onClick(product) }
-            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.ivCart.onThrottleClick { onClickCart(product) }
             binding.product = product
             binding.executePendingBindings()
         }
@@ -124,7 +125,7 @@ class ProductAdapter(
 
         fun bind(product: Product) {
             itemView.setOnClickListener { onClick(product) }
-            binding.ivCart.setOnClickListener { onClickCart(product) }
+            binding.ivCart.onThrottleClick { onClickCart(product) }
             binding.product = product
             binding.executePendingBindings()
         }

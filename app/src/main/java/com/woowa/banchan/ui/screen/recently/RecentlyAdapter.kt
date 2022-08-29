@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemRecentlyBinding
 import com.woowa.banchan.domain.entity.RecentlyViewed
+import com.woowa.banchan.ui.extensions.onThrottleClick
 
 class RecentlyAdapter(
     private val recentlyItems: List<RecentlyViewed>,
@@ -35,7 +36,7 @@ class RecentlyAdapter(
 
         fun bind(item: RecentlyViewed) {
             itemView.setOnClickListener { onClick(item) }
-            binding.ivCart.setOnClickListener { onClickCart(item) }
+            binding.ivCart.onThrottleClick { onClickCart(item) }
             binding.recentlyItem = item
             binding.executePendingBindings()
         }
