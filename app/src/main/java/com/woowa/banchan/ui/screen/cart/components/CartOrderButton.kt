@@ -25,7 +25,6 @@ fun CartOrderButton(
             .padding(16.dp, 0.dp)
             .fillMaxWidth(),
         onClick = {
-
             onOrderClick()
         },
         enabled = totalPrice >= 10000,

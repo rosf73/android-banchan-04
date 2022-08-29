@@ -120,6 +120,7 @@ class SideFragment : Fragment(), OnDetailClickListener {
                             it.data.description
                         )
                         is ProductUiEvent.NavigateToCart -> navigateToCart(it.data)
+                        is ProductUiEvent.NavigateToBack -> Unit
                     }
                 }
             }
