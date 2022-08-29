@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.customview
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -25,6 +26,15 @@ class CartDialog : DialogFragment(), OnCartClickListener {
 
     override fun onResume() {
         super.onResume()
+        setDialogSize()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setDialogSize()
+    }
+
+    private fun setDialogSize() {
         val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
         val windowManager =
             requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
