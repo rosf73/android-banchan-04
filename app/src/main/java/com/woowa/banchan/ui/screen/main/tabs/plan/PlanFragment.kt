@@ -95,6 +95,7 @@ class PlanFragment : Fragment(), OnDetailClickListener {
                             navigateToDetail(it.data.detailHash, it.data.title, it.data.description)
                         }
                         is ProductUiEvent.NavigateToCart -> navigateToCart(it.data)
+                        is ProductUiEvent.NavigateToBack -> Unit
                     }
                 }
             }

@@ -125,10 +125,10 @@ fun CartScreen(
         else {
             itemsIndexed(
                 items = cartState.cart,
-                key = { index: Int, cart: Cart ->
+                key = { _: Int, cart: Cart ->
                     cart.id
                 }
-            ) { index: Int, item: Cart ->
+            ) { _: Int, item: Cart ->
                 CartItemRow(
                     modifier = Modifier
                         .background(colorResource(R.color.white))
@@ -191,7 +191,10 @@ fun CartScreen(
                     focusManager.clearFocus()
                     navigateToRecently()
                 },
-                onItemClick = onItemClick
+                onItemClick = {
+                    focusManager.clearFocus()
+                    onItemClick(it)
+                }
             )
         }
     }

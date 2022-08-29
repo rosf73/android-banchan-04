@@ -110,7 +110,7 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
                     typeFilterAdapter.setViewMode(viewMode)
                     when (viewMode) {
                         ProductViewType.Grid -> setGridLayoutManager()
-                        ProductViewType.Vertical -> setLinearLayoutManager()
+                        else -> setLinearLayoutManager()
                     }
                 }
             }
@@ -131,6 +131,7 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
                             it.data.description
                         )
                         is ProductUiEvent.NavigateToCart -> navigateToCart(it.data)
+                        is ProductUiEvent.NavigateToBack -> Unit
                     }
                 }
             }
