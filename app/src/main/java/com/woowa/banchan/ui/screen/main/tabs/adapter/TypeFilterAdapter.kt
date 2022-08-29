@@ -59,15 +59,21 @@ class TypeFilterAdapter(
                     R.id.rb_linear -> onChangeType(ProductViewType.Vertical)
                 }
             }
-            binding.spinnerFilter.setSelection(sortType.ordinal)
             binding.spinnerFilter.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
+                    private var isFirst = true
+
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
                         view: View?,
                         position: Int,
                         id: Long
                     ) {
+                        if (isFirst) {
+                            isFirst = false
+                            return
+                        }
+
                         adapter.clickItem(position)
                         onClickItem(spinnerList[position])
                     }

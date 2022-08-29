@@ -53,6 +53,13 @@ class CartFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initView()
+        observeData()
+    }
+
+    private fun initView() {
+        binding.viewModel = cartViewModel
         binding.composeCart.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
@@ -65,13 +72,6 @@ class CartFragment :
                 )
             }
         }
-
-        initView()
-        observeData()
-    }
-
-    private fun initView() {
-        binding.viewModel = cartViewModel
     }
 
     private fun observeData() {
@@ -112,7 +112,7 @@ class CartFragment :
                 R.anim.slide_out
             )
             .addToBackStack("Cart")
-            .replace(R.id.fcv_main, RecentlyFragment())
+            .add(R.id.fcv_main, RecentlyFragment())
             .commit()
     }
 
@@ -126,7 +126,7 @@ class CartFragment :
                 R.anim.slide_out
             )
             .addToBackStack("Cart")
-            .replace(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
+            .add(R.id.fcv_main, DetailFragment.newInstance(hash, name, description))
             .commit()
     }
 
@@ -135,7 +135,6 @@ class CartFragment :
         parentFragmentManager.beginTransaction()
             .addToBackStack("Cart")
             .add(R.id.fcv_main, OrderDetailFragment.newInstance(id))
-            .detach(this@CartFragment)
             .commit()
     }
 

@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
@@ -61,8 +59,7 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
     private val typeFilterAdapter by lazy {
         TypeFilterAdapter(
             onClickItem = { type ->
-                productsViewModel.setSortType(type)
-                productsViewModel.getProduct(getString(R.string.main_dish_tag))
+                productsViewModel.setSortType(type, getString(R.string.main_dish_tag))
             },
             onChangeType = { productsViewModel.setViewMode(it) }
         )
@@ -100,10 +97,9 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.state.collectLatest { state ->
+                    binding.pbMainDish.bringToFront()
                     binding.pbMainDish.visibility = state.isLoading.toVisibility()
-                    binding.rvMainDish.isGone = true
                     if (state.products.isNotEmpty()) {
-                        binding.rvMainDish.isVisible = true
                         productAdapter.submitList(state.products)
                     }
                 }
@@ -121,7 +117,6 @@ class MainDishFragment : Fragment(), OnDetailClickListener {
 
             launch {
                 productsViewModel.sortType.collectLatest { sortType ->
-                    productsViewModel.getProduct(getString(R.string.main_dish_tag))
                     typeFilterAdapter.setSortType(sortType)
                 }
             }

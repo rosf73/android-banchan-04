@@ -24,7 +24,10 @@ fun CartOrderButton(
         modifier = Modifier
             .padding(16.dp, 0.dp)
             .fillMaxWidth(),
-        onClick = onOrderClick,
+        onClick = {
+
+            onOrderClick()
+        },
         enabled = totalPrice >= 10000,
         contentPadding = PaddingValues(16.dp),
         colors = ButtonDefaults.buttonColors(
