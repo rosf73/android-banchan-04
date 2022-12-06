@@ -45,3 +45,43 @@
 - AndroidxJunit version 1.1.3
 - Truth version 1.1.2
 - ktlint version 10.3.0
+
+<br/>
+
+## 🏠 개발 문화
+
+#### 1. 필수 규칙
+
+- 무시하지 않고 싸우지 말기
+    - 싸우는 경우, 벌금 100,000원
+
+#### 2. 데일리 만남과 헤어짐은 필수
+
+  - 매일 9시 30분에 데일리 스크럼을 진행한다.
+  - 매일 5시에 데일리 회고를 진행한다.
+  - 매주 월요일은 스프린트 계획을 진행한다.
+  - 매주 금요일은 스프린트 회고를 진행한다.
+
+#### 3. 장소
+
+- 온라인, 오프라인은 전 날 회의 후, 결정한다.
+
+#### 4. 협업
+
+- PR로 올린 정보는 이해할 수 있을 때 까지 질의 응답과 머지가 불가능하다.
+- 모르는 내용은 즉각 공유하고 생각해본다.
+    - 회피도 정답일 수가 있기 떄문이다.
+    - 공유하고 스스로 생각한 뒤, 팀원의 이야기를 빠르게 들어볼 수 있기 때문이다.
+
+<br/>
+
+## 🔗 관련 링크
+
+- 하단 링크는 같은 스프레드시트로 링크됩니다.
+- 스프레드시트의 하단에 요구사항 명세서, 데일리 스크럼, 스프린트 계획/회고, 트러블 슈팅, 데이터베이스를 확인할 수 있다.
+
+[기능적 요구사항 명세서](https://docs.google.com/spreadsheets/d/1hU1G8ZzBLXUD7sJSPrs_Cw3NrjP_mbFWGFshoSNzSBs/edit#gid=0)  
+[데일리 스크럼](https://docs.google.com/spreadsheets/d/1hU1G8ZzBLXUD7sJSPrs_Cw3NrjP_mbFWGFshoSNzSBs/edit#gid=1)  
+[스프린트 계획/회고](https://docs.google.com/spreadsheets/d/1hU1G8ZzBLXUD7sJSPrs_Cw3NrjP_mbFWGFshoSNzSBs/edit#gid=0)  
+[트러블 슈팅](https://docs.google.com/spreadsheets/d/1hU1G8ZzBLXUD7sJSPrs_Cw3NrjP_mbFWGFshoSNzSBs/edit#gid=0)  
+[데이터베이스](https://docs.google.com/spreadsheets/d/1hU1G8ZzBLXUD7sJSPrs_Cw3NrjP_mbFWGFshoSNzSBs/edit#gid=0)  
